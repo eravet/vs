@@ -86,8 +86,8 @@ test.describe("Contact @functional", () => {
   test("plan chosen on the coaching page is preselected", async ({ page }) => {
     await page.goto("/coaching/");
     await page.locator(".plan").nth(1).getByRole("link").click();
-    await expect(page).toHaveURL(/\/contact\/\?plan=Performance/);
-    await expect(page.locator("select[name=plan]")).toHaveValue("Performance");
+    await expect(page).toHaveURL(/\/contact\/\?plan=Advanced(%20|\+)Performance/);
+    await expect(page.locator("select[name=plan]")).toHaveValue("Advanced Performance");
   });
 });
 
@@ -107,7 +107,7 @@ test.describe("Navigation @functional", () => {
 
   test("current page is marked in the header", async ({ page }) => {
     await page.goto("/about/");
-    await expect(page.locator(".site-nav a[aria-current=page]")).toHaveText("About Mark");
+    await expect(page.locator(".site-nav a[aria-current=page]")).toHaveText("About");
   });
 });
 

@@ -7,6 +7,10 @@ const pages = [
   { path: "/journal/", heading: /training notes/i },
   { path: "/contact/", heading: /talk about your riding/i },
   { path: "/credits/", heading: /photo credits/i },
+  { path: "/juniors/", heading: /next generation/i },
+  { path: "/programs/", heading: /camps, clinics/i },
+  { path: "/rides/", heading: /ride with me/i },
+  { path: "/athletes/", heading: /athlete hub/i },
 ];
 
 test.describe("Core pages @smoke", () => {

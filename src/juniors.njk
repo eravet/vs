@@ -1,0 +1,129 @@
+---
+layout: layouts/base.njk
+title: Violet Crown Jr Racing Team
+description: Junior road racing in Austin with the Violet Crown Jr Racing Team, coached by former European pro Mark Duroy. Skills, fitness and race craft for riders 17 and under.
+permalink: /juniors/
+headerOverlay: true
+---
+{%- set j = juniors %}
+{%- set ph = { eyebrow: j.eyebrow, headline: j.headline, intro: j.intro, image: j.image, image_alt: j.image_alt } %}
+{% include "partials/photo-head.njk" %}
+
+<section class="section">
+  <div class="wrap split split--text">
+    <div>
+      <p class="eyebrow">The club</p>
+      <h2 class="display">{{ j.about_heading }}</h2>
+    </div>
+    <div class="prose prose--lead">{{ j.about | renderMarkdown | safe }}</div>
+  </div>
+</section>
+
+<section class="section section--tint">
+  <div class="wrap">
+    <p class="eyebrow">The program</p>
+    <h2 class="display">{{ j.highlights_heading }}</h2>
+    <div class="principles">
+      {%- for h in j.highlights %}
+      <article class="principle">
+        <span class="principle__num">{{ loop.index | pad2 }}</span>
+        <h3>{{ h.title }}</h3>
+        <p>{{ h.text }}</p>
+      </article>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+{%- if j.coaches.length %}
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow">Who coaches</p>
+    <h2 class="display">{{ j.coaches_heading }}</h2>
+    <div class="people">
+      {%- for c in j.coaches %}
+      <article class="person">
+        {%- if c.photo %}<img src="{{ c.photo }}" alt="{{ c.name }}" sizes="160px">{% endif %}
+        <div>
+          <h3>{{ c.name }}</h3>
+          <p class="person__role">{{ c.role }}</p>
+          <p>{{ c.text }}</p>
+        </div>
+      </article>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{%- if j.results.length %}
+<section class="section section--dark">
+  <div class="wrap">
+    <p class="eyebrow eyebrow--light">Results</p>
+    <h2 class="display display--light">{{ j.results_heading }}</h2>
+    <ol class="timeline">
+      {%- for r in j.results %}
+      <li class="timeline__item">
+        <p class="timeline__year">{{ r.date }}</p>
+        <div><h3>{{ r.result }}</h3><p>{{ r.event }}</p></div>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+</section>
+{%- endif %}
+
+<section class="section {% if not j.results.length %}section--tint{% endif %}">
+  <div class="wrap narrow">
+    <p class="eyebrow">Parents</p>
+    <h2 class="display">{{ j.parents_heading }}</h2>
+    <div class="faq">
+      {%- for q in j.parents %}
+      <details class="faq__item">
+        <summary>{{ q.question }}</summary>
+        <div class="prose">{{ q.answer | renderMarkdown | safe }}</div>
+      </details>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="join">
+  <div class="wrap contact">
+    <div class="contact__intro">
+      <p class="eyebrow">Join</p>
+      <h2 class="display">{{ j.join_heading }}</h2>
+      <p class="lede">{{ j.join_text }}</p>
+      <ul class="contact__list">
+        {%- if j.club_email %}<li><span>Club email</span><a href="mailto:{{ j.club_email }}">{{ j.club_email }}</a></li>{% endif %}
+        {%- if j.club_url %}<li><span>Club website</span><a href="{{ j.club_url }}" target="_blank" rel="noopener">Violet Crown Junior Race Team</a></li>{% endif %}
+      </ul>
+    </div>
+    <form class="form" name="junior-interest" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="company">
+      <input type="hidden" name="form-name" value="junior-interest">
+      <p class="hp"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
+      <div class="form__row"><label for="j-parent">Parent or guardian name</label><input id="j-parent" name="parent_name" required autocomplete="name"></div>
+      <div class="form__row"><label for="j-email">Email</label><input id="j-email" name="email" type="email" required autocomplete="email"></div>
+      <div class="form__row"><label for="j-rider">Rider's first name</label><input id="j-rider" name="rider_first_name" required></div>
+      <div class="form__row"><label for="j-age">Rider's age</label><input id="j-age" name="rider_age" type="number" min="6" max="18" required></div>
+      <div class="form__row"><label for="j-exp">Riding experience</label><textarea id="j-exp" name="experience" rows="4" placeholder="What kind of riding do they do now? Any races?"></textarea></div>
+      <button class="btn btn--accent btn--block" type="submit">Send</button>
+      <p class="form__note">We only use these details to reply about the team.</p>
+    </form>
+  </div>
+</section>
+
+<section class="section section--tint">
+  <div class="wrap">
+    <p class="eyebrow">Sponsors</p>
+    <h2 class="display">{{ j.sponsors_heading }}</h2>
+    {%- if j.sponsors.length %}
+    <ul class="sponsors">
+      {%- for s in j.sponsors %}
+      <li>{% if s.url %}<a href="{{ s.url }}" target="_blank" rel="noopener">{% endif %}{% if s.logo %}<img src="{{ s.logo }}" alt="{{ s.name }}" sizes="200px">{% else %}<span>{{ s.name }}</span>{% endif %}{% if s.url %}</a>{% endif %}</li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+    <p class="lede">{{ j.sponsor_text }} <a href="/contact/?plan=Sponsorship">Contact us</a>.</p>
+  </div>
+</section>

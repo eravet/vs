@@ -6,6 +6,8 @@ import { defineConfig, devices } from "@playwright/test";
 // and set PW_CHANNEL=chromium.
 const channel = process.env.PW_CHANNEL || "msedge";
 const PORT = 8090;
+// Set PW_BASE_URL (e.g. http://localhost:8080) to test an already-running dev server instead of building.
+const external = process.env.PW_BASE_URL;
 
 export default defineConfig({
   testDir: "./tests",
@@ -13,14 +15,14 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? "github" : "list",
   use: {
-    baseURL: `http://localhost:${PORT}`,
+    baseURL: external || `http://localhost:${PORT}`,
     trace: "retain-on-failure",
   },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"], channel } },
     { name: "mobile", use: { ...devices["Pixel 7"], channel }, grep: /@mobile|@smoke/ },
   ],
-  webServer: {
+  webServer: external ? undefined : {
     command: `npx @11ty/eleventy && npx @11ty/eleventy-dev-server --dir=_site --port=${PORT}`,
     url: `http://localhost:${PORT}/`,
     reuseExistingServer: !process.env.CI,

@@ -1,0 +1,11 @@
+{#- Photo header for section pages. Expects `ph` = { eyebrow, headline, intro, image, image_alt } -#}
+<section class="photo-head">
+  {%- if ph.image %}
+  <img class="photo-head__img" src="{{ ph.image }}" alt="{{ ph.image_alt }}" loading="eager" fetchpriority="high" sizes="100vw">
+  {%- endif %}
+  <div class="wrap photo-head__content">
+    <p class="eyebrow eyebrow--light">{{ ph.eyebrow }}</p>
+    <h1 class="page-head__title page-head__title--light">{{ ph.headline }}</h1>
+    {%- if ph.intro %}<p class="photo-head__lede">{{ ph.intro }}</p>{% endif %}
+  </div>
+</section>

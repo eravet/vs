@@ -69,6 +69,23 @@ bodyClass: page-home
   </div>
 </section>
 
+<section class="section section--flush-top">
+  <div class="wrap feature-tiles">
+    <a class="feature-tile" href="/juniors/">
+      <img src="{{ juniors.image }}" alt="" sizes="(min-width: 900px) 33vw, 100vw">
+      <span class="feature-tile__body"><span class="eyebrow eyebrow--light">Juniors</span><strong>Violet Crown Jr Racing Team</strong><span class="link-arrow link-arrow--light">Meet the team</span></span>
+    </a>
+    <a class="feature-tile" href="/programs/">
+      <img src="{{ programs.image }}" alt="" sizes="(min-width: 900px) 33vw, 100vw">
+      <span class="feature-tile__body"><span class="eyebrow eyebrow--light">Programs</span><strong>Camps, clinics & training plans</strong><span class="link-arrow link-arrow--light">See what's on</span></span>
+    </a>
+    <a class="feature-tile" href="/rides/">
+      <img src="{{ rides.image }}" alt="" sizes="(min-width: 900px) 33vw, 100vw">
+      <span class="feature-tile__body"><span class="eyebrow eyebrow--light">Group rides</span><strong>Ride with Mark in Austin</strong><span class="link-arrow link-arrow--light">This week's rides</span></span>
+    </a>
+  </div>
+</section>
+
 {%- set quotes = testimonials.items | where("show", true) %}
 {%- if quotes.length %}
 <section class="section section--dark">

@@ -1,0 +1,64 @@
+---
+layout: layouts/base.njk
+title: Camps, clinics & training plans
+description: Cycling skills clinics, Hill Country training camps, a junior summer camp and ready-made TrainingPeaks plans from Austin coach Mark Duroy.
+permalink: /programs/
+headerOverlay: true
+---
+{%- set p = programs %}
+{%- set ph = { eyebrow: "Programs", headline: p.headline, intro: p.intro, image: p.image, image_alt: p.image_alt } %}
+{% include "partials/photo-head.njk" %}
+
+<nav class="wrap jump" aria-label="Programs">
+  {%- for s in p.sections %}<a href="#{{ s.id }}">{{ s.title }}</a>{% endfor %}
+</nav>
+
+{%- for s in p.sections %}
+<section class="section{% if loop.index is even %} section--tint{% endif %}" id="{{ s.id }}">
+  <div class="wrap">
+    <div class="section-head section-head--stack">
+      <h2 class="display">{{ s.title }}</h2>
+      <p class="lede">{{ s.text }}</p>
+    </div>
+    <div class="programs">
+      {%- for item in s.items %}
+      <article class="program">
+        <p class="program__status program__status--{{ item.status }}">{% if item.status == "open" %}Booking now{% elif item.status == "full" %}Full{% else %}Coming soon{% endif %}</p>
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.detail }}</p>
+        <p class="program__meta">{{ item.when }}{% if item.price %} · {{ item.price }}{% endif %}</p>
+        {%- if item.link and item.status == "open" %}
+        <a class="btn btn--accent btn--small" href="{{ item.link }}">Book a place</a>
+        {%- else %}
+        <a class="link-arrow" href="#interest" data-program="{{ item.name }}">Tell me when it's on</a>
+        {%- endif %}
+      </article>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endfor %}
+
+<section class="section section--dark" id="interest">
+  <div class="wrap newsletter__inner">
+    <div>
+      <p class="eyebrow eyebrow--light">Interested?</p>
+      <h2 class="display display--light">{{ p.interest_heading }}</h2>
+      <p>{{ p.interest_text }}</p>
+    </div>
+    <form class="form form--dark" name="program-interest" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="company">
+      <input type="hidden" name="form-name" value="program-interest">
+      <p class="hp"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
+      <div class="form__row"><label for="p-name">Name</label><input id="p-name" name="name" required autocomplete="name"></div>
+      <div class="form__row"><label for="p-email">Email</label><input id="p-email" name="email" type="email" required autocomplete="email"></div>
+      <div class="form__row">
+        <label for="p-program">Interested in</label>
+        <select id="p-program" name="program" data-program-select>
+          <option value="Anything">All clinics & camps</option>
+          {%- for s in p.sections %}{% for item in s.items %}<option value="{{ item.name }}">{{ item.name }}</option>{% endfor %}{% endfor %}
+        </select>
+      </div>
+      <button class="btn btn--accent btn--block" type="submit">Keep me posted</button>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,47 @@
+{
+  "headline": "Camps, clinics & training plans",
+  "intro": "Not every rider needs one-to-one coaching. Learn a skill in an afternoon, spend a weekend riding the Hill Country, or follow one of my ready-made training plans.",
+  "image": "/assets/images/site/programs.jpg",
+  "image_alt": "Three riders cornering together on a quiet road",
+  "sections": [
+    {
+      "id": "clinics",
+      "title": "Skills clinics",
+      "text": "Small-group sessions in Austin focused on one skill at a time. Ride better in a group, corner with confidence and finish faster.",
+      "items": [
+        { "name": "Pack riding & pacelines", "detail": "Ride safely and efficiently in a group: drafting, rotating, signalling and holding a wheel.", "when": "Dates announced soon", "price": "", "link": "", "status": "coming-soon" },
+        { "name": "Cornering & descending", "detail": "Lines, braking and body position so you carry speed safely through corners.", "when": "Dates announced soon", "price": "", "link": "", "status": "coming-soon" },
+        { "name": "Crit racing 101", "detail": "Positioning, cornering in a bunch, when to move up and how to sprint. Ideal before your first criterium.", "when": "Dates announced soon", "price": "", "link": "", "status": "coming-soon" }
+      ]
+    },
+    {
+      "id": "camps",
+      "title": "Training camps",
+      "text": "A focused block of riding with coaching, route knowledge and good company. A camp is the fastest way to kick-start a season.",
+      "items": [
+        { "name": "Hill Country weekend camp", "detail": "Two or three days of guided rides on the best roads west of Austin, with daily skills sessions and a ride debrief.", "when": "Dates announced soon", "price": "", "link": "", "status": "coming-soon" },
+        { "name": "Spring race-prep camp", "detail": "Get ready for race season with structured efforts, race simulation and tactics sessions.", "when": "Dates announced soon", "price": "", "link": "", "status": "coming-soon" }
+      ]
+    },
+    {
+      "id": "junior-camp",
+      "title": "Junior summer camp",
+      "text": "A week of riding, skills and fun for young riders who want to try racing. Run alongside the Violet Crown Jr Racing Team.",
+      "items": [
+        { "name": "Junior summer camp", "detail": "Daily morning rides, bike-handling games, basic bike maintenance and a mini race to finish the week. For riders aged roughly 10–17.", "when": "Summer dates announced soon", "price": "", "link": "", "status": "coming-soon" }
+      ]
+    },
+    {
+      "id": "plans",
+      "title": "Ready-made training plans",
+      "text": "Structured plans you follow in TrainingPeaks at your own pace. The same approach I use with my athletes, without the monthly coaching.",
+      "items": [
+        { "name": "First century in 12 weeks", "detail": "Build the endurance and fueling habits to finish your first 100-miler strong.", "when": "Start anytime", "price": "", "link": "", "status": "coming-soon" },
+        { "name": "Texas crit season", "detail": "Sharpen your top-end and repeatability for criterium racing.", "when": "Start anytime", "price": "", "link": "", "status": "coming-soon" },
+        { "name": "Off-season base", "detail": "A patient winter block of endurance, strength and skills that sets up your spring.", "when": "Start anytime", "price": "", "link": "", "status": "coming-soon" }
+      ]
+    }
+  ],
+  "interest_heading": "Get first dibs",
+  "interest_text": "Places at clinics and camps are limited. Leave your email and I'll let you know as soon as dates are set."
+}

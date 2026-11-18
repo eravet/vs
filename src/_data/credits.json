@@ -416,5 +416,38 @@
     "source": "https://commons.wikimedia.org/wiki/File:Sean_Kelly,_Tour_de_France_2009.jpg",
     "license": "CC0",
     "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+  },
+  {
+    "file": "site/juniors.jpg",
+    "used_for": "Juniors page",
+    "alt": "Riders racing a criterium through city streets",
+    "title": "Riders racing a criterium through city streets",
+    "author": "alexandredaoust",
+    "site": "Unsplash",
+    "source": "https://unsplash.com/@alexandredaoust",
+    "license": "Unsplash License",
+    "license_url": "https://unsplash.com/license"
+  },
+  {
+    "file": "site/rides.jpg",
+    "used_for": "Group rides page",
+    "alt": "A group of cyclists riding together on an open road",
+    "title": "A group of cyclists riding together on an open road",
+    "author": "Markus Spiske",
+    "site": "Unsplash",
+    "source": "https://unsplash.com/@markusspiske",
+    "license": "Unsplash License",
+    "license_url": "https://unsplash.com/license"
+  },
+  {
+    "file": "site/programs.jpg",
+    "used_for": "Camps & clinics page",
+    "alt": "Three riders cornering together on a quiet road",
+    "title": "Three riders cornering together on a quiet road",
+    "author": "munbaik_cycling",
+    "site": "Unsplash",
+    "source": "https://unsplash.com/@munbaik_cycling",
+    "license": "Unsplash License",
+    "license_url": "https://unsplash.com/license"
   }
 ]

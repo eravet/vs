@@ -57,6 +57,15 @@
     }
   }
 
+  // Programs page: "Tell me when it's on" preselects that program in the form
+  var programSelect = document.querySelector("[data-program-select]");
+  if (programSelect) {
+    document.addEventListener("click", function (e) {
+      var link = e.target.closest("[data-program]");
+      if (link) programSelect.value = link.getAttribute("data-program");
+    });
+  }
+
   // Thanks page: different message after a newsletter signup
   var thanks = document.querySelector("[data-thanks-text]");
   if (thanks && new URLSearchParams(window.location.search).get("form") === "newsletter") {

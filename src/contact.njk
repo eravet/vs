@@ -37,6 +37,9 @@ permalink: /contact/
           <option value="Not sure yet">Not sure yet</option>
           {%- for p in coaching.plans %}<option value="{{ p.name }}">{{ p.name }} coaching</option>{% endfor %}
           {%- for a in coaching.addons %}<option value="{{ a.name }}">{{ a.name }}</option>{% endfor %}
+          <option value="Camps & clinics">Camps & clinics</option>
+          <option value="Juniors team">Juniors team</option>
+          <option value="Sponsorship">Sponsoring the juniors team</option>
         </select>
       </div>
       <div class="form__row">

@@ -52,8 +52,28 @@ Click **Pages**, then the page:
 |---|---|
 | **Home page** | Banner headline, text and photo; the four highlights; "How it works" steps; the bottom call to action |
 | **About Mark page** | Your story, your photo, the wide photo, the timeline, your coaching philosophy |
-| **Coaching plans & prices** | Plan names, prices, what's included, single sessions, FAQ |
+| **Coaching plans & prices** | Plan names, prices, what's included, single sessions, FAQ, the referral offer |
+| **Camps, clinics & training plans** | Each clinic, camp and ready-made plan: description, dates, price and status |
+| **Juniors team page** | Team info, coaches, results, parent questions, sponsors |
+| **Group rides** | Weekly rides and one-off special rides |
+| **Athlete hub** | TrainingPeaks, billing, waiver and Google review links; guides for athletes |
 | **Rider testimonials** | Add a quote, or switch **Show on site** off to hide one |
+
+### Announcing a clinic or camp
+1. **Pages → Camps, clinics & training plans**, then open the section and the program.
+2. Fill in **When** (e.g. "Saturday March 14, 8–11am") and **Price**.
+3. Change **Status** to **Open for booking** and paste a **Booking link** (Stripe payment link,
+   BikeReg, a TrainingPeaks plan…). A "Book a place" button appears.
+4. While a program is **Coming soon**, visitors can leave their email to hear when it's on.
+   Those emails arrive as Netlify form submissions ("program-interest").
+
+### Selling a ready-made plan
+Create the plan in the TrainingPeaks store, then paste its store link into that plan's
+**Booking link** and set **Status** to **Open for booking**.
+
+### Special rides
+Add a ride under **Group rides → Special rides & events** (e.g. a Hugel prep ride). Delete it
+once it's over. The section disappears when it's empty.
 
 Lists (plans, timeline rows, FAQ…) can be **dragged** to reorder, and each has
 **Add** and **Delete** buttons.

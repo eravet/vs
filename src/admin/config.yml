@@ -7,7 +7,8 @@ backend:
   branch: main
 
 # For testing on your own computer: run `npx decap-server` and uncomment:
-# local_backend: true
+local_backend:
+  url: http://localhost:8082/api/v1
 
 site_url: https://www.velo-savvy.com
 display_url: https://www.velo-savvy.com
@@ -207,6 +208,176 @@ collections:
             fields:
               - { label: "Question", name: "question", widget: "string" }
               - { label: "Answer", name: "answer", widget: "text" }
+          - label: "Referral offer"
+            name: "referral"
+            widget: "object"
+            hint: "Shown on the Coaching page and the Athlete hub."
+            fields:
+              - { label: "Show the referral offer", name: "enabled", widget: "boolean", default: true }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Text", name: "text", widget: "markdown", buttons: ["bold", "italic", "link"], editor_components: [] }
+
+      # ---------------- Camps & clinics ----------------
+      - name: "programs"
+        label: "Camps, clinics & training plans"
+        file: "src/_data/programs.json"
+        fields:
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Intro", name: "intro", widget: "text" }
+          - { label: "Header photo", name: "image", widget: "image" }
+          - { label: "Describe the photo", name: "image_alt", widget: "string" }
+          - label: "Sections"
+            name: "sections"
+            widget: "list"
+            summary: "{{fields.title}}"
+            hint: "Clinics, camps, junior camp, ready-made plans. Each section has its own list of programs."
+            fields:
+              - { label: "Section title", name: "title", widget: "string" }
+              - { label: "Short web address (no spaces)", name: "id", widget: "string", hint: "e.g. clinics. Used for the jump links at the top of the page." }
+              - { label: "Section intro", name: "text", widget: "text" }
+              - label: "Programs"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.name}} · {{fields.when}}"
+                fields:
+                  - { label: "Name", name: "name", widget: "string" }
+                  - { label: "Description", name: "detail", widget: "text" }
+                  - { label: "When", name: "when", widget: "string", hint: "e.g. Saturday March 14, 8–11am or Dates announced soon" }
+                  - { label: "Price", name: "price", widget: "string", required: false, hint: "e.g. $60. Leave empty to hide." }
+                  - label: "Status"
+                    name: "status"
+                    widget: "select"
+                    default: "coming-soon"
+                    options:
+                      - { label: "Coming soon (shows 'Tell me when it's on')", value: "coming-soon" }
+                      - { label: "Open for booking (shows a 'Book a place' button)", value: "open" }
+                      - { label: "Full", value: "full" }
+                  - { label: "Booking link", name: "link", widget: "string", required: false, hint: "Where 'Book a place' goes when the status is Open: a TrainingPeaks plan, Stripe, BikeReg or similar link." }
+          - { label: "Sign-up box heading", name: "interest_heading", widget: "string" }
+          - { label: "Sign-up box text", name: "interest_text", widget: "text" }
+
+      # ---------------- Juniors ----------------
+      - name: "juniors"
+        label: "Juniors team page"
+        file: "src/_data/juniors.json"
+        fields:
+          - { label: "Small line above the headline", name: "eyebrow", widget: "string" }
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Intro", name: "intro", widget: "text" }
+          - { label: "Header photo", name: "image", widget: "image", hint: "Only use photos of junior riders with their parents' permission." }
+          - { label: "Describe the photo", name: "image_alt", widget: "string" }
+          - { label: "'About the team' heading", name: "about_heading", widget: "string" }
+          - { label: "About the team", name: "about", widget: "markdown", buttons: ["bold", "italic", "link"], editor_components: [] }
+          - { label: "'What riders get' heading", name: "highlights_heading", widget: "string" }
+          - label: "What riders get"
+            name: "highlights"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+          - { label: "Coaches heading", name: "coaches_heading", widget: "string" }
+          - label: "Coaches"
+            name: "coaches"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Role", name: "role", widget: "string" }
+              - { label: "About", name: "text", widget: "text" }
+              - { label: "Photo", name: "photo", widget: "image", required: false }
+          - { label: "Results heading", name: "results_heading", widget: "string" }
+          - label: "Results"
+            name: "results"
+            widget: "list"
+            summary: "{{fields.date}} · {{fields.result}}"
+            hint: "The results section only appears once you add a result."
+            fields:
+              - { label: "Date", name: "date", widget: "string", hint: "e.g. Apr 2026" }
+              - { label: "Result", name: "result", widget: "string", hint: "e.g. 1st, Junior 15–16" }
+              - { label: "Race", name: "event", widget: "string" }
+          - { label: "Parents section heading", name: "parents_heading", widget: "string" }
+          - label: "Questions from parents"
+            name: "parents"
+            widget: "list"
+            summary: "{{fields.question}}"
+            fields:
+              - { label: "Question", name: "question", widget: "string" }
+              - { label: "Answer", name: "answer", widget: "text" }
+          - { label: "Join heading", name: "join_heading", widget: "string" }
+          - { label: "Join text", name: "join_text", widget: "text" }
+          - { label: "Club website link", name: "club_url", widget: "string", required: false }
+          - { label: "Club email", name: "club_email", widget: "string", required: false }
+          - { label: "Sponsors heading", name: "sponsors_heading", widget: "string" }
+          - label: "Sponsors"
+            name: "sponsors"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Website", name: "url", widget: "string", required: false }
+              - { label: "Logo", name: "logo", widget: "image", required: false, hint: "Leave empty to show the name instead." }
+          - { label: "Sponsor invitation text", name: "sponsor_text", widget: "text" }
+
+      # ---------------- Group rides ----------------
+      - name: "rides"
+        label: "Group rides"
+        file: "src/_data/rides.json"
+        fields:
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Intro", name: "intro", widget: "text" }
+          - { label: "Header photo", name: "image", widget: "image" }
+          - { label: "Describe the photo", name: "image_alt", widget: "string" }
+          - { label: "Weekly rides heading", name: "weekly_heading", widget: "string" }
+          - label: "Weekly rides"
+            name: "weekly"
+            widget: "list"
+            summary: "{{fields.day}} {{fields.time}} · {{fields.name}}"
+            fields:
+              - { label: "Ride name", name: "name", widget: "string" }
+              - { label: "Day", name: "day", widget: "string", hint: "e.g. Tuesdays" }
+              - { label: "Time", name: "time", widget: "string", hint: "e.g. 6:45am" }
+              - { label: "Meeting place", name: "place", widget: "string" }
+              - { label: "Description", name: "text", widget: "string", required: false }
+              - { label: "Link (Strava event, club page)", name: "link", widget: "string", required: false }
+          - { label: "Special rides heading", name: "special_heading", widget: "string" }
+          - label: "Special rides & events"
+            name: "special"
+            widget: "list"
+            summary: "{{fields.date}} · {{fields.name}}"
+            hint: "One-off rides like a Hugel prep ride. This section only appears when it has at least one ride. Delete rides once they're over."
+            fields:
+              - { label: "Ride name", name: "name", widget: "string" }
+              - { label: "Date", name: "date", widget: "string", hint: "e.g. Sat Nov 1" }
+              - { label: "Time", name: "time", widget: "string", required: false }
+              - { label: "Meeting place", name: "place", widget: "string" }
+              - { label: "Description", name: "text", widget: "string", required: false }
+              - { label: "Link (Strava event)", name: "link", widget: "string", required: false }
+          - { label: "Strava club text", name: "strava_text", widget: "string" }
+
+      # ---------------- Athlete hub ----------------
+      - name: "athletes"
+        label: "Athlete hub"
+        file: "src/_data/athletes.json"
+        fields:
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Intro", name: "intro", widget: "string" }
+          - { label: "Links heading", name: "links_heading", widget: "string" }
+          - { label: "TrainingPeaks login link", name: "trainingpeaks_url", widget: "string" }
+          - { label: "Billing link (Stripe customer portal)", name: "billing_url", widget: "string", required: false, hint: "Leave empty to hide the Billing box." }
+          - { label: "Coaching agreement / waiver link", name: "waiver_url", widget: "string", required: false, hint: "e.g. a DocuSign, Dropbox Sign or Google Form link. Leave empty to hide." }
+          - { label: "Google review link", name: "review_url", widget: "string", required: false, hint: "From your Google Business Profile. Leave empty to hide." }
+          - { label: "Resources heading", name: "resources_heading", widget: "string" }
+          - label: "Guides & resources"
+            name: "resources"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Short description", name: "text", widget: "string" }
+              - { label: "Link", name: "link", widget: "string", hint: "A Journal post (e.g. /journal/...), a video or a PDF." }
+          - { label: "Intake form heading", name: "intake_heading", widget: "string" }
+          - { label: "Intake form text", name: "intake_text", widget: "text" }
 
       # ---------------- Testimonials ----------------
       - name: "testimonials"

@@ -1,8 +1,10 @@
 {%- set nav = [
   { url: "/coaching/", label: "Coaching" },
-  { url: "/about/", label: "About Mark" },
-  { url: "/journal/", label: "Journal" },
-  { url: "/contact/", label: "Contact" }
+  { url: "/programs/", label: "Camps & Clinics" },
+  { url: "/juniors/", label: "Juniors" },
+  { url: "/rides/", label: "Rides" },
+  { url: "/about/", label: "About" },
+  { url: "/journal/", label: "Journal" }
 ] %}
 <header class="site-header{% if headerOverlay %} site-header--overlay{% endif %}" data-header>
   <div class="wrap site-header__inner">
@@ -20,6 +22,7 @@
         <li><a href="{{ item.url }}"{% if page.url.startsWith(item.url) %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
         {%- endfor %}
       </ul>
+      <a class="site-nav__athletes" href="/athletes/"{% if page.url == "/athletes/" %} aria-current="page"{% endif %}>Athlete login</a>
       <a class="btn btn--small" href="/contact/">Free intro call</a>
     </nav>
   </div>

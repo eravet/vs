@@ -1,0 +1,37 @@
+{
+  "eyebrow": "Violet Crown Jr Racing Team",
+  "headline": "Developing Austin's next generation of racers",
+  "intro": "I coach the Violet Crown Jr Racing Team, the junior program of Austin's longest-running cycling club. We help young riders build real fitness, sharp bike-handling and smart race craft, and have fun doing it.",
+  "image": "/assets/images/site/juniors.jpg",
+  "image_alt": "Riders racing a criterium through city streets",
+  "about_heading": "About the team",
+  "about": "The Violet Crown Sports Association started its junior race team in 2018. It's now one of the largest junior cycling programs in Austin, with riders racing local, state and national events.\n\nThe club makes it easy to get started: junior memberships cost **$1** thanks to club sponsors, and team riders race in kit provided by **Castelli**.",
+  "highlights_heading": "What riders get",
+  "highlights": [
+    { "title": "Structured coaching", "text": "Age-appropriate training that builds the engine without burning kids out." },
+    { "title": "Skills & safety", "text": "Pack riding, cornering, sprinting and racing etiquette, practised in a safe setting." },
+    { "title": "Race support", "text": "Help choosing races, plus warm-ups, tactics and debriefs on race days." },
+    { "title": "Team & friends", "text": "Group rides and races with riders their own age, and a club behind them." }
+  ],
+  "coaches_heading": "Coaches",
+  "coaches": [
+    { "name": "Mark Duroy", "role": "Coach", "text": "Former professional who raced in Belgium and the Netherlands. USA Cycling certified coach and founder of Velo-Savvy." }
+  ],
+  "results_heading": "Recent results",
+  "results": [],
+  "parents_heading": "For parents",
+  "parents": [
+    { "question": "Who can join?", "answer": "Junior riders 17 and under with a road bike and a helmet. Riders don't need racing experience, just a love of riding and a willingness to learn." },
+    { "question": "How much does it cost?", "answer": "Junior club membership is $1, and team kit is provided. Race entries and travel are extra; the club helps with costs for bigger events where it can." },
+    { "question": "How do I get my rider started?", "answer": "Send a message with your rider's age and experience, and we'll invite you to a team ride to meet everyone." }
+  ],
+  "join_heading": "Join the team",
+  "join_text": "Tell us about your rider and we'll be in touch about the next team ride.",
+  "club_url": "https://www.violetcrown.org/junior-race-team",
+  "club_email": "info@violetcrown.org",
+  "sponsors_heading": "Team sponsors",
+  "sponsors": [
+    { "name": "Castelli", "url": "https://www.castelli-cycling.com/", "logo": "" }
+  ],
+  "sponsor_text": "Local businesses keep junior racing affordable. Interested in supporting the team? Get in touch."
+}

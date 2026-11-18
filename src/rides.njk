@@ -1,0 +1,49 @@
+---
+layout: layouts/base.njk
+title: Group rides
+description: Group rides in Austin with cycling coach Mark Duroy. Weekly rides, special events and how to join.
+permalink: /rides/
+headerOverlay: true
+---
+{%- set r = rides %}
+{%- set ph = { eyebrow: "Group rides · Austin", headline: r.headline, intro: r.intro, image: r.image, image_alt: r.image_alt } %}
+{% include "partials/photo-head.njk" %}
+
+{%- if r.special.length %}
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow">Coming up</p>
+    <h2 class="display">{{ r.special_heading }}</h2>
+    <ul class="rides">
+      {%- for ride in r.special %}
+      <li class="ride ride--special">
+        <p class="ride__when"><strong>{{ ride.date }}</strong>{% if ride.time %}<span>{{ ride.time }}</span>{% endif %}</p>
+        <div><h3>{{ ride.name }}</h3><p>{{ ride.place }}{% if ride.text %} · {{ ride.text }}{% endif %}</p></div>
+        {%- if ride.link %}<a class="link-arrow" href="{{ ride.link }}" target="_blank" rel="noopener">Details</a>{% endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+{%- endif %}
+
+<section class="section{% if r.special.length %} section--tint{% endif %}">
+  <div class="wrap">
+    <p class="eyebrow">Every week</p>
+    <h2 class="display">{{ r.weekly_heading }}</h2>
+    <ul class="rides">
+      {%- for ride in r.weekly %}
+      <li class="ride">
+        <p class="ride__when"><strong>{{ ride.day }}</strong><span>{{ ride.time }}</span></p>
+        <div><h3>{{ ride.name }}</h3><p>{{ ride.place }}{% if ride.text %} · {{ ride.text }}{% endif %}</p></div>
+        {%- if ride.link %}<a class="link-arrow" href="{{ ride.link }}" target="_blank" rel="noopener">Details</a>{% endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- if site.social.strava %}
+    <p class="lede rides__strava">{{ r.strava_text }} <a href="{{ site.social.strava }}" target="_blank" rel="noopener">Join the Strava club</a>.</p>
+    {%- endif %}
+  </div>
+</section>
+
+{% include "partials/cta.njk" %}

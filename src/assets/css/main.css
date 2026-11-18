@@ -178,8 +178,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .brand--light { color: var(--white); }
 .brand--light .brand__mark { filter: brightness(0) invert(1); }
 
-.site-nav { display: flex; align-items: center; gap: 28px; }
-.site-nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+.site-nav { display: flex; align-items: center; gap: 22px; }
+.site-nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
 .site-nav a:not(.btn) {
   font-family: var(--font-display); font-weight: 600; font-size: 1.1rem;
   letter-spacing: 0.06em; text-transform: uppercase;
@@ -190,7 +190,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .nav-toggle { display: none; }
 
-@media (max-width: 860px) {
+@media (max-width: 1140px) {
   .nav-toggle {
     display: inline-flex; flex-direction: column; justify-content: center; gap: 6px;
     width: 44px; height: 44px; padding: 10px; margin-right: -10px;

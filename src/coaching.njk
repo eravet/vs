@@ -35,8 +35,18 @@ permalink: /coaching/
       </li>
       {%- endfor %}
     </ul>
+    <p class="addons__more">Prefer a group setting or a plan you follow yourself? <a class="link-arrow" href="/programs/">Camps, clinics & ready-made plans</a></p>
   </div>
 </section>
+
+{%- if coaching.referral and coaching.referral.enabled %}
+<section class="referral">
+  <div class="wrap referral__inner">
+    <h2 class="display display--light">{{ coaching.referral.heading }}</h2>
+    <div class="prose">{{ coaching.referral.text | renderMarkdown | safe }}</div>
+  </div>
+</section>
+{%- endif %}
 
 <section class="section">
   <div class="wrap narrow">

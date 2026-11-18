@@ -1,0 +1,99 @@
+---
+layout: layouts/base.njk
+title: Athlete hub
+description: Links, guides and forms for Velo-Savvy coaching athletes.
+permalink: /athletes/
+---
+{%- set a = athletes %}
+<header class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Athletes</p>
+    <h1 class="page-head__title">{{ a.headline }}</h1>
+    <p class="page-head__lede">{{ a.intro }}</p>
+  </div>
+</header>
+
+<section class="section section--flush-top">
+  <div class="wrap">
+    <h2 class="display">{{ a.links_heading }}</h2>
+    <ul class="tiles">
+      <li class="tile tile--dark">
+        <h3>TrainingPeaks</h3>
+        <p>Your plan, workouts and ride data. Log in here every day.</p>
+        <a class="btn btn--accent btn--small" href="{{ a.trainingpeaks_url }}" target="_blank" rel="noopener">Open TrainingPeaks</a>
+      </li>
+      {%- if a.billing_url %}
+      <li class="tile">
+        <h3>Billing</h3>
+        <p>Update your card, change plans or download receipts.</p>
+        <a class="btn btn--outline btn--small" href="{{ a.billing_url }}" target="_blank" rel="noopener">Manage subscription</a>
+      </li>
+      {%- endif %}
+      {%- if a.waiver_url %}
+      <li class="tile">
+        <h3>Coaching agreement</h3>
+        <p>Read and sign the coaching agreement and waiver.</p>
+        <a class="btn btn--outline btn--small" href="{{ a.waiver_url }}" target="_blank" rel="noopener">Sign the agreement</a>
+      </li>
+      {%- endif %}
+      <li class="tile">
+        <h3>Questions?</h3>
+        <p>Email or text Mark any time.</p>
+        <a class="btn btn--outline btn--small" href="mailto:{{ site.email }}">Email Mark</a>
+      </li>
+      {%- if a.review_url %}
+      <li class="tile">
+        <h3>Enjoying coaching?</h3>
+        <p>A quick Google review helps other riders find Velo-Savvy.</p>
+        <a class="btn btn--outline btn--small" href="{{ a.review_url }}" target="_blank" rel="noopener">Leave a review</a>
+      </li>
+      {%- endif %}
+    </ul>
+  </div>
+</section>
+
+{%- if coaching.referral and coaching.referral.enabled %}
+<section class="referral">
+  <div class="wrap referral__inner">
+    <h2 class="display display--light">{{ coaching.referral.heading }}</h2>
+    <div class="prose">{{ coaching.referral.text | renderMarkdown | safe }}</div>
+  </div>
+</section>
+{%- endif %}
+
+<section class="section">
+  <div class="wrap">
+    <h2 class="display">{{ a.resources_heading }}</h2>
+    <ul class="resources">
+      {%- for r in a.resources %}
+      <li><a href="{{ r.link }}"><strong>{{ r.title }}</strong><span>{{ r.text }}</span></a></li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tint" id="intake">
+  <div class="wrap contact">
+    <div class="contact__intro">
+      <p class="eyebrow">Getting started</p>
+      <h2 class="display">{{ a.intake_heading }}</h2>
+      <p class="lede">{{ a.intake_text }}</p>
+    </div>
+    <form class="form" name="intake" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="company">
+      <input type="hidden" name="form-name" value="intake">
+      <p class="hp"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
+      <div class="form__row"><label for="i-name">Name</label><input id="i-name" name="name" required autocomplete="name"></div>
+      <div class="form__row"><label for="i-email">Email</label><input id="i-email" name="email" type="email" required autocomplete="email"></div>
+      <div class="form__row"><label for="i-goals">Your goals this season</label><textarea id="i-goals" name="goals" rows="3" required placeholder="Events, results, or how you want to feel on the bike"></textarea></div>
+      <div class="form__row"><label for="i-events">Target events and dates</label><input id="i-events" name="events"></div>
+      <div class="form__row">
+        <label for="i-hours">Hours per week you can train</label>
+        <select id="i-hours" name="hours"><option>Under 5</option><option>5–8</option><option>8–12</option><option>12+</option></select>
+      </div>
+      <div class="form__row"><label for="i-history">Riding and racing background</label><textarea id="i-history" name="history" rows="3"></textarea></div>
+      <div class="form__row"><label for="i-gear">Equipment</label><input id="i-gear" name="equipment" placeholder="e.g. road bike, power meter, heart-rate strap, smart trainer"></div>
+      <div class="form__row"><label for="i-limits">Anything that limits your training?</label><input id="i-limits" name="limitations" placeholder="e.g. old knee injury, travel for work"></div>
+      <button class="btn btn--accent btn--block" type="submit">Send to Mark</button>
+    </form>
+  </div>
+</section>

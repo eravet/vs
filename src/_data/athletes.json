@@ -1,0 +1,18 @@
+{
+  "headline": "Athlete hub",
+  "intro": "Everything you need as a Velo-Savvy athlete, in one place.",
+  "links_heading": "Your training",
+  "trainingpeaks_url": "https://app.trainingpeaks.com/",
+  "billing_url": "",
+  "waiver_url": "",
+  "review_url": "",
+  "resources_heading": "Guides & resources",
+  "resources": [
+    { "title": "Structuring training blocks", "text": "How 4-week mesocycles build fitness, with an FTP-building example.", "link": "/journal/mesocycles-structured-training-blocks/" },
+    { "title": "Fueling long rides", "text": "How many carbs per hour, and how to practise it in training.", "link": "/journal/nutrition-endurance-alberto-bettiol/" },
+    { "title": "Training in the heat", "text": "Hydration, electrolytes and heat adaptation for Texas summers.", "link": "/journal/heat-training-boost-performance/" },
+    { "title": "Sleep & recovery", "text": "The recovery tool most riders underuse.", "link": "/journal/sleep-performance-primoz-roglic/" }
+  ],
+  "intake_heading": "New athlete? Start here",
+  "intake_text": "Fill this in before our first call so we can spend the time on your goals instead of paperwork. Please don't include detailed medical information. We'll talk about anything important in person."
+}
