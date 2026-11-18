@@ -1,0 +1,26 @@
+{%- set nav = [
+  { url: "/coaching/", label: "Coaching" },
+  { url: "/about/", label: "About Mark" },
+  { url: "/journal/", label: "Journal" },
+  { url: "/contact/", label: "Contact" }
+] %}
+<header class="site-header{% if headerOverlay %} site-header--overlay{% endif %}" data-header>
+  <div class="wrap site-header__inner">
+    <a class="brand" href="/" aria-label="{{ site.name }} home">
+      <img class="brand__mark" src="/assets/brand/vs-mark.svg" alt="" width="40" height="28" eleventy:ignore>
+      <span class="brand__word">Velo<span>·</span>Savvy</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+      <span class="sr-only">Menu</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        {%- for item in nav %}
+        <li><a href="{{ item.url }}"{% if page.url.startsWith(item.url) %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        {%- endfor %}
+      </ul>
+      <a class="btn btn--small" href="/contact/">Free intro call</a>
+    </nav>
+  </div>
+</header>

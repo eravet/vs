@@ -1,0 +1,25 @@
+{
+  "name": "vs3",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy",
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:functional": "playwright test --grep @functional",
+    "test:pre-push": "playwright test --grep \"@smoke|@critical\"",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed"
+  },
+  "description": "Velo-Savvy — cycling coaching with Mark Duroy",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8",
+    "@11ty/eleventy-img": "^6.0.4",
+    "@playwright/test": "^1.65.1",
+    "js-yaml": "^4.3.2",
+    "markdown-it": "^14.3.3",
+    "netlify-plugin-cache": "^1.0.3"
+  },
+  "type": "module",
+  "private": true
+}

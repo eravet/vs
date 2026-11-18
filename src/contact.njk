@@ -1,0 +1,50 @@
+---
+layout: layouts/base.njk
+title: Contact
+description: Book a free intro call with cycling coach Mark Duroy. Tell him about your riding and goals.
+permalink: /contact/
+---
+<section class="page-head">
+  <div class="wrap contact">
+    <div class="contact__intro">
+      <p class="eyebrow">Free intro call</p>
+      <h1 class="page-head__title">Let's talk about your riding</h1>
+      <p class="page-head__lede">Tell me a little about where you are and what you're aiming for. I'll reply within a day to set up a free 20-minute call.</p>
+      {%- if site.booking_url %}
+      <p><a class="btn btn--accent" href="{{ site.booking_url }}" target="_blank" rel="noopener">Pick a time on my calendar</a></p>
+      {%- endif %}
+      <ul class="contact__list">
+        <li><span>Email</span><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        {%- if site.phone %}<li><span>Phone / text</span><a href="tel:{{ site.phone | replace('-', '') }}">{{ site.phone }}</a></li>{% endif %}
+        <li><span>Based in</span>{{ site.location }} · coaching riders everywhere</li>
+      </ul>
+    </div>
+
+    <form class="form" name="contact" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="company" data-contact-form>
+      <input type="hidden" name="form-name" value="contact">
+      <p class="hp"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
+      <div class="form__row">
+        <label for="c-name">Name</label>
+        <input id="c-name" name="name" required autocomplete="name">
+      </div>
+      <div class="form__row">
+        <label for="c-email">Email</label>
+        <input id="c-email" name="email" type="email" required autocomplete="email">
+      </div>
+      <div class="form__row">
+        <label for="c-plan">Interested in</label>
+        <select id="c-plan" name="plan" data-plan-select>
+          <option value="Not sure yet">Not sure yet</option>
+          {%- for p in coaching.plans %}<option value="{{ p.name }}">{{ p.name }} coaching</option>{% endfor %}
+          {%- for a in coaching.addons %}<option value="{{ a.name }}">{{ a.name }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="form__row">
+        <label for="c-message">Your riding and goals</label>
+        <textarea id="c-message" name="message" rows="6" required placeholder="What kind of riding do you do? Any events coming up? How many hours a week can you train?"></textarea>
+      </div>
+      <button class="btn btn--accent btn--block" type="submit">Send message</button>
+      <p class="form__note">I'll only use your details to reply to you.</p>
+    </form>
+  </div>
+</section>

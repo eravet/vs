@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Velo-Savvy editor</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+  <script src="https://unpkg.com/decap-cms@3.17.3/dist/decap-cms.js"></script>
+  <script>
+    // Posts preview with the real site styles
+    CMS.registerPreviewStyle("/assets/css/main.css");
+    CMS.registerPreviewStyle("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;600&family=Source+Serif+4:wght@400;600&display=swap");
+    var h = window.h || CMS.h;
+    var PostPreview = createClass({
+      render: function () {
+        var entry = this.props.entry;
+        var image = entry.getIn(["data", "image"]);
+        var asset = image ? this.props.getAsset(image) : null;
+        return h("article", { className: "post" },
+          h("header", { className: "post__head" },
+            h("div", { className: "wrap narrow" },
+              h("p", { className: "eyebrow" }, "Journal · " + (entry.getIn(["data", "category"]) || "")),
+              h("h1", { className: "post__title" }, entry.getIn(["data", "title"])),
+              h("p", { className: "post__lede" }, entry.getIn(["data", "excerpt"]))
+            )
+          ),
+          asset ? h("figure", { className: "post__hero wrap" }, h("img", { src: asset.toString(), alt: "" })) : null,
+          h("div", { className: "wrap narrow prose prose--article" }, this.props.widgetFor("body"))
+        );
+      }
+    });
+    CMS.registerPreviewTemplate("journal", PostPreview);
+  </script>
+</body>
+</html>

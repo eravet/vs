@@ -1,0 +1,32 @@
+{
+  "hero": {
+    "eyebrow": "Mark Duroy · Former European pro · Austin, TX",
+    "headline": "Train like the pros who taught me.",
+    "text": "I raced the Belgian and Dutch classics in the '90s. Now I coach riders of every level, from first centuries to Cat 1 crits, with the same patient, no-nonsense structure that got me there.",
+    "button": "Book a free intro call",
+    "secondary_button": "See coaching plans",
+    "image": "/assets/images/site/hero.jpg",
+    "image_alt": "Two riders on an open road under a dramatic sunset sky"
+  },
+  "proof": [
+    { "number": "1992–96", "label": "Raced the European classics" },
+    { "number": "BEL · NED", "label": "Team Lada & De Zwaluwen" },
+    { "number": "20+ yrs", "label": "Racing in Northern California & Europe" },
+    { "number": "USAC", "label": "Certified cycling coach" }
+  ],
+  "intro": {
+    "heading": "Coaching that fits a real life",
+    "text": "Most riders don't need more miles. They need the right miles, enough rest, and someone who can see the whole season. I build your plan around your schedule, adjust it when life gets busy, and explain the *why* behind every session so you become a smarter rider, not just a fitter one."
+  },
+  "steps_heading": "How it works",
+  "steps": [
+    { "title": "Free intro call", "text": "Twenty minutes to talk about your riding, your goals and your week. No pressure, no sales pitch." },
+    { "title": "Baseline & plan", "text": "We set your training zones and I build a periodized plan in TrainingPeaks around your target events." },
+    { "title": "Ride, review, adjust", "text": "You ride. I review the data, check in, and adjust the plan when work, family or fatigue get in the way." }
+  ],
+  "cta": {
+    "heading": "Ready for your best season?",
+    "text": "Every plan starts with a free conversation about where you are and where you want to go.",
+    "button": "Book a free intro call"
+  }
+}

@@ -1,0 +1,16 @@
+<article class="post-card" data-category="{{ post.data.category | slugify }}">
+  <a class="post-card__link" href="{{ post.url }}">
+    <figure class="post-card__media">
+      {%- if post.data.image %}
+      <img src="{{ post.data.image }}" alt="{{ post.data.image_alt }}" sizes="(min-width: 1000px) 33vw, (min-width: 640px) 50vw, 100vw">
+      {%- else %}
+      <div class="post-card__placeholder" aria-hidden="true"><img src="/assets/brand/vs-mark.svg" alt="" eleventy:ignore></div>
+      {%- endif %}
+    </figure>
+    <div class="post-card__body">
+      <p class="post-card__meta"><span>{{ post.data.category }}</span> · <time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time></p>
+      <h3 class="post-card__title">{{ post.data.title }}</h3>
+      <p class="post-card__excerpt">{{ post.data.excerpt }}</p>
+    </div>
+  </a>
+</article>

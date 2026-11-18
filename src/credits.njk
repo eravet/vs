@@ -1,0 +1,21 @@
+---
+layout: layouts/base.njk
+title: Photo credits
+permalink: /credits/
+eleventyExcludeFromCollections: true
+---
+<header class="page-head">
+  <div class="wrap narrow">
+    <h1 class="page-head__title">Photo credits</h1>
+    <p class="page-head__lede">Thanks to the photographers who share their work under free licences.</p>
+  </div>
+</header>
+<section class="section section--flush-top">
+  <div class="wrap narrow">
+    <ul class="credits">
+      {%- for c in credits %}
+      <li><strong>{{ c.used_for }}</strong>: “{{ c.title }}” by {{ c.author }}, <a href="{{ c.source }}" target="_blank" rel="noopener">{{ c.site }}</a>{% if c.license %}, {% if c.license_url %}<a href="{{ c.license_url }}" target="_blank" rel="noopener">{{ c.license }}</a>{% else %}{{ c.license }}{% endif %}{% endif %}</li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>

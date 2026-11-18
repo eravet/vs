@@ -1,0 +1,104 @@
+---
+layout: layouts/base.njk
+headerOverlay: true
+bodyClass: page-home
+---
+{%- set h = home.hero %}
+<section class="hero">
+  <img class="hero__img" src="{{ h.image }}" alt="{{ h.image_alt }}" loading="eager" fetchpriority="high" sizes="100vw">
+  <div class="wrap hero__content">
+    <p class="eyebrow eyebrow--light">{{ h.eyebrow }}</p>
+    <h1 class="hero__title">{{ h.headline }}</h1>
+    <p class="hero__text">{{ h.text }}</p>
+    <div class="btn-row">
+      <a class="btn btn--accent" href="/contact/">{{ h.button }}</a>
+      <a class="btn btn--ghost" href="/coaching/">{{ h.secondary_button }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="proof" aria-label="Mark's background">
+  <ul class="wrap proof__list">
+    {%- for p in home.proof %}
+    <li><strong>{{ p.number }}</strong><span>{{ p.label }}</span></li>
+    {%- endfor %}
+  </ul>
+</section>
+
+<section class="section">
+  <div class="wrap split">
+    <figure class="split__media portrait">
+      <img src="{{ about.photo }}" alt="{{ about.photo_alt }}" sizes="(min-width: 900px) 40vw, 100vw">
+    </figure>
+    <div class="split__body">
+      <p class="eyebrow">Your coach</p>
+      <h2 class="display">{{ home.intro.heading }}</h2>
+      <div class="prose">{{ home.intro.text | renderMarkdown | safe }}</div>
+      <p><a class="link-arrow" href="/about/">Read Mark's story</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tint">
+  <div class="wrap">
+    <p class="eyebrow">Getting started</p>
+    <h2 class="display">{{ home.steps_heading }}</h2>
+    <ol class="steps">
+      {%- for s in home.steps %}
+      <li class="step">
+        <span class="step__num">{{ loop.index | pad2 }}</span>
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.text }}</p>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Coaching</p>
+        <h2 class="display">Plans for every kind of rider</h2>
+      </div>
+      <a class="link-arrow" href="/coaching/">Compare plans</a>
+    </div>
+    {% set compact = true %}
+    {% include "partials/plans.njk" %}
+  </div>
+</section>
+
+{%- set quotes = testimonials.items | where("show", true) %}
+{%- if quotes.length %}
+<section class="section section--dark">
+  <div class="wrap quotes">
+    <p class="eyebrow eyebrow--light">{{ testimonials.heading }}</p>
+    {%- for t in quotes %}
+    <figure class="quote">
+      <blockquote><p>{{ t.quote }}</p></blockquote>
+      <figcaption><strong>{{ t.name }}</strong>{% if t.detail %} · {{ t.detail }}{% endif %}</figcaption>
+    </figure>
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">The Journal</p>
+        <h2 class="display">Training notes from Mark</h2>
+      </div>
+      <a class="link-arrow" href="/journal/">All posts</a>
+    </div>
+    <div class="post-grid">
+      {%- for post in collections.posts | limit(3) %}
+      {% include "partials/post-card.njk" %}
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+{% include "partials/cta.njk" %}

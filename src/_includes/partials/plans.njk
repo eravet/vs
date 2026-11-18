@@ -1,0 +1,16 @@
+<div class="plans">
+  {%- for plan in coaching.plans %}
+  <article class="plan{% if plan.featured %} plan--featured{% endif %}">
+    {%- if plan.badge %}<p class="plan__badge">{{ plan.badge }}</p>{% endif %}
+    <h3 class="plan__name">{{ plan.name }}</h3>
+    <p class="plan__price">{% if plan.price %}<span class="plan__currency">$</span>{{ plan.price }}<span class="plan__period">/{{ plan.period or "month" }}</span>{% else %}<span class="plan__period">Ask about pricing</span>{% endif %}</p>
+    <p class="plan__summary">{{ plan.summary }}</p>
+    {%- if not compact %}
+    <ul class="plan__features">
+      {%- for f in plan.features %}<li>{{ f }}</li>{% endfor %}
+    </ul>
+    {%- endif %}
+    <a class="btn {% if plan.featured %}btn--accent{% else %}btn--outline{% endif %} plan__cta" href="/contact/?plan={{ plan.name | urlencode }}">Start with a free call</a>
+  </article>
+  {%- endfor %}
+</div>

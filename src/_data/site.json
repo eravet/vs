@@ -1,0 +1,23 @@
+{
+  "name": "Velo-Savvy",
+  "coach": "Mark Duroy",
+  "tagline": "Cycling coaching from a former European pro",
+  "description": "Personal cycling coaching from Mark Duroy, a former professional who raced the Belgian and Dutch classics. Based in Austin, Texas, coaching riders everywhere.",
+  "url": "https://www.velo-savvy.com",
+  "location": "Austin, Texas",
+  "email": "mark.duroy@velo-savvy.com",
+  "phone": "512-829-7152",
+  "booking_url": "",
+  "social": {
+    "instagram": "https://www.instagram.com/velosavvy_coaching/",
+    "strava": "https://www.strava.com/clubs/1357604",
+    "facebook": "https://www.facebook.com/profile.php?id=61574175245381",
+    "trainingpeaks": "https://www.trainingpeaks.com/coach/velo-savvy-coach-duroy"
+  },
+  "newsletter": {
+    "enabled": true,
+    "heading": "The Friday ride notes",
+    "text": "One short email: a training idea that works, a story from the pro peloton, and what's worth watching this weekend."
+  },
+  "social_image": "/assets/images/site/social-card.jpg"
+}

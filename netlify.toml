@@ -1,0 +1,65 @@
+# Netlify build settings for Velo-Savvy
+[build]
+  command = "npm run build"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Keep processed images between builds so publishing from the editor stays fast
+[[plugins]]
+  package = "netlify-plugin-cache"
+  [plugins.inputs]
+    paths = [".cache", "_site/img"]
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Old site addresses -> new ones
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+[[redirects]]
+  from = "/services.html"
+  to = "/coaching/"
+  status = 301
+[[redirects]]
+  from = "/services"
+  to = "/coaching/"
+  status = 301
+[[redirects]]
+  from = "/about.html"
+  to = "/about/"
+  status = 301
+[[redirects]]
+  from = "/contact.html"
+  to = "/contact/"
+  status = 301
+[[redirects]]
+  from = "/blog.html"
+  to = "/journal/"
+  status = 301
+[[redirects]]
+  from = "/blog"
+  to = "/journal/"
+  status = 301
+[[redirects]]
+  from = "/blog-post.html"
+  to = "/journal/"
+  status = 301

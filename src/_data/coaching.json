@@ -1,0 +1,67 @@
+{
+  "headline": "Coaching plans",
+  "intro": "Every plan is built around your goals, your schedule and your data, delivered through TrainingPeaks. All plans are month-to-month and start with a free intro call.",
+  "plans": [
+    {
+      "name": "Essential",
+      "price": 199,
+      "period": "month",
+      "summary": "For self-motivated riders who want a smart plan and a coach in their corner.",
+      "featured": false,
+      "features": [
+        "Custom training plan in TrainingPeaks",
+        "Monthly plan updates",
+        "Monthly performance review",
+        "Email support (48-hour response)"
+      ]
+    },
+    {
+      "name": "Performance",
+      "price": 349,
+      "period": "month",
+      "summary": "For riders with target events who want regular feedback and race planning.",
+      "featured": true,
+      "badge": "Most popular",
+      "features": [
+        "Everything in Essential",
+        "Plan adjustments every two weeks",
+        "Video check-in every two weeks",
+        "Power data analysis",
+        "Race planning & strategy",
+        "Nutrition guidance",
+        "Email & text support (24-hour response)"
+      ]
+    },
+    {
+      "name": "Premium",
+      "price": 549,
+      "period": "month",
+      "summary": "Hands-on, week-by-week coaching for serious racers and big goals.",
+      "featured": false,
+      "features": [
+        "Everything in Performance",
+        "Weekly video check-in",
+        "Plan adjustments whenever you need them",
+        "Testing protocols & advanced analytics",
+        "Strength & mobility program",
+        "Race-day support"
+      ]
+    }
+  ],
+  "addons_heading": "One-off sessions",
+  "addons_intro": "Not ready for ongoing coaching? Start with a single session.",
+  "addons": [
+    { "name": "FTP test & zones", "price": 75, "text": "A structured test with analysis, so every workout is set at the right intensity." },
+    { "name": "Race strategy call", "price": 100, "text": "One-on-one call to plan tactics, pacing and fueling for your target event." },
+    { "name": "Bike fit review", "price": 150, "text": "Position review for comfort, power and aerodynamics, in person in Austin or by video." },
+    { "name": "12-week event plan", "price": 299, "text": "A complete plan for one goal event, without ongoing coaching." }
+  ],
+  "faq_heading": "Questions riders ask",
+  "faq": [
+    { "question": "Do you coach beginners?", "answer": "Yes. I coach riders of every level, from first group rides and centuries to Cat 1 racers. The plan starts where you are." },
+    { "question": "Do I need a power meter?", "answer": "No. A bike and a way to record your rides (a GPS computer or phone app) is enough to start. A power meter or heart-rate strap makes the training more precise, and I'll help you get the most out of whatever you have." },
+    { "question": "Do I have to live in Austin?", "answer": "No. Coaching happens through TrainingPeaks, email and video calls, so I work with riders anywhere. If you're local, we can also ride together and do bike fits in person." },
+    { "question": "How soon will I see results?", "answer": "Most riders feel a difference in 4–6 weeks of consistent training. Bigger gains come over a full 12–16 week block." },
+    { "question": "Can I change plans or cancel?", "answer": "Yes. Plans are month-to-month. You can move up, move down or stop at the start of any month." }
+  ]
+}

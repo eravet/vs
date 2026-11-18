@@ -1,0 +1,67 @@
+---
+layout: layouts/base.njk
+title: About Mark Duroy
+description: Mark Duroy raced professionally in Belgium and the Netherlands from 1992 to 1996 and now coaches cyclists of every level from Austin, Texas.
+permalink: /about/
+---
+<header class="page-head page-head--split">
+  <div class="wrap split">
+    <div class="split__body">
+      <p class="eyebrow">About Mark</p>
+      <h1 class="page-head__title">{{ about.headline }}</h1>
+      <p class="page-head__lede">{{ about.intro }}</p>
+    </div>
+    <figure class="split__media portrait">
+      <img src="{{ about.photo }}" alt="{{ about.photo_alt }}" loading="eager" sizes="(min-width: 900px) 40vw, 100vw">
+    </figure>
+  </div>
+</header>
+
+<section class="section section--flush-top">
+  <div class="wrap narrow prose prose--story">
+    {{ about.story | renderMarkdown | safe }}
+  </div>
+</section>
+
+{%- if about.band_image %}
+<figure class="band">
+  <img src="{{ about.band_image }}" alt="{{ about.band_alt }}" sizes="100vw">
+  {%- if about.band_caption %}<figcaption class="wrap">{{ about.band_caption }}</figcaption>{% endif %}
+</figure>
+{%- endif %}
+
+<section class="section section--dark">
+  <div class="wrap">
+    <p class="eyebrow eyebrow--light">Palmarès</p>
+    <h2 class="display display--light">{{ about.timeline_heading }}</h2>
+    <ol class="timeline">
+      {%- for t in about.timeline %}
+      <li class="timeline__item">
+        <p class="timeline__year">{{ t.year }}</p>
+        <div>
+          <h3>{{ t.title }}</h3>
+          <p>{{ t.text }}</p>
+        </div>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow">Philosophy</p>
+    <h2 class="display">{{ about.principles_heading }}</h2>
+    <div class="principles">
+      {%- for p in about.principles %}
+      <article class="principle">
+        <span class="principle__num">{{ loop.index | pad2 }}</span>
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.text }}</p>
+      </article>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+{% include "partials/cta.njk" %}

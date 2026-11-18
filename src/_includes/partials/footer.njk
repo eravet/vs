@@ -1,0 +1,59 @@
+{%- if site.newsletter.enabled and not hideNewsletter %}
+<section class="newsletter" aria-labelledby="newsletter-heading">
+  <div class="wrap newsletter__inner">
+    <div>
+      <p class="eyebrow">Newsletter</p>
+      <h2 id="newsletter-heading">{{ site.newsletter.heading }}</h2>
+      <p>{{ site.newsletter.text }}</p>
+    </div>
+    <form class="newsletter__form" name="newsletter" method="POST" action="/thanks/?form=newsletter" data-netlify="true" netlify-honeypot="company">
+      <input type="hidden" name="form-name" value="newsletter">
+      <p class="hp"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
+      <label class="sr-only" for="nl-email">Email address</label>
+      <input id="nl-email" type="email" name="email" placeholder="you@example.com" required autocomplete="email">
+      <button class="btn" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+{%- endif %}
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__brand">
+      <a class="brand brand--light" href="/">
+        <img class="brand__mark" src="/assets/brand/vs-mark.svg" alt="" width="40" height="28" eleventy:ignore>
+        <span class="brand__word">Velo<span>·</span>Savvy</span>
+      </a>
+      <p>{{ site.tagline }}. {{ site.coach }}, {{ site.location }}.</p>
+    </div>
+    <nav aria-label="Footer">
+      <h3>Explore</h3>
+      <ul>
+        <li><a href="/coaching/">Coaching plans</a></li>
+        <li><a href="/about/">About Mark</a></li>
+        <li><a href="/journal/">Journal</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h3>Get in touch</h3>
+      <ul>
+        <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        {%- if site.phone %}<li><a href="tel:{{ site.phone | replace('-', '') }}">{{ site.phone }}</a></li>{% endif %}
+        <li>{{ site.location }}</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Ride along</h3>
+      <ul class="social">
+        {%- if site.social.strava %}<li><a href="{{ site.social.strava }}" rel="noopener" target="_blank">Strava club</a></li>{% endif %}
+        {%- if site.social.instagram %}<li><a href="{{ site.social.instagram }}" rel="noopener" target="_blank">Instagram</a></li>{% endif %}
+        {%- if site.social.facebook %}<li><a href="{{ site.social.facebook }}" rel="noopener" target="_blank">Facebook</a></li>{% endif %}
+        {%- if site.social.trainingpeaks %}<li><a href="{{ site.social.trainingpeaks }}" rel="noopener" target="_blank">TrainingPeaks</a></li>{% endif %}
+      </ul>
+    </div>
+  </div>
+  <div class="wrap site-footer__base">
+    <p>© {{ "" | year }} {{ site.name }}</p>
+    <p><a href="/credits/">Photo credits</a> · <a href="/admin/">Editor login</a></p>
+  </div>
+</footer>

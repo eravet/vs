@@ -1,0 +1,264 @@
+# Velo-Savvy content editor (Decap CMS)
+# Mark logs in at /admin/ with his Netlify Identity email + password.
+# Every "Publish" saves a commit to GitHub and Netlify rebuilds the site (about 1 minute).
+
+backend:
+  name: git-gateway
+  branch: main
+
+# For testing on your own computer: run `npx decap-server` and uncomment:
+# local_backend: true
+
+site_url: https://www.velo-savvy.com
+display_url: https://www.velo-savvy.com
+logo_url: /assets/brand/vs-logo.svg
+
+media_folder: "src/assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+collections:
+  # ------------------------------------------------------------------
+  # JOURNAL
+  # ------------------------------------------------------------------
+  - name: "journal"
+    label: "Journal posts"
+    label_singular: "Journal post"
+    description: "Your weekly ride notes. Click 'New Journal post' to write one. Posts appear on the site about a minute after you publish."
+    folder: "src/journal"
+    extension: "md"
+    format: "frontmatter"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: ["date", "title", "category"]
+    view_filters:
+      - { label: "Drafts", field: published, pattern: false }
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        date_format: "MMM D, YYYY"
+        time_format: false
+        format: "YYYY-MM-DD"
+      - label: "Short summary"
+        name: "excerpt"
+        widget: "text"
+        hint: "One or two sentences. Shown on the Journal page, on the homepage and in Google results."
+      - label: "Topic"
+        name: "category"
+        widget: "select"
+        default: "Training Tips"
+        options: ["Training Tips", "Nutrition", "Recovery", "Mindset", "Race Strategy", "Equipment"]
+      - label: "Main photo"
+        name: "image"
+        widget: "image"
+        required: false
+        choose_url: true
+        hint: "A wide (landscape) photo works best. Leave empty to show the Velo-Savvy logo instead."
+      - label: "Describe the photo"
+        name: "image_alt"
+        widget: "string"
+        required: false
+        hint: "A few words for people who can't see the image, e.g. 'Riders on a cobbled climb'."
+      - label: "Photo credit"
+        name: "image_credit"
+        widget: "string"
+        required: false
+        hint: "Optional. e.g. Photo: Jane Smith on Unsplash. Links like [Jane Smith](https://...) work."
+      - label: "Keywords"
+        name: "tags"
+        widget: "list"
+        required: false
+        hint: "Separate with commas, e.g. heat training, hydration"
+      - label: "Published"
+        name: "published"
+        widget: "boolean"
+        default: true
+        hint: "Switch off to keep this post as a draft that doesn't show on the site."
+      - label: "Post"
+        name: "body"
+        widget: "markdown"
+        hint: "Use the toolbar for headings, bold, lists, links and photos."
+
+  # ------------------------------------------------------------------
+  # PAGES
+  # ------------------------------------------------------------------
+  - name: "pages"
+    label: "Pages"
+    description: "The words and photos on each page of the site."
+    editor: { preview: false }
+    files:
+      # ---------------- Home ----------------
+      - name: "home"
+        label: "Home page"
+        file: "src/_data/home.json"
+        fields:
+          - label: "Top banner"
+            name: "hero"
+            widget: "object"
+            collapsed: false
+            fields:
+              - { label: "Small line above the headline", name: "eyebrow", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Intro text", name: "text", widget: "text" }
+              - { label: "Main button text", name: "button", widget: "string" }
+              - { label: "Second button text", name: "secondary_button", widget: "string" }
+              - { label: "Background photo", name: "image", widget: "image", hint: "A wide, dark-ish photo works best so the white text stays readable." }
+              - { label: "Describe the photo", name: "image_alt", widget: "string" }
+          - label: "Highlights bar"
+            name: "proof"
+            widget: "list"
+            hint: "The four short facts under the banner. Keep each one very short."
+            summary: "{{fields.number}} · {{fields.label}}"
+            fields:
+              - { label: "Big text", name: "number", widget: "string" }
+              - { label: "Small text", name: "label", widget: "string" }
+          - label: "'Your coach' section"
+            name: "intro"
+            widget: "object"
+            fields:
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Text", name: "text", widget: "markdown", buttons: ["bold", "italic", "link"], editor_components: [] }
+          - { label: "'How it works' heading", name: "steps_heading", widget: "string" }
+          - label: "'How it works' steps"
+            name: "steps"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Step title", name: "title", widget: "string" }
+              - { label: "Step text", name: "text", widget: "text" }
+          - label: "Bottom call-to-action (shown on several pages)"
+            name: "cta"
+            widget: "object"
+            fields:
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+              - { label: "Button text", name: "button", widget: "string" }
+
+      # ---------------- About ----------------
+      - name: "about"
+        label: "About Mark page"
+        file: "src/_data/about.json"
+        fields:
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Intro paragraph", name: "intro", widget: "text" }
+          - { label: "Photo of Mark", name: "photo", widget: "image", hint: "A portrait (taller than wide) photo looks best. Also used on the homepage and under every post." }
+          - { label: "Describe the photo", name: "photo_alt", widget: "string" }
+          - { label: "Your story", name: "story", widget: "markdown", buttons: ["bold", "italic", "link", "heading-three", "quote"], editor_components: [] }
+          - { label: "Wide photo under your story", name: "band_image", widget: "image", required: false }
+          - { label: "Describe the wide photo", name: "band_alt", widget: "string", required: false }
+          - { label: "Caption on the wide photo", name: "band_caption", widget: "string", required: false }
+          - { label: "Timeline heading", name: "timeline_heading", widget: "string" }
+          - label: "Racing & coaching timeline"
+            name: "timeline"
+            widget: "list"
+            hint: "Add a row for each period of your career. Drag rows to reorder."
+            summary: "{{fields.year}} · {{fields.title}}"
+            fields:
+              - { label: "Year(s)", name: "year", widget: "string", hint: "e.g. 1994 or 1992–96" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Details", name: "text", widget: "text" }
+          - { label: "Philosophy heading", name: "principles_heading", widget: "string" }
+          - label: "Coaching philosophy"
+            name: "principles"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+
+      # ---------------- Coaching ----------------
+      - name: "coaching"
+        label: "Coaching plans & prices"
+        file: "src/_data/coaching.json"
+        fields:
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Intro", name: "intro", widget: "text" }
+          - label: "Monthly plans"
+            name: "plans"
+            widget: "list"
+            summary: "{{fields.name}} · ${{fields.price}}"
+            hint: "Drag to reorder. Three plans looks best."
+            fields:
+              - { label: "Plan name", name: "name", widget: "string" }
+              - { label: "Price (USD)", name: "price", widget: "number", value_type: "int", required: false, hint: "Leave empty to show 'Ask about pricing'." }
+              - { label: "Per", name: "period", widget: "select", options: ["month", "week", "session"], default: "month" }
+              - { label: "One-line description", name: "summary", widget: "string" }
+              - { label: "Highlight this plan", name: "featured", widget: "boolean", default: false, hint: "Shows the plan in dark colours." }
+              - { label: "Badge (optional)", name: "badge", widget: "string", required: false, hint: "e.g. Most popular" }
+              - { label: "What's included", name: "features", widget: "list", field: { label: "Item", name: "item", widget: "string" } }
+          - { label: "Single sessions heading", name: "addons_heading", widget: "string" }
+          - { label: "Single sessions intro", name: "addons_intro", widget: "string" }
+          - label: "Single sessions"
+            name: "addons"
+            widget: "list"
+            summary: "{{fields.name}} · ${{fields.price}}"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Price (USD)", name: "price", widget: "number", value_type: "int", required: false }
+              - { label: "Description", name: "text", widget: "text" }
+          - { label: "FAQ heading", name: "faq_heading", widget: "string" }
+          - label: "Frequently asked questions"
+            name: "faq"
+            widget: "list"
+            summary: "{{fields.question}}"
+            fields:
+              - { label: "Question", name: "question", widget: "string" }
+              - { label: "Answer", name: "answer", widget: "text" }
+
+      # ---------------- Testimonials ----------------
+      - name: "testimonials"
+        label: "Rider testimonials"
+        file: "src/_data/testimonials.json"
+        fields:
+          - { label: "Section heading", name: "heading", widget: "string" }
+          - label: "Testimonials"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}}"
+            hint: "Only use real quotes from riders who said it's OK to publish them."
+            fields:
+              - { label: "Rider name", name: "name", widget: "string", hint: "First name and last initial is fine, e.g. Eric R." }
+              - { label: "About the rider", name: "detail", widget: "string", required: false, hint: "e.g. Cat 3 racer, Austin" }
+              - { label: "Quote", name: "quote", widget: "text" }
+              - { label: "Show on site", name: "show", widget: "boolean", default: true }
+
+  # ------------------------------------------------------------------
+  # SETTINGS
+  # ------------------------------------------------------------------
+  - name: "settings"
+    label: "Settings"
+    description: "Contact details, social links and site-wide text."
+    editor: { preview: false }
+    files:
+      - name: "site"
+        label: "Contact & site settings"
+        file: "src/_data/site.json"
+        fields:
+          - { label: "Business name", name: "name", widget: "string" }
+          - { label: "Coach name", name: "coach", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Site description (for Google)", name: "description", widget: "text", hint: "About 150 characters." }
+          - { label: "Website address", name: "url", widget: "string" }
+          - { label: "Location", name: "location", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string", required: false }
+          - { label: "Booking link (optional)", name: "booking_url", widget: "string", required: false, hint: "Paste a Calendly or similar link to add a 'Pick a time' button on the Contact page." }
+          - label: "Social links"
+            name: "social"
+            widget: "object"
+            fields:
+              - { label: "Instagram", name: "instagram", widget: "string", required: false }
+              - { label: "Strava club", name: "strava", widget: "string", required: false }
+              - { label: "Facebook", name: "facebook", widget: "string", required: false }
+              - { label: "TrainingPeaks", name: "trainingpeaks", widget: "string", required: false }
+          - label: "Newsletter signup"
+            name: "newsletter"
+            widget: "object"
+            fields:
+              - { label: "Show signup box", name: "enabled", widget: "boolean", default: true }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+          - { label: "Image for link previews", name: "social_image", widget: "image", hint: "Shown when the site is shared on Facebook, iMessage, etc. 1200×630 works best." }

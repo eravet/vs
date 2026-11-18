@@ -1,0 +1,56 @@
+---
+layout: layouts/base.njk
+title: Coaching plans
+description: Month-to-month cycling coaching plans with Mark Duroy, from structured TrainingPeaks plans to weekly one-on-one coaching. Every plan starts with a free intro call.
+permalink: /coaching/
+---
+<header class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Coaching</p>
+    <h1 class="page-head__title">{{ coaching.headline }}</h1>
+    <p class="page-head__lede">{{ coaching.intro }}</p>
+  </div>
+</header>
+
+<section class="section section--flush-top">
+  <div class="wrap">
+    {% set compact = false %}
+    {% include "partials/plans.njk" %}
+  </div>
+</section>
+
+<section class="section section--tint">
+  <div class="wrap">
+    <p class="eyebrow">Single sessions</p>
+    <h2 class="display">{{ coaching.addons_heading }}</h2>
+    <p class="lede">{{ coaching.addons_intro }}</p>
+    <ul class="addons">
+      {%- for a in coaching.addons %}
+      <li class="addon">
+        <div>
+          <h3>{{ a.name }}</h3>
+          <p>{{ a.text }}</p>
+        </div>
+        {%- if a.price %}<p class="addon__price">${{ a.price }}</p>{% endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap narrow">
+    <p class="eyebrow">FAQ</p>
+    <h2 class="display">{{ coaching.faq_heading }}</h2>
+    <div class="faq">
+      {%- for q in coaching.faq %}
+      <details class="faq__item">
+        <summary>{{ q.question }}</summary>
+        <div class="prose">{{ q.answer | renderMarkdown | safe }}</div>
+      </details>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+{% include "partials/cta.njk" %}
