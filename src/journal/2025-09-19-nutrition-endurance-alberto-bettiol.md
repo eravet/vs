@@ -6,7 +6,7 @@ category: "Nutrition"
 tags: ["nutrition","carbohydrates","fueling","endurance","Alberto Bettiol","90g per hour"]
 image: "/assets/images/journal/endurance-nutrition.jpg"
 image_alt: "Two riders on a coastal road"
-image_credit: "Photo: [ocen](https://unsplash.com/@ocen) on Unsplash"
+image_credit: "Photo: [ocen](https://unsplash.com/@ocen)"
 published: true
 ---
 
@@ -84,11 +84,7 @@ Keep meals varied; watch for micronutrients (vitamin D, iodine, etc.). Ensure yo
 ## Athlete Spotlight: Alberto Bettiol
 
 ![Alberto Bettiol before a Tour of California stage start in Modesto](/assets/images/journal/riders/alberto-bettiol.jpg)
-*Photo: Ray Rogers from Novato, United States, [CC BY-SA 2.0](https://commons.wikimedia.org/wiki/File:Alberto_Bettiol_of_Cannondale_Drapac_before_the_start_of_Stage_2_in_Modesto_(34228300863).jpg), via Wikimedia Commons*
-
-*Photo: Ray Rogers from Novato, United States, [CC BY-SA 2.0](https://commons.wikimedia.org/wiki/File:Alberto_Bettiol_of_Cannondale_Drapac_before_the_start_of_Stage_2_in_Modesto_(34228300863).jpg), via Wikimedia Commons*
-
-*Photo: Ray Rogers from Novato, United States, [CC BY-SA 2.0](https://commons.wikimedia.org/wiki/File:Alberto_Bettiol_of_Cannondale_Drapac_before_the_start_of_Stage_2_in_Modesto_(34228300863).jpg), via Wikimedia Commons*
+*Photo: [Ray Rogers from Novato, United States](https://commons.wikimedia.org/wiki/File:Alberto_Bettiol_of_Cannondale_Drapac_before_the_start_of_Stage_2_in_Modesto_(34228300863).jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)*
 
 Alberto Bettiol is an Italian pro (currently riding with Astana) known for his strength in one-day classics.
 

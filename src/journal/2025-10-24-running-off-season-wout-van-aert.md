@@ -6,7 +6,7 @@ category: "Training Tips"
 tags: ["running","off-season","cross-training","Wout van Aert","bone health","durability"]
 image: "/assets/images/journal/running.jpg"
 image_alt: "A runner on a high grassy ridge"
-image_credit: "Photo: [Alessio Soggetti](https://unsplash.com/@asoggetti) on Unsplash"
+image_credit: "Photo: [Alessio Soggetti](https://unsplash.com/@asoggetti)"
 published: true
 ---
 
@@ -46,11 +46,7 @@ A **30-minute run can equal the aerobic stimulus of a 60-minute ride**. But more
 ## Pro Spotlight: Wout van Aert
 
 ![Wout van Aert racing cyclocross](/assets/images/journal/riders/wout-van-aert.jpg)
-*Photo: Flowizm ..., [CC BY 2.0](https://commons.wikimedia.org/wiki/File:Wout_Van_Aert_(24505479255).jpg), via Wikimedia Commons*
-
-*Photo: Flowizm ..., [CC BY 2.0](https://commons.wikimedia.org/wiki/File:Wout_Van_Aert_(24505479255).jpg), via Wikimedia Commons*
-
-*Photo: Flowizm ..., [CC BY 2.0](https://commons.wikimedia.org/wiki/File:Wout_Van_Aert_(24505479255).jpg), via Wikimedia Commons*
+*Photo: [Flowizm ...](https://commons.wikimedia.org/wiki/File:Wout_Van_Aert_(24505479255).jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)*
 
 **Wout van Aert**, one of the world's most versatile pros, never leaves running behind.
 

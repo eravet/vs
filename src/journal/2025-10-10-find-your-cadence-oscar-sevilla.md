@@ -6,7 +6,7 @@ category: "Training Tips"
 tags: ["cadence","RPM","efficiency","Oscar Sevilla","pedaling technique","longevity"]
 image: "/assets/images/journal/cadence.jpg"
 image_alt: "Close-up of a rider's legs and crank mid pedal stroke"
-image_credit: "Photo: [dafidvor](https://unsplash.com/@dafidvor) on Unsplash"
+image_credit: "Photo: [dafidvor](https://unsplash.com/@dafidvor)"
 published: true
 ---
 
@@ -64,9 +64,7 @@ Your cadence isn't fixed—**it's adaptable**. Try experimenting this week:
 ## Rider Spotlight: Oscar Sevilla
 
 ![Óscar Sevilla racing the 2018 Vuelta a Colombia](/assets/images/journal/riders/oscar-sevilla.jpg)
-*Photo: nuestrociclismo.com, [CC BY-SA 2.0](https://commons.wikimedia.org/wiki/File:3_Etapa-Vuelta_a_Colombia_2018-Ciclista_Oscar_Sevilla.jpg), via Wikimedia Commons*
-
-*Photo: nuestrociclismo.com, [CC BY-SA 2.0](https://commons.wikimedia.org/wiki/File:3_Etapa-Vuelta_a_Colombia_2018-Ciclista_Oscar_Sevilla.jpg), via Wikimedia Commons*
+*Photo: [nuestrociclismo.com](https://commons.wikimedia.org/wiki/File:3_Etapa-Vuelta_a_Colombia_2018-Ciclista_Oscar_Sevilla.jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)*
 
 At **48 years old**, Oscar Sevilla continues to defy expectations. The former Tour de France podium finisher and current Team Medellín leader remains one of the most consistent riders in the peloton.
 

@@ -6,7 +6,7 @@ category: "Nutrition"
 tags: ["caffeine","performance","supplements","Jacky Durand","race tactics","courage"]
 image: "/assets/images/journal/caffeine.jpg"
 image_alt: "An espresso in a white cup and saucer"
-image_credit: "Photo: [Gabriella Miranda](https://unsplash.com/@gabimirandan) on Unsplash"
+image_credit: "Photo: [Gabriella Miranda](https://unsplash.com/@gabimirandan)"
 published: true
 ---
 
@@ -67,9 +67,7 @@ Caffeine is one of the most reliable performance aids in endurance sport. Beyond
 ## Athlete Spotlight: Jacky Durand
 
 ![Jacky Durand](/assets/images/journal/riders/jacky-durand.jpg)
-*Photo: Eric HOUDAS, [CC BY-SA 3.0](https://commons.wikimedia.org/wiki/File:Jacky_DURAND.jpg), via Wikimedia Commons*
-
-*Photo: Eric HOUDAS, [CC BY-SA 3.0](https://commons.wikimedia.org/wiki/File:Jacky_DURAND.jpg), via Wikimedia Commons*
+*Photo: [Eric HOUDAS](https://commons.wikimedia.org/wiki/File:Jacky_DURAND.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)*
 
 Few riders captured fans' hearts like **Jacky Durand**, the French master of the long-range attack.
 

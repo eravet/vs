@@ -6,7 +6,7 @@ category: "Training Tips"
 tags: ["heat training","adaptation","Juan Ayuso","Grand Tours","performance"]
 image: "/assets/images/journal/heat-adaptation.jpg"
 image_alt: "A rider crossing a field at sunset"
-image_credit: "Photo: [mery_lu_design](https://unsplash.com/@mery_lu_design) on Unsplash"
+image_credit: "Photo: [mery_lu_design](https://unsplash.com/@mery_lu_design)"
 published: true
 ---
 
@@ -79,11 +79,7 @@ Heat stress is real stress! Monitor resting heart rate and sleep quality.
 ## Athlete Spotlight: Juan Ayuso
 
 ![Juan Ayuso winning the 2024 Faun-Ardèche Classic](/assets/images/journal/riders/juan-ayuso.jpg)
-*Photo: Kakoula10, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Juan_Ayuso_Faun-Ard%C3%A8che_Classic_2024_win.jpg), via Wikimedia Commons*
-
-*Photo: Kakoula10, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Juan_Ayuso_Faun-Ard%C3%A8che_Classic_2024_win.jpg), via Wikimedia Commons*
-
-*Photo: Kakoula10, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Juan_Ayuso_Faun-Ard%C3%A8che_Classic_2024_win.jpg), via Wikimedia Commons*
+*Photo: [Kakoula10](https://commons.wikimedia.org/wiki/File:Juan_Ayuso_Faun-Ard%C3%A8che_Classic_2024_win.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)*
 
 At just **22 years old**, Juan Ayuso of UAE Team Emirates has become Spain's biggest cycling star, and he's already making history.
 

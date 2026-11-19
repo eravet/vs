@@ -6,7 +6,7 @@ category: "Mindset"
 tags: ["second wind","warm-up","Sean Kelly","consistency","mental toughness","classics"]
 image: "/assets/images/journal/second-wind.jpg"
 image_alt: "A rider on a misty morning road with sun rays through trees"
-image_credit: "Photo: [willamiina](https://unsplash.com/@willamiina) on Unsplash"
+image_credit: "Photo: [willamiina](https://unsplash.com/@willamiina)"
 published: true
 ---
 
@@ -53,7 +53,7 @@ Don't judge your ride by how you feel in the first 15 minutes. Give your body ti
 ## Athlete Spotlight: Sean Kelly
 
 ![Sean Kelly at the 2009 Tour de France](/assets/images/journal/riders/sean-kelly.jpg)
-*Photo: Pierre Diéterlé (Jean de Gribaldy.com), [CC0](https://commons.wikimedia.org/wiki/File:Sean_Kelly,_Tour_de_France_2009.jpg), via Wikimedia Commons*
+*Photo: [Pierre Diéterlé (Jean de Gribaldy.com)](https://commons.wikimedia.org/wiki/File:Sean_Kelly,_Tour_de_France_2009.jpg), [CC0](https://creativecommons.org/publicdomain/zero/1.0/)*
 
 Sean Kelly, one of the greatest classics riders in cycling history, grew up in rural Ireland on a small farm. When he was young, he rode an old bike to school, **without realizing that those daily miles were laying the foundation for a legendary career.**
 

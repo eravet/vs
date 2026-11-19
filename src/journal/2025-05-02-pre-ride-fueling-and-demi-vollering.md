@@ -6,7 +6,7 @@ category: "Nutrition"
 tags: ["nutrition","pre-ride fueling","carbohydrates","Demi Vollering","race preparation"]
 image: "/assets/images/journal/pre-ride-fueling.jpg"
 image_alt: "Two bowls of oatmeal topped with fruit"
-image_credit: "Photo: [Brooke Lark](https://unsplash.com/@brookelark) on Unsplash"
+image_credit: "Photo: [Brooke Lark](https://unsplash.com/@brookelark)"
 published: true
 ---
 
@@ -48,11 +48,7 @@ Save these for post-ride recovery meals.
 ## Athlete Spotlight: Demi Vollering (Team SD Worx–Protime)
 
 ![Demi Vollering racing stage 8 of the 2024 Tour de France Femmes](/assets/images/journal/riders/demi-vollering.jpg)
-*Photo: JrPol, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Demi_Vollering_in_etappe_8_van_de_Tour_de_France_Femmes_2024.jpg), via Wikimedia Commons*
-
-*Photo: JrPol, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Demi_Vollering_in_etappe_8_van_de_Tour_de_France_Femmes_2024.jpg), via Wikimedia Commons*
-
-*Photo: JrPol, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Demi_Vollering_in_etappe_8_van_de_Tour_de_France_Femmes_2024.jpg), via Wikimedia Commons*
+*Photo: [JrPol](https://commons.wikimedia.org/wiki/File:Demi_Vollering_in_etappe_8_van_de_Tour_de_France_Femmes_2024.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)*
 
 Demi Vollering is having a breakout season—and it's not by accident. After a focused winter of polarized training and altitude blocks, she won at **La Flèche Wallonne**, cementing her status as the top climber in the women's WorldTour.
 

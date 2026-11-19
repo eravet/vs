@@ -6,7 +6,7 @@ category: "Training Tips"
 tags: ["consistency","overtraining","recovery","mindset","race tactics"]
 image: "/assets/images/journal/consistency.jpg"
 image_alt: "A rider on a white gravel road through farmland"
-image_credit: "Photo: [eolewind](https://unsplash.com/@eolewind) on Unsplash"
+image_credit: "Photo: [eolewind](https://unsplash.com/@eolewind)"
 published: true
 ---
 
@@ -38,11 +38,7 @@ Learn more about [overtraining syndrome from Cleveland Clinic](https://my.clevel
 ## Athlete Spotlight: Mathew Hayman
 
 ![Mathew Hayman and other riders on the cobbles of Paris-Roubaix, 2012](/assets/images/journal/riders/mathew-hayman.jpg)
-*Photo: Laurie Beylier from France, [CC BY-SA 2.0](https://commons.wikimedia.org/wiki/File:2012_Paris-Roubaix,_Maarten_Wynants,_Mathew_Hayman,_Luca_Paolini,_Matthieu_Ladagnous,_Johan_Vansummeren_(6919133232).jpg), via Wikimedia Commons*
-
-*Photo: Laurie Beylier from France, [CC BY-SA 2.0](https://commons.wikimedia.org/wiki/File:2012_Paris-Roubaix,_Maarten_Wynants,_Mathew_Hayman,_Luca_Paolini,_Matthieu_Ladagnous,_Johan_Vansummeren_(6919133232).jpg), via Wikimedia Commons*
-
-*Photo: Laurie Beylier from France, [CC BY-SA 2.0](https://commons.wikimedia.org/wiki/File:2012_Paris-Roubaix,_Maarten_Wynants,_Mathew_Hayman,_Luca_Paolini,_Matthieu_Ladagnous,_Johan_Vansummeren_(6919133232).jpg), via Wikimedia Commons*
+*Photo: [Laurie Beylier from France](https://commons.wikimedia.org/wiki/File:2012_Paris-Roubaix,_Maarten_Wynants,_Mathew_Hayman,_Luca_Paolini,_Matthieu_Ladagnous,_Johan_Vansummeren_(6919133232).jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)*
 
 Retired professional rider Mathew Hayman is an excellent example of a rider who made progress throughout his career. In 2016, Mathew Hayman lined up for his **15th attempt at Paris-Roubaix**, and won the day.
 

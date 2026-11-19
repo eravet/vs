@@ -6,7 +6,7 @@ category: "Training Tips"
 tags: ["mesocycles","FTP","training structure","periodization","Thomas De Gendt","breakaways"]
 image: "/assets/images/journal/mesocycles.jpg"
 image_alt: "A bike computer mounted on handlebars"
-image_credit: "Photo: [willy_teee](https://unsplash.com/@willy_teee) on Unsplash"
+image_credit: "Photo: [willy_teee](https://unsplash.com/@willy_teee)"
 published: true
 ---
 
@@ -86,11 +86,7 @@ Structured mesocycles = predictable progress.
 ## Athlete Spotlight: Thomas De Gendt – The Breakaway King
 
 ![Thomas De Gendt in the mountains jersey at Paris-Nice 2019](/assets/images/journal/riders/thomas-de-gendt.jpg)
-*Photo: Martin Mystère, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Thomas_De_Gendt_dot_jersey_2,_2019_Paris-Nice.jpg), via Wikimedia Commons*
-
-*Photo: Martin Mystère, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Thomas_De_Gendt_dot_jersey_2,_2019_Paris-Nice.jpg), via Wikimedia Commons*
-
-*Photo: Martin Mystère, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Thomas_De_Gendt_dot_jersey_2,_2019_Paris-Nice.jpg), via Wikimedia Commons*
+*Photo: [Martin Mystère](https://commons.wikimedia.org/wiki/File:Thomas_De_Gendt_dot_jersey_2,_2019_Paris-Nice.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)*
 
 **Rider Type:** Breakaway specialist  
 **Nickname:** "The Breakaway King"  

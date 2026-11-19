@@ -6,7 +6,7 @@ category: "Mindset"
 tags: ["motivation","focus","sports psychology","winter base","Jonas Abrahamsen","breakaways"]
 image: "/assets/images/journal/motivation-focus.jpg"
 image_alt: "A blurred rider descending a mountain road in black and white"
-image_credit: "Photo: [Krzysztof Kowalik](https://unsplash.com/@kowalikus) on Unsplash"
+image_credit: "Photo: [Krzysztof Kowalik](https://unsplash.com/@kowalikus)"
 published: true
 ---
 
@@ -67,7 +67,7 @@ Last week I broke my own rule on a ride and told a friend I wasn't feeling good.
 ## Athlete Spotlight: Jonas Abrahamsen
 
 ![Jonas Abrahamsen descending the Tourmalet in the polka-dot jersey, Tour de France 2024](/assets/images/journal/riders/jonas-abrahamsen.jpg)
-*Photo: Hugo LUC, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Jonas_Abrahamsen_in_the_descent_of_Tourmalet_pass_during_stage_14_of_TDF_24.jpg), via Wikimedia Commons*
+*Photo: [Hugo LUC](https://commons.wikimedia.org/wiki/File:Jonas_Abrahamsen_in_the_descent_of_Tourmalet_pass_during_stage_14_of_TDF_24.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)*
 
 **Jonas Abrahamsen** is a Norwegian professional road racer riding for **Uno-X Mobility** (UCI ProTeam). He stands 1.83 m and races at around 78 kg: a rouleur and breakaway specialist build. His style is aggressive and opportunistic, often attacking from breakaways, and he's known for tenacity and tactical sense.
 

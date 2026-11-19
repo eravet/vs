@@ -6,7 +6,7 @@ category: "Training Tips"
 tags: ["hydration","heat training","classics","endurance","nutrition"]
 image: "/assets/images/journal/hydration.jpg"
 image_alt: "A cyclist drinking from a water bottle"
-image_credit: "Photo: [Eric Petrozza](https://unsplash.com/@ericpetrozza) on Unsplash"
+image_credit: "Photo: [Eric Petrozza](https://unsplash.com/@ericpetrozza)"
 published: true
 ---
 
@@ -32,9 +32,7 @@ I recently started using more electrolytes when riding over 2 hours, and found t
 ## Athlete Spotlight: Johan Museeuw - The Lion of Flanders
 
 ![Johan Museeuw racing Paris-Roubaix in 2000](/assets/images/journal/riders/johan-museeuw.jpg)
-*Photo: Matheus Katharus, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Museeuw_Roubaix_2000.jpg), via Wikimedia Commons*
-
-*Photo: Matheus Katharus, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Museeuw_Roubaix_2000.jpg), via Wikimedia Commons*
+*Photo: [Matheus Katharus](https://commons.wikimedia.org/wiki/File:Museeuw_Roubaix_2000.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)*
 
 This week, let's look at Johan Museeuw, one of the greatest Classics riders of all time. Known as **"The Lion of Flanders,"** Museeuw dominated races like Paris-Roubaix and the Tour of Flanders in the '90s. His grit and resilience, especially after a devastating knee injury, define what it means to be a true competitor.
 

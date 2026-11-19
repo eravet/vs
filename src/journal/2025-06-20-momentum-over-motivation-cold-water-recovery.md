@@ -6,7 +6,7 @@ category: "Training Tips"
 tags: ["momentum","motivation","recovery","cold water immersion","Tim Merlier","sprinting"]
 image: "/assets/images/journal/cold-water.jpg"
 image_alt: "A man swimming in icy water"
-image_credit: "Photo: [Vidar Nordli-Mathisen](https://unsplash.com/@vidarnm) on Unsplash"
+image_credit: "Photo: [Vidar Nordli-Mathisen](https://unsplash.com/@vidarnm)"
 published: true
 ---
 
@@ -60,11 +60,7 @@ Use CWI strategically:
 ## Athlete Spotlight: Tim Merlier – The Belgian Bullet
 
 ![Tim Merlier at the 2025 Tour de France](/assets/images/journal/riders/tim-merlier.jpg)
-*Photo: Renhour48, [CC0](https://commons.wikimedia.org/wiki/File:Tour_de_France_2025_-_Tim_Merlier_N24.jpg), via Wikimedia Commons*
-
-*Photo: Renhour48, [CC0](https://commons.wikimedia.org/wiki/File:Tour_de_France_2025_-_Tim_Merlier_N24.jpg), via Wikimedia Commons*
-
-*Photo: Renhour48, [CC0](https://commons.wikimedia.org/wiki/File:Tour_de_France_2025_-_Tim_Merlier_N24.jpg), via Wikimedia Commons*
+*Photo: [Renhour48](https://commons.wikimedia.org/wiki/File:Tour_de_France_2025_-_Tim_Merlier_N24.jpg), [CC0](https://creativecommons.org/publicdomain/zero/1.0/)*
 
 When Tim Merlier lines up, you know a sprint showdown is coming. The **Belgian national champion** and **current European champion** has made his mark with explosive power.
 

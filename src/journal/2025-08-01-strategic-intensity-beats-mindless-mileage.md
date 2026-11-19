@@ -6,7 +6,7 @@ category: "Training Tips"
 tags: ["FTP","low-cadence intervals","nutrition","carbs","Laurent Fignon","training philosophy"]
 image: "/assets/images/journal/strategic-intensity.jpg"
 image_alt: "A cyclist on a winding road through a forest"
-image_credit: "Photo: [xokvictor](https://unsplash.com/@xokvictor) on Unsplash"
+image_credit: "Photo: [xokvictor](https://unsplash.com/@xokvictor)"
 published: true
 ---
 
@@ -84,11 +84,7 @@ If the legs still feel like bricks, call it. If not, you just beat the biggest o
 ## Athlete Spotlight: Laurent Fignon – The Professor
 
 ![Laurent Fignon at the 1989 Giro d'Italia](/assets/images/journal/riders/laurent-fignon.jpg)
-*Photo: Massimo Nicolodi, [CC BY 2.0](https://commons.wikimedia.org/wiki/File:Laurent-Fignon-Giro-1989.jpg), via Wikimedia Commons*
-
-*Photo: Massimo Nicolodi, [CC BY 2.0](https://commons.wikimedia.org/wiki/File:Laurent-Fignon-Giro-1989.jpg), via Wikimedia Commons*
-
-*Photo: Massimo Nicolodi, [CC BY 2.0](https://commons.wikimedia.org/wiki/File:Laurent-Fignon-Giro-1989.jpg), via Wikimedia Commons*
+*Photo: [Massimo Nicolodi](https://commons.wikimedia.org/wiki/File:Laurent-Fignon-Giro-1989.jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)*
 
 Laurent Fignon won the **Tour de France twice** (1983, 1984)—and lost it once by just **eight seconds**, the narrowest margin in history.
 

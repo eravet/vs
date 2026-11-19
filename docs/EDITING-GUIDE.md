@@ -23,7 +23,8 @@ After you click **Publish**, the website updates by itself in about one minute.
    - **Topic**: pick one (Training Tips, Nutrition, Recovery, Mindset, Race Strategy, Equipment).
    - **Main photo**: click *Choose an image* → *Upload*. Wide (landscape) photos look best.
    - **Describe the photo**: a few words, e.g. "Riders on a cobbled climb".
-   - **Photo credit**: if the photo isn't yours, e.g. `Photo: Jane Smith on Unsplash`.
+   - **Photo credit**: if the photo isn't yours, the photographer's name linked to the photo's
+     page, e.g. `Photo: [Jane Smith](https://unsplash.com/photos/...)`.
    - **Keywords**: optional.
    - **Post**: write the newsletter here. The toolbar has headings, bold, lists and links.
      To add a photo in the middle of a post, click **+** → **Image**.
@@ -37,9 +38,12 @@ toolbar to turn section titles ("Training Insight", "Athlete Spotlight"…) into
 **Heading 2**. They'll get the bold condensed style automatically.
 
 ### Where to find free photos
-- **Unsplash** (unsplash.com) and **Pexels** (pexels.com): free to use. Credit the photographer.
+- **Unsplash** (unsplash.com) and **Pexels** (pexels.com): free to use. Credit the photographer
+  with a link, e.g. `Photo: [Jane Smith](link to the photo)`.
 - **Wikimedia Commons** (commons.wikimedia.org): good for photos of pro riders. You **must**
-  credit the photographer and licence, e.g. `Photo: Jane Smith, CC BY-SA 4.0, via Wikimedia Commons`.
+  credit the photographer **and name the licence** shown on the photo's page, e.g.
+  `Photo: [Jane Smith](link to the photo), CC BY-SA 4.0`. Licence names start with "CC"; if the
+  page says "CC0" or "public domain", no licence name is needed.
 - **Don't** use photos from news sites, Getty, team sites or Google Images. They're copyrighted.
 
 ---

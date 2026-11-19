@@ -6,7 +6,7 @@ category: "Training Tips"
 tags: ["heat training","hydration","electrolytes","Óscar Freire","summer training","race tactics"]
 image: "/assets/images/journal/heat-mindset.jpg"
 image_alt: "A rider climbing a road through sunlit hills"
-image_credit: "Photo: [Urban Vintage](https://unsplash.com/@urban_vintage) on Unsplash"
+image_credit: "Photo: [Urban Vintage](https://unsplash.com/@urban_vintage)"
 published: true
 ---
 
@@ -58,11 +58,7 @@ Studies show that targeted electrolyte replacement during long endurance events 
 ## Athlete Spotlight: Óscar Freire
 
 ![Óscar Freire in 2012](/assets/images/journal/riders/oscar-freire.jpg)
-*Photo: Laurie Beylier, [CC BY-SA 2.0](https://commons.wikimedia.org/wiki/File:Oscar_Freire_2012_-_1.jpg), via Wikimedia Commons*
-
-*Photo: Laurie Beylier, [CC BY-SA 2.0](https://commons.wikimedia.org/wiki/File:Oscar_Freire_2012_-_1.jpg), via Wikimedia Commons*
-
-*Photo: Laurie Beylier, [CC BY-SA 2.0](https://commons.wikimedia.org/wiki/File:Oscar_Freire_2012_-_1.jpg), via Wikimedia Commons*
+*Photo: [Laurie Beylier](https://commons.wikimedia.org/wiki/File:Oscar_Freire_2012_-_1.jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)*
 
 One of the great legends in cycling history, Óscar Freire combined explosive speed with tactical brilliance.
 

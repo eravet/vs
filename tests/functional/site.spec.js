@@ -69,7 +69,8 @@ test.describe("Journal @functional", () => {
   test("a post shows title, photo credit, rider photo and related posts", async ({ page }) => {
     await page.goto("/journal/nutrition-endurance-alberto-bettiol/");
     await expect(page.locator("h1")).toContainText("Nutrition for Endurance");
-    await expect(page.locator(".post__hero figcaption")).toContainText("Unsplash");
+    await expect(page.locator(".post__hero figcaption a[href*='unsplash.com']")).toHaveCount(1);
+    await expect(page.locator(".post__hero figcaption")).not.toContainText("on Unsplash");
     await expect(page.locator(".prose--article img[alt*='Bettiol']")).toHaveCount(1);
     await expect(page.locator(".post-grid .post-card")).toHaveCount(3);
   });

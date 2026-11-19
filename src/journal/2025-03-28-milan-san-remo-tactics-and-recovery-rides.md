@@ -6,7 +6,7 @@ category: "Race Strategy"
 tags: ["Milan-San Remo","race tactics","recovery","classics","Magnus Sheffield"]
 image: "/assets/images/journal/milan-san-remo.jpg"
 image_alt: "A tight peloton leaning through a corner"
-image_credit: "Photo: [quinoal](https://unsplash.com/@quinoal) on Unsplash"
+image_credit: "Photo: [quinoal](https://unsplash.com/@quinoal)"
 published: true
 ---
 
@@ -42,11 +42,7 @@ My analysis: **Van der Poel was not the strongest, but he was the fastest and wo
 ## Athlete Profile: Magnus Sheffield
 
 ![Magnus Sheffield racing the 2022 Tour of Denmark](/assets/images/journal/riders/magnus-sheffield.jpg)
-*Photo: Hejsa, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:2022_Tour_of_Denmark_-_Stage_2_-_Magnus_Sheffield.jpg), via Wikimedia Commons*
-
-*Photo: Hejsa, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:2022_Tour_of_Denmark_-_Stage_2_-_Magnus_Sheffield.jpg), via Wikimedia Commons*
-
-*Photo: Hejsa, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:2022_Tour_of_Denmark_-_Stage_2_-_Magnus_Sheffield.jpg), via Wikimedia Commons*
+*Photo: [Hejsa](https://commons.wikimedia.org/wiki/File:2022_Tour_of_Denmark_-_Stage_2_-_Magnus_Sheffield.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)*
 
 **Hometown:** Pittsford, NY  
 **Team:** INEOS Grenadiers  

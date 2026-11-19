@@ -6,7 +6,7 @@ category: "Recovery"
 tags: ["sleep","recovery","performance","Primož Roglič","rest","adaptation"]
 image: "/assets/images/journal/sleep.jpg"
 image_alt: "Someone asleep under warm blankets"
-image_credit: "Photo: [vagabondage](https://unsplash.com/@vagabondage) on Unsplash"
+image_credit: "Photo: [vagabondage](https://unsplash.com/@vagabondage)"
 published: true
 ---
 
@@ -59,11 +59,7 @@ Aim for **7–9 hours**, and when training load spikes, add a **nap (20–30 min
 ## Rider Spotlight: Primož Roglič
 
 ![Primož Roglič at the 2020 Slovenian time-trial championship](/assets/images/journal/riders/primoz-roglic.jpg)
-*Photo: Petar Milošević, [CC BY 4.0](https://commons.wikimedia.org/wiki/File:Primo%C5%BE_Rogli%C4%8D_(2020_Slovenian_Time_Trial_championship)_v3.jpg), via Wikimedia Commons*
-
-*Photo: Petar Milošević, [CC BY 4.0](https://commons.wikimedia.org/wiki/File:Primo%C5%BE_Rogli%C4%8D_(2020_Slovenian_Time_Trial_championship)_v3.jpg), via Wikimedia Commons*
-
-*Photo: Petar Milošević, [CC BY 4.0](https://commons.wikimedia.org/wiki/File:Primo%C5%BE_Rogli%C4%8D_(2020_Slovenian_Time_Trial_championship)_v3.jpg), via Wikimedia Commons*
+*Photo: [Petar Milošević](https://commons.wikimedia.org/wiki/File:Primo%C5%BE_Rogli%C4%8D_(2020_Slovenian_Time_Trial_championship)_v3.jpg), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)*
 
 From **ski jumper to Grand Tour winner**, Primož Roglič has built a career on resilience and relentless preparation.
 

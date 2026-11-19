@@ -6,7 +6,7 @@ category: "Training Tips"
 tags: ["macrocycles","off-season","periodization","Alexi Grewal","rest","planning"]
 image: "/assets/images/journal/off-season.jpg"
 image_alt: "A lone cyclist on a foggy forest road"
-image_credit: "Photo: [kadykov](https://unsplash.com/@kadykov) on Unsplash"
+image_credit: "Photo: [kadykov](https://unsplash.com/@kadykov)"
 published: true
 ---
 

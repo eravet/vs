@@ -6,7 +6,7 @@ category: "Nutrition"
 tags: ["protein","recovery","nitrates","beet juice","Kristin Armstrong","time trial"]
 image: "/assets/images/journal/protein-recovery.jpg"
 image_alt: "Jars of deep red beet juice"
-image_credit: "Photo: [K15 Photos](https://unsplash.com/@k15photos) on Unsplash"
+image_credit: "Photo: [K15 Photos](https://unsplash.com/@k15photos)"
 published: true
 ---
 
@@ -82,9 +82,7 @@ Try **beet juice 2–3 hours pre-race** for maximum effect.
 ## Athlete Spotlight: Kristin Armstrong – Queen of the TT
 
 ![Kristin Armstrong on her time-trial bike](/assets/images/journal/riders/kristin-armstrong.jpg)
-*Photo: Peter Trimming from Croydon, England, [CC BY 2.0](https://commons.wikimedia.org/wiki/File:Kristin_Armstrong_riding_to_Gold.jpg), via Wikimedia Commons*
-
-*Photo: Peter Trimming from Croydon, England, [CC BY 2.0](https://commons.wikimedia.org/wiki/File:Kristin_Armstrong_riding_to_Gold.jpg), via Wikimedia Commons*
+*Photo: [Peter Trimming from Croydon, England](https://commons.wikimedia.org/wiki/File:Kristin_Armstrong_riding_to_Gold.jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)*
 
 This week, we discuss **Kristin Armstrong**, the most decorated female time trialist in Olympic history. A **three-time Olympic gold medalist** (2008, 2012, 2016), Kristin's dominance in the time trial discipline came after turning pro at **age 27**—proof that success isn't bound by age or timing.
 

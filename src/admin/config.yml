@@ -67,7 +67,7 @@ collections:
         name: "image_credit"
         widget: "string"
         required: false
-        hint: "Optional. e.g. Photo: Jane Smith on Unsplash. Links like [Jane Smith](https://...) work."
+        hint: "Optional. e.g. Photo: [Jane Smith](https://unsplash.com/@janesmith). Links like [Jane Smith](https://...) work."
       - label: "Keywords"
         name: "tags"
         widget: "list"

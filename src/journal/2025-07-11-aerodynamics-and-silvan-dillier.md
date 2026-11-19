@@ -6,7 +6,7 @@ category: "Equipment"
 tags: ["aerodynamics","bike fit","drafting","Silvan Dillier","position","paceline"]
 image: "/assets/images/journal/aerodynamics.jpg"
 image_alt: "A time-trial rider at speed"
-image_credit: "Photo: [hipposeyephotography](https://unsplash.com/@hipposeyephotography) on Unsplash"
+image_credit: "Photo: [hipposeyephotography](https://unsplash.com/@hipposeyephotography)"
 published: true
 ---
 
@@ -57,11 +57,7 @@ Riding in a paceline reduces effort by **~30%**, creating massive energy savings
 ## Athlete Spotlight: Silvan Dillier
 
 ![Silvan Dillier at the 2023 Tour de France](/assets/images/journal/riders/silvan-dillier.jpg)
-*Photo: René Hourdry, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Silvan_Dillier_-_Tour_de_France_2023.jpg), via Wikimedia Commons*
-
-*Photo: René Hourdry, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Silvan_Dillier_-_Tour_de_France_2023.jpg), via Wikimedia Commons*
-
-*Photo: René Hourdry, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Silvan_Dillier_-_Tour_de_France_2023.jpg), via Wikimedia Commons*
+*Photo: [René Hourdry](https://commons.wikimedia.org/wiki/File:Silvan_Dillier_-_Tour_de_France_2023.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)*
 
 **Age:** 34 (born August 3, 1990)  
 **Nationality:** Switzerland 🇨🇭  

@@ -6,7 +6,7 @@ category: "Training Tips"
 tags: ["heat training","adaptation","hydration","performance","Mike McCarthy"]
 image: "/assets/images/journal/heat-training.jpg"
 image_alt: "A cyclist silhouetted against a low, bright sun"
-image_credit: "Photo: [adventurous_artist](https://unsplash.com/@adventurous_artist) on Unsplash"
+image_credit: "Photo: [adventurous_artist](https://unsplash.com/@adventurous_artist)"
 published: true
 ---
 
