@@ -67,9 +67,10 @@ test.describe("Athlete hub @functional", () => {
     await expect(page.getByRole("link", { name: "Leave a review" })).toHaveCount(a.review_url ? 1 : 0);
   });
 
-  test("header 'Athlete login' goes to the hub", async ({ page, isMobile }) => {
+  test("header 'Athlete hub' goes to the hub", async ({ page, isMobile }) => {
     await page.goto("/");
     if (isMobile) await page.locator("[data-nav-toggle]").click();
+    await expect(page.locator(".site-nav__athletes")).toHaveText("Athlete hub");
     await page.locator(".site-nav__athletes").click();
     await expect(page).toHaveURL(/\/athletes\/$/);
   });
