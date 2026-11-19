@@ -37,9 +37,6 @@
     "sameAs": [{{ site.social.instagram | dump | safe }}, {{ site.social.strava | dump | safe }}, {{ site.social.facebook | dump | safe }}, {{ site.social.trainingpeaks | dump | safe }}]
   }
   </script>
-  {%- if page.url == "/" %}
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
-  {%- endif %}
 </head>
 <body class="{{ bodyClass }}">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -51,13 +48,16 @@
   <script src="/assets/js/main.js" defer></script>
   {%- if page.url == "/" %}
   <script>
-    // Send editors who arrive from an invite/password email on to the editor.
-    window.addEventListener("load", function () {
-      if (!window.netlifyIdentity) return;
-      window.netlifyIdentity.on("init", function (user) {
-        if (!user) window.netlifyIdentity.on("login", function () { document.location.href = "/admin/"; });
-      });
-    });
+    // The editor lives at /admin/ only. Invite and password-reset emails link to the home page
+    // with a token in the address, so load the login widget just for those visits.
+    if (/(invite|recovery|confirmation|email_change)_token=/.test(location.hash)) {
+      var s = document.createElement("script");
+      s.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
+      s.onload = function () {
+        window.netlifyIdentity.on("login", function () { location.href = "/admin/"; });
+      };
+      document.head.appendChild(s);
+    }
   </script>
   {%- endif %}
 </body>
