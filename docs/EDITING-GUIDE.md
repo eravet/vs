@@ -4,9 +4,13 @@ A guide for Mark. No technical knowledge needed.
 
 ## Logging in
 
+**First time only:** make a free account at **github.com** and send Eric your username. You'll get
+an email from GitHub inviting you to the website's project: click **Accept invitation**.
+(GitHub is where the website's files are stored. You won't need to do anything else there.)
+
 1. Go to **www.velo-savvy.com/admin/**
-2. Click **Login with Netlify Identity** and sign in with your email and password.
-   (The first time, use the invite email to set your password.)
+2. Click **Login with GitHub**. The first time, GitHub asks you to authorise "Velo-Savvy editor":
+   click **Authorize**. After that you'll stay logged in on that computer.
 3. You'll see three sections on the left: **Journal posts**, **Pages** and **Settings**.
 
 After you click **Publish**, the website updates by itself in about one minute.

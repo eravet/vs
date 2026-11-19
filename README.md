@@ -3,7 +3,7 @@
 Website for Velo-Savvy, cycling coaching with Mark Duroy.
 
 - **Static site**: [Eleventy](https://www.11ty.dev/) builds plain HTML from templates + content.
-- **Content editor**: [Decap CMS](https://decapcms.org/) at `/admin/`, logged in through Netlify Identity.
+- **Content editor**: [Decap CMS](https://decapcms.org/) at `/admin/`, logged in with GitHub (Netlify handles the sign-in).
   Mark edits text, prices, photos and Journal posts there; every save is a Git commit.
 - **Hosting**: Netlify (forms for contact + newsletter signups).
 
@@ -26,7 +26,7 @@ src/
   admin/config.yml  ← the editor's fields. Keep in sync with _data (a test checks this).
 docs/
   EDITING-GUIDE.md  ← for Mark
-  SETUP.md          ← deploying to Netlify, Identity, DNS
+  SETUP.md          ← deploying to Netlify, editor login, DNS
   RESEARCH-NOTES.md ← sourced facts about Mark + what still needs confirming
 ```
 

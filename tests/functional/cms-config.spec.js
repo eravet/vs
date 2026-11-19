@@ -42,20 +42,19 @@ test.describe("Content editor configuration @functional", () => {
     expect(res.ok()).toBe(true);
     const html = await (await page.request.get("/admin/")).text();
     expect(html).toContain("decap-cms@");
-    expect(html).toContain("netlify-identity-widget");
   });
 
-  test("public pages don't link to the editor or load its login", async ({ page }) => {
+  test("the editor signs in with GitHub and saves to the site's repo @critical", () => {
+    expect(config.backend.name).toBe("github");
+    expect(config.backend.repo).toMatch(/^[\w.-]+\/[\w.-]+$/);
+    expect(config.backend.branch).toBe("main");
+  });
+
+  test("public pages don't link to the editor or load any login script", async ({ page }) => {
     for (const path of ["/", "/about/", "/journal/"]) {
       await page.goto(path);
       await expect(page.locator('a[href^="/admin"]')).toHaveCount(0);
-      await expect(page.locator('script[src*="netlify-identity"]')).toHaveCount(0);
+      await expect(page.locator('script[src*="identity"]')).toHaveCount(0);
     }
-  });
-
-  test("an invite link on the home page loads the login widget", async ({ page }) => {
-    await page.route("https://identity.netlify.com/**", (route) => route.fulfill({ contentType: "text/javascript", body: "" }));
-    await page.goto("/#invite_token=test");
-    await expect(page.locator('script[src*="netlify-identity"]')).toHaveCount(1);
   });
 });

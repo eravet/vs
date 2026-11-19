@@ -1,12 +1,20 @@
 # Velo-Savvy content editor (Decap CMS)
-# Mark logs in at /admin/ with his Netlify Identity email + password.
+# Mark logs in at /admin/ with "Login with GitHub" (his GitHub account must be a collaborator on the repo).
+# Netlify handles the GitHub sign-in (Project configuration > Access & security > OAuth). See docs/SETUP.md.
 # Every "Publish" saves a commit to GitHub and Netlify rebuilds the site (about 1 minute).
 
 backend:
-  name: git-gateway
+  name: github
+  repo: eravet/vs3   # change if the GitHub repo has a different name
   branch: main
+  commit_messages:
+    create: "Add {{collection}} “{{slug}}”"
+    update: "Update {{collection}} “{{slug}}”"
+    delete: "Delete {{collection}} “{{slug}}”"
+    uploadMedia: "Upload “{{path}}”"
+    deleteMedia: "Delete “{{path}}”"
 
-# For testing on your own computer: run `npx decap-server` and uncomment:
+# Only used when the editor runs on localhost (run: PORT=8082 npx decap-server@3). Ignored on the live site.
 local_backend:
   url: http://localhost:8082/api/v1
 
