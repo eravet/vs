@@ -294,16 +294,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .page-head--split .split { grid-template-columns: 6fr 5fr; }
 .split__media { margin: 0; }
 .portrait { position: relative; }
-.portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 15%; border-radius: var(--radius); }
-.portrait::after {
-  content: ""; position: absolute; z-index: -1; inset: 18px -18px -18px 18px;
-  border: 2px solid var(--accent); border-radius: var(--radius);
-}
-.split__media.portrait { isolation: isolate; }
+.portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 15%; border-radius: calc(var(--radius) * 2); box-shadow: 0 30px 60px -24px rgba(15, 23, 32, 0.45), 0 12px 24px -12px rgba(15, 23, 32, 0.25); }
 @media (max-width: 860px) {
   .split, .page-head--split .split { grid-template-columns: 1fr; }
   .page-head--split .split__media { order: -1; max-width: 420px; }
-  .portrait::after { inset: 12px -12px -12px 12px; }
 }
 
 /* ---------- Prose ---------- */

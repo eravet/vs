@@ -46,4 +46,19 @@ headerOverlay: true
   </div>
 </section>
 
+{%- if r.photo %}
+<section class="section">
+  <div class="wrap split">
+    <figure class="split__media portrait">
+      <img src="{{ r.photo }}" alt="{{ r.photo_alt }}" sizes="(min-width: 900px) 40vw, 100vw">
+    </figure>
+    <div class="split__body">
+      <p class="eyebrow">On the road</p>
+      <h2 class="display">{{ r.photo_heading }}</h2>
+      <p class="lede">{{ r.photo_text }}</p>
+    </div>
+  </div>
+</section>
+{%- endif %}
+
 {% include "partials/cta.njk" %}

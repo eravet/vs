@@ -122,6 +122,8 @@ collections:
             fields:
               - { label: "Heading", name: "heading", widget: "string" }
               - { label: "Text", name: "text", widget: "markdown", buttons: ["bold", "italic", "link"], editor_components: [] }
+              - { label: "Photo", name: "image", widget: "image", required: false, hint: "A portrait (taller than wide) photo. Leave empty to use the photo from the About page." }
+              - { label: "Describe the photo", name: "image_alt", widget: "string", required: false }
           - { label: "'How it works' heading", name: "steps_heading", widget: "string" }
           - label: "'How it works' steps"
             name: "steps"
@@ -145,7 +147,7 @@ collections:
         fields:
           - { label: "Headline", name: "headline", widget: "string" }
           - { label: "Intro paragraph", name: "intro", widget: "text" }
-          - { label: "Photo of Mark", name: "photo", widget: "image", hint: "A portrait (taller than wide) photo looks best. Also used on the homepage and under every post." }
+          - { label: "Photo of Mark", name: "photo", widget: "image", hint: "A portrait (taller than wide) photo looks best. Also used under every Journal post." }
           - { label: "Describe the photo", name: "photo_alt", widget: "string" }
           - { label: "Your story", name: "story", widget: "markdown", buttons: ["bold", "italic", "link", "heading-three", "quote"], editor_components: [] }
           - { label: "Wide photo under your story", name: "band_image", widget: "image", required: false }
@@ -353,6 +355,10 @@ collections:
               - { label: "Meeting place", name: "place", widget: "string" }
               - { label: "Description", name: "text", widget: "string", required: false }
               - { label: "Link (Strava event)", name: "link", widget: "string", required: false }
+          - { label: "Photo of you on a ride", name: "photo", widget: "image", required: false, hint: "Portrait (taller than wide). Leave empty to hide this section." }
+          - { label: "Describe the photo", name: "photo_alt", widget: "string", required: false }
+          - { label: "Photo section heading", name: "photo_heading", widget: "string", required: false }
+          - { label: "Photo section text", name: "photo_text", widget: "text", required: false }
           - { label: "Strava club text", name: "strava_text", widget: "string" }
 
       # ---------------- Athlete hub ----------------

@@ -5,11 +5,36 @@
   "image_alt": "A group of cyclists riding together on an open road",
   "weekly_heading": "Weekly rides",
   "weekly": [
-    { "name": "Hill Climbers ride", "day": "Tuesdays", "time": "6:45am", "place": "The Meteor, Austin", "text": "A social, hilly morning ride with the Hill Climbers community.", "link": "https://www.strava.com/clubs/1258591" },
-    { "name": "Violet Crown TnT ride", "day": "Tuesdays", "time": "7:00am", "place": "Mellow Johnny's, Austin", "text": "Violet Crown club ride.", "link": "https://www.violetcrown.org/" },
-    { "name": "Breakfast Club ride", "day": "Saturdays", "time": "8:00am", "place": "Central Machine Works, Austin", "text": "Weekend group ride with a coffee stop.", "link": "" }
+    {
+      "name": "Hill Climbers ride",
+      "day": "Tuesdays",
+      "time": "6:45am",
+      "place": "The Meteor, Austin",
+      "text": "A social, hilly morning ride with the Hill Climbers community.",
+      "link": "https://www.strava.com/clubs/1258591"
+    },
+    {
+      "name": "Violet Crown TnT ride",
+      "day": "Tuesdays",
+      "time": "7:00am",
+      "place": "Mellow Johnny's, Austin",
+      "text": "Violet Crown club ride.",
+      "link": "https://www.violetcrown.org/"
+    },
+    {
+      "name": "Breakfast Club ride",
+      "day": "Saturdays",
+      "time": "8:00am",
+      "place": "Central Machine Works, Austin",
+      "text": "Weekend group ride with a coffee stop.",
+      "link": ""
+    }
   ],
   "special_heading": "Special rides & events",
   "special": [],
+  "photo": "/assets/images/site/mark-group-ride.jpg",
+  "photo_alt": "Mark Duroy in a red Velo-Savvy jersey riding behind a group on a curving road",
+  "photo_heading": "Look for the red jersey",
+  "photo_text": "I'm usually somewhere in the group in Velo-Savvy kit. Come and say hello: I'm always happy to talk training, pacing or anything else on the road.",
   "strava_text": "Join the Velo-Savvy Strava club to see ride details, routes and last-minute changes."
 }

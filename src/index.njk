@@ -28,7 +28,7 @@ bodyClass: page-home
 <section class="section">
   <div class="wrap split">
     <figure class="split__media portrait">
-      <img src="{{ about.photo }}" alt="{{ about.photo_alt }}" sizes="(min-width: 900px) 40vw, 100vw">
+      <img src="{{ home.intro.image or about.photo }}" alt="{{ home.intro.image_alt if home.intro.image else about.photo_alt }}" sizes="(min-width: 900px) 40vw, 100vw">
     </figure>
     <div class="split__body">
       <p class="eyebrow">Your coach</p>

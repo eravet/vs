@@ -9,20 +9,43 @@
     "image_alt": "Two riders on an open road under a dramatic sunset sky"
   },
   "proof": [
-    { "number": "1992–96", "label": "Raced the European classics" },
-    { "number": "BEL · NED", "label": "Team Lada & De Zwaluwen" },
-    { "number": "20+ yrs", "label": "Racing in Northern California & Europe" },
-    { "number": "USAC", "label": "Certified cycling coach" }
+    {
+      "number": "1992–96",
+      "label": "Raced the European classics"
+    },
+    {
+      "number": "BEL · NED",
+      "label": "Team Lada & De Zwaluwen"
+    },
+    {
+      "number": "20+ yrs",
+      "label": "Racing in Northern California & Europe"
+    },
+    {
+      "number": "USAC",
+      "label": "Certified cycling coach"
+    }
   ],
   "intro": {
     "heading": "Coaching that fits a real life",
-    "text": "Most riders don't need more miles. They need the right miles, enough rest, and someone who can see the whole season. I build your plan around your schedule, adjust it when life gets busy, and explain the *why* behind every session so you become a smarter rider, not just a fitter one."
+    "text": "Most riders don't need more miles. They need the right miles, enough rest, and someone who can see the whole season. I build your plan around your schedule, adjust it when life gets busy, and explain the *why* behind every session so you become a smarter rider, not just a fitter one.",
+    "image": "/assets/images/site/mark-home.jpg",
+    "image_alt": "Mark Duroy riding toward the camera in a white Velo-Savvy jersey"
   },
   "steps_heading": "How it works",
   "steps": [
-    { "title": "Free intro call", "text": "Twenty minutes to talk about your riding, your goals and your week. No pressure, no sales pitch." },
-    { "title": "Baseline & plan", "text": "We set your training zones and I build a periodized plan in TrainingPeaks around your target events." },
-    { "title": "Ride, review, adjust", "text": "You ride. I review the data, check in, and adjust the plan when work, family or fatigue get in the way." }
+    {
+      "title": "Free intro call",
+      "text": "Twenty minutes to talk about your riding, your goals and your week. No pressure, no sales pitch."
+    },
+    {
+      "title": "Baseline & plan",
+      "text": "We set your training zones and I build a periodized plan in TrainingPeaks around your target events."
+    },
+    {
+      "title": "Ride, review, adjust",
+      "text": "You ride. I review the data, check in, and adjust the plan when work, family or fatigue get in the way."
+    }
   ],
   "cta": {
     "heading": "Ready for your best season?",

@@ -14,7 +14,11 @@ eleventyExcludeFromCollections: true
   <div class="wrap narrow">
     <ul class="credits">
       {%- for c in credits %}
+      {%- if c.source %}
       <li><strong>{{ c.used_for }}</strong>: “{{ c.title }}” by {{ c.author }}, <a href="{{ c.source }}" target="_blank" rel="noopener">{{ c.site }}</a>{% if c.license %}, {% if c.license_url %}<a href="{{ c.license_url }}" target="_blank" rel="noopener">{{ c.license }}</a>{% else %}{{ c.license }}{% endif %}{% endif %}</li>
+      {%- else %}
+      <li><strong>{{ c.used_for }}</strong>: {{ c.author }}</li>
+      {%- endif %}
       {%- endfor %}
     </ul>
   </div>

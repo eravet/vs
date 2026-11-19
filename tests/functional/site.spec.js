@@ -38,6 +38,17 @@ test.describe("Content from the editor appears on the site @functional", () => {
     await expect(page.locator(".prose--story")).toContainText("Team Lada");
   });
 
+
+  test("home and rides pages use their own photos of Mark", async ({ page }) => {
+    const home = read("home.json");
+    const rides = read("rides.json");
+    await page.goto("/");
+    await expect(page.locator(`.split__media img[alt="${home.intro.image_alt}"]`)).toHaveCount(1);
+    await page.goto("/rides/");
+    await expect(page.locator(`.split__media img[alt="${rides.photo_alt}"]`)).toHaveCount(1);
+    await expect(page.getByRole("heading", { name: rides.photo_heading })).toBeVisible();
+  });
+
   test("only testimonials marked 'show' are displayed", async ({ page }) => {
     const { items } = read("testimonials.json");
     await page.goto("/");
