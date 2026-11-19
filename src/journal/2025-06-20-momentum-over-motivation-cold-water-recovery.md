@@ -146,7 +146,7 @@ What topics interest you? Training tips? Nutrition? Race analysis?
 Know someone with a great cycling story? We want to hear it.
 
 **Ask Mark anything**  
-He might answer it in the next edition. Email [mark.duroy@velo-savvy.com](mailto:mark.duroy@velo-savvy.com).
+He might answer it in the next edition. Email [mark@velo-savvy.com](mailto:mark@velo-savvy.com).
 
 **Keep the momentum going.**
 
