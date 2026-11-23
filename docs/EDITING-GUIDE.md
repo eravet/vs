@@ -46,8 +46,10 @@ toolbar to turn section titles ("Training Insight", "Athlete Spotlight"…) into
 2. Type your notes: the idea, ride stories, a rider to feature, links. Rough is fine.
    Pick a topic or let the AI choose, then click **Write draft** (20–40 seconds).
 3. Read the draft. Anything marked **⚠️ check** is a fact the AI added: check it, fix it or delete it.
-4. Pick a photo, or search for your own words under **Search for other photos**. The photographer
-   is credited automatically.
+4. Pick a photo, or search under **Search for other photos**. Short searches work best
+   ("cycling peloton", "bicycle race", a rider's name). The photos are free to use, and the photographer
+   and licence are credited automatically. If none fit, choose **No photo for now** and upload
+   your own in the editor.
 5. Click **Save draft and open in the editor**. The post opens with **Published** switched off.
    Finish it there, switch **Published** on, and publish as usual.
 

@@ -41,7 +41,7 @@
     .photo:has(input:checked) { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(0, 95, 184, .2); }
     .photo input { position: absolute; top: 10px; left: 10px; width: 20px; height: 20px; }
     .photo img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: #ddd; }
-    .photo .by { display: block; padding: 6px 10px; font-size: 13px; color: var(--muted); }
+    .photo .by { display: block; padding: 6px 10px; font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
     .photo.none { display: flex; align-items: center; justify-content: center; min-height: 120px; border-color: var(--line); padding: 16px 16px 16px 40px; }
     .search { display: flex; gap: 8px; }
     .search input { flex: 1; }
@@ -98,16 +98,16 @@
       </div>
 
       <h2>Pick a photo</h2>
-      <p class="hint">Photos provided by <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a>, free to use. The photographer is credited on the post and on the Photo credits page automatically.</p>
-      <p id="photo-error" class="error" hidden></p>
+      <p class="hint">Free photos from Flickr, Wikimedia Commons and others, found with <a href="https://openverse.org" target="_blank" rel="noopener">Openverse</a>. Only licences that allow use on your site are shown. The photographer and licence are credited on the post and on the Photo credits page automatically. Short searches work best, e.g. "cycling peloton" or "bicycle race".</p>
+      <p id="photo-status" class="status" role="status"></p>
       <div id="photos" class="photos"></div>
       <form id="search-form" class="card">
         <label for="search">Search for other photos</label>
         <div class="search">
-          <input type="search" id="search" placeholder="e.g. cyclists on a mountain road">
+          <input type="search" id="search" placeholder="e.g. cycling peloton">
           <button type="submit" class="secondary" id="search-button">Search</button>
         </div>
-        <div class="row"><button type="button" class="secondary" id="more" hidden>Show more photos</button><span id="search-status" class="status" role="status"></span></div>
+        <div class="row"><button type="button" class="secondary" id="more" hidden>Show more photos</button></div>
       </form>
       <label for="alt">Describe the photo</label>
       <input type="text" id="alt" placeholder="A few words for people who can't see the image">
@@ -135,7 +135,7 @@
     if (!token) { $("login").hidden = false; return; }
     $("step-notes").hidden = false;
 
-    var state = { draft: null, photos: [], searchQuery: "", searchPage: 1 };
+    var state = { draft: null, photos: [], query: "", page: 1 };
 
     function api(path, body) {
       return fetch(path, {
@@ -177,11 +177,9 @@
       api("/api/ai/draft", { notes: notes, category: $("topic").value })
         .then(function (data) {
           showDraft(data.draft);
-          showPhotos(data.photos || [], false);
-          showPhotoError(data.photoError);
-          store.set("vs-ai-draft", { draft: data.draft, photos: data.photos || [] });
           setStatus($("notes-status"), "Done. Your draft is below.");
           $("step-draft").scrollIntoView({ behavior: "smooth" });
+          return findPhotos(data.draft.photo_searches || []);
         })
         .catch(function (err) { setStatus($("notes-status"), err.message, true); })
         .then(function () { clearInterval(timer); $("write").disabled = $("again").disabled = false; });
@@ -202,6 +200,7 @@
       $("alt").value = d.image_alt || "";
       $("search").value = (d.photo_searches && d.photo_searches[0]) || "";
       $("step-draft").hidden = false;
+      saveDraftLocally();
     }
 
     function currentDraft() {
@@ -212,23 +211,112 @@
       };
     }
 
-    // ---- Photos ----
-    function showPhotoError(msg) { $("photo-error").textContent = msg || ""; $("photo-error").hidden = !msg; }
+    function saveDraftLocally() {
+      if (state.draft) store.set("vs-ai-draft", { draft: currentDraft(), photos: state.photos });
+    }
+    ["title", "excerpt", "category", "body", "alt"].forEach(function (id) { $(id).addEventListener("change", saveDraftLocally); });
+
+    // ---- Photos (searched straight from this page: Openverse needs no key) ----
+    var LICENSES = "cc0,pdm,by,by-sa";
+    var LICENSE_NAMES = { cc0: "CC0", pdm: "Public domain", by: "CC BY", "by-sa": "CC BY-SA" };
+    // Some Flickr results are from events you'd never want on the site.
+    var BLOCKED = /\b(nude|naked|nudity|topless|solstice parade|wnbr|bikini)\b/i;
+
+    function searchOpenverse(q, page) {
+      var url = "https://api.openverse.org/v1/images/?" + new URLSearchParams({
+        q: q, license: LICENSES, category: "photograph", page_size: "20", page: String(page || 1)
+      });
+      return fetch(url).then(function (res) {
+        if (res.status === 429) throw new Error("Openverse's search limit is used up for now (20 a minute, 200 a day). Wait a minute and try again.");
+        if (!res.ok) throw new Error("Openverse search didn't work (" + res.status + "). Try again.");
+        return res.json();
+      }).then(function (data) {
+        return (data.results || []).filter(function (r) {
+          var words = [r.title].concat((r.tags || []).map(function (t) { return t.name; })).join(" ");
+          return !r.mature && LICENSE_NAMES[r.license] && r.url && !BLOCKED.test(words);
+        }).map(function (r) {
+          return {
+            id: r.id, url: r.url, thumbnail: r.thumbnail || r.url, title: r.title || "Untitled",
+            creator: r.creator || "", creator_url: r.creator_url || "", foreign_landing_url: r.foreign_landing_url || "",
+            license: r.license, license_version: r.license_version || "", license_url: r.license_url || "",
+            source: r.source || "", width: r.width || 0
+          };
+        });
+      });
+    }
+
+    // Best of each search first, no duplicates, at most 2 photos from one photographer.
+    function mix(lists, limit, existing) {
+      var seen = {}, perCreator = {}, out = [];
+      (existing || []).forEach(function (p) { seen[p.id] = true; perCreator[p.creator] = (perCreator[p.creator] || 0) + 1; });
+      for (var i = 0; out.length < limit && lists.some(function (l) { return i < l.length; }); i++) {
+        lists.forEach(function (list) {
+          var p = list[i];
+          if (!p || seen[p.id] || out.length >= limit || (perCreator[p.creator] || 0) >= 2) return;
+          seen[p.id] = true;
+          perCreator[p.creator] = (perCreator[p.creator] || 0) + 1;
+          out.push(p);
+        });
+      }
+      return out;
+    }
+
+    function findPhotos(queries) {
+      setStatus($("photo-status"), "Finding photos…");
+      showPhotos([], false);
+      return Promise.all(queries.slice(0, 3).map(function (q) {
+        return searchOpenverse(q, 1).catch(function (err) { return err; });
+      })).then(function (results) {
+        var lists = results.filter(Array.isArray);
+        var failure = results.filter(function (r) { return r instanceof Error; })[0];
+        var photos = mix(lists, 12);
+        showPhotos(photos, false);
+        state.query = queries[0] || ""; state.page = 1;
+        $("more").hidden = !photos.length;
+        if (!photos.length) setStatus($("photo-status"), failure ? failure.message : "No photos matched. Try a short search below, e.g. \"cycling peloton\".", !!failure);
+        else setStatus($("photo-status"), "");
+      });
+    }
+
+    function search(page) {
+      var q = $("search").value.trim();
+      if (!q) { setStatus($("photo-status"), "Type what the photo should show.", true); return; }
+      state.query = q; state.page = page;
+      setStatus($("photo-status"), "Searching…");
+      $("search-button").disabled = $("more").disabled = true;
+      searchOpenverse(q, page)
+        .then(function (found) {
+          var photos = mix([found], 12, page > 1 ? state.photos : []);
+          showPhotos(photos, page > 1);
+          setStatus($("photo-status"), photos.length ? "" : (page > 1 ? "No more photos for that search." : "No photos matched. Try other words."));
+          $("more").hidden = found.length < 20;
+        })
+        .catch(function (err) { setStatus($("photo-status"), err.message, true); })
+        .then(function () { $("search-button").disabled = $("more").disabled = false; });
+    }
+
+    $("search-form").addEventListener("submit", function (e) { e.preventDefault(); search(1); });
+    $("more").addEventListener("click", function () { search(state.page + 1); });
+
+    function licenceText(p) {
+      return LICENSE_NAMES[p.license] + (p.license === "pdm" || !p.license_version ? "" : " " + p.license_version);
+    }
 
     function photoOption(p) {
       var label = document.createElement("label");
       label.className = "photo";
       var input = document.createElement("input");
-      input.type = "radio"; input.name = "photo"; input.value = String(p.id);
-      input.addEventListener("change", function () { if (p.alt) $("alt").value = p.alt; });
+      input.type = "radio"; input.name = "photo"; input.value = p.id;
       var img = document.createElement("img");
-      img.src = p.thumb; img.alt = p.alt || ""; img.loading = "lazy";
+      img.src = p.thumbnail; img.alt = p.title; img.loading = "lazy";
+      img.onerror = function () { if (img.src !== p.url) img.src = p.url; };
       var by = document.createElement("span");
       by.className = "by";
-      by.appendChild(document.createTextNode("Photo by "));
       var a = document.createElement("a");
-      a.href = p.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = p.photographer;
+      a.href = p.foreign_landing_url || p.url; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = p.title;
       by.appendChild(a);
+      by.appendChild(document.createTextNode((p.creator ? " by " + p.creator : "") + " · " + licenceText(p)));
       label.appendChild(input); label.appendChild(img); label.appendChild(by);
       return label;
     }
@@ -250,45 +338,20 @@
         grid.textContent = "";
         grid.appendChild(noPhotoOption());
       }
-      photos.forEach(function (p) {
-        if (state.photos.some(function (x) { return x.id === p.id; })) return;
-        state.photos.push(p);
-        grid.appendChild(photoOption(p));
-      });
-      var checked = grid.querySelector("input:checked");
-      if (!checked) {
-        var first = grid.querySelector('input[value]:not([value=""])') || grid.querySelector("input");
-        first.checked = true;
-        if (first.value) first.dispatchEvent(new Event("change"));
+      photos.forEach(function (p) { state.photos.push(p); grid.appendChild(photoOption(p)); });
+      if (!grid.querySelector("input:checked")) {
+        (grid.querySelector('input:not([value=""])') || grid.querySelector("input")).checked = true;
       }
+      saveDraftLocally();
     }
-
-    function search(page) {
-      var q = $("search").value.trim();
-      if (!q) { setStatus($("search-status"), "Type what the photo should show.", true); return; }
-      state.searchQuery = q; state.searchPage = page;
-      setStatus($("search-status"), "Searching…");
-      $("search-button").disabled = $("more").disabled = true;
-      api("/api/ai/photos", { query: q, page: page })
-        .then(function (data) {
-          showPhotos(data.photos || [], page > 1);
-          showPhotoError("");
-          setStatus($("search-status"), (data.photos || []).length ? "" : "No photos matched. Try other words.");
-          $("more").hidden = (data.photos || []).length < 9;
-        })
-        .catch(function (err) { setStatus($("search-status"), err.message, true); })
-        .then(function () { $("search-button").disabled = $("more").disabled = false; });
-    }
-
-    $("search-form").addEventListener("submit", function (e) { e.preventDefault(); search(1); });
-    $("more").addEventListener("click", function () { search(state.searchPage + 1); });
 
     // ---- Save ----
     $("save").addEventListener("click", function () {
       var chosen = document.querySelector('input[name="photo"]:checked');
+      var photo = chosen && chosen.value ? state.photos.filter(function (p) { return p.id === chosen.value; })[0] : null;
       setStatus($("save-status"), "Saving…");
       $("save").disabled = true;
-      api("/api/ai/save", { draft: currentDraft(), photoId: chosen ? chosen.value : "", imageAlt: $("alt").value })
+      api("/api/ai/save", { draft: currentDraft(), photo: photo, imageAlt: $("alt").value })
         .then(function (data) {
           store.del("vs-ai-draft");
           store.del("vs-ai-notes");

@@ -6,8 +6,8 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# Server code for the editor's "Draft with AI" page (needs GEMINI_API_KEY and PEXELS_API_KEY,
-# set under Project configuration > Environment variables). See docs/SETUP.md.
+# Server code for the editor's "Draft with AI" page (needs GEMINI_API_KEY, set under
+# Project configuration > Environment variables). See docs/SETUP.md.
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"

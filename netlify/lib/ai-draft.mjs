@@ -1,10 +1,11 @@
 // Shared code for the editor's "Draft with AI" page (src/admin/draft/).
-// Used by netlify/functions/ai-draft.mjs, ai-photos.mjs and ai-save.mjs.
+// Used by netlify/functions/ai-draft.mjs and ai-save.mjs.
 //
 // - Only people who can push to the site's GitHub repo can use it: the page sends the
 //   GitHub token from the editor login, and every request checks it against the repo.
-// - Gemini writes the draft (GEMINI_API_KEY). Pexels supplies photos (PEXELS_API_KEY).
-//   Both keys live in Netlify's environment variables and never reach the browser.
+// - Gemini writes the draft (GEMINI_API_KEY, kept in Netlify's environment variables).
+// - Photos come from Openverse (openverse.org: Flickr, Wikimedia Commons...), which needs no key.
+//   The page searches it directly; ai-save.mjs looks the chosen photo up again and saves it.
 // - Mark's editable instructions live in src/_data/ai_writing.json ("AI writing settings"
 //   in the editor) and are read from GitHub on every request, so edits apply right away.
 
@@ -169,7 +170,7 @@ export const DRAFT_SCHEMA = {
     tags: { type: "array", items: { type: "string" }, description: "3 to 6 short keywords." },
     body: { type: "string", description: "The post in Markdown, starting with a ## heading." },
     image_alt: { type: "string", description: "Alt text describing a photo that would suit the post." },
-    photo_searches: { type: "array", items: { type: "string" }, description: "2 or 3 Pexels searches, best first." },
+    photo_searches: { type: "array", items: { type: "string" }, description: "3 short photo searches, best first." },
   },
   required: ["title", "excerpt", "category", "tags", "body", "image_alt", "photo_searches"],
 };
@@ -193,7 +194,7 @@ export function buildPrompt({ settings, notes, category, today }) {
     "- body: the post in Markdown. Start with a ## heading. Never use a single # heading and don't repeat the title. No HTML, images or tables.",
     "- Facts: build the post on Mark's notes. Don't invent quotes, race results, numbers or studies. If you add a statistic, a study, or a fact about a real rider that isn't in the notes, put \"(⚠️ check)\" right after it so Mark verifies it before publishing.",
     "- image_alt: alt text for the kind of photo that would suit the post, e.g. \"Riders climbing a quiet country road\".",
-    "- photo_searches: 2 or 3 short searches (2 to 4 words) for the Pexels stock photo library, best first, for a wide photo that suits the post. Describe what is visible in the photo, not abstract ideas.",
+    "- photo_searches: 3 searches for a free photo library (Flickr and Wikimedia Commons photos), best first, for a photo that suits the post. The library matches words in photo titles, so use 2 plain, common words for things you can see, e.g. \"cycling peloton\", \"road cycling\", \"bicycle race\", \"ice bath\", \"oatmeal breakfast\". For cycling, include the word cycling or bicycle (\"peloton\" alone also finds running races). No abstract ideas, no long phrases. For a rider spotlight, the rider's full name is a good search.",
     "",
     "## Photo hints from Mark",
     settings.photoHints || "Prefer road cycling photos.",
@@ -269,66 +270,79 @@ export function cleanDraft(d = {}) {
   };
 }
 
-// ---------- Pexels ----------
+// ---------- Openverse photos ----------
 
-const toPhoto = (p) => ({
-  id: p.id,
-  thumb: p.src?.medium,
-  preview: p.src?.large,
-  download: p.src?.large2x,
-  alt: p.alt || "",
-  photographer: p.photographer || "Pexels photographer",
-  photographer_url: p.photographer_url || "",
-  url: p.url || "https://www.pexels.com",
-  width: p.width,
-  height: p.height,
-});
+// Licences that allow use on a business site with just a credit. The page searches with the same list.
+export const LICENSES = {
+  cc0: "CC0",
+  pdm: "Public Domain Mark",
+  by: "CC BY",
+  "by-sa": "CC BY-SA",
+};
 
-async function pexels(path, apiKey) {
-  let res;
+export const isOpenverseId = (id) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(id));
+
+const httpsUrl = (v) => {
   try {
-    res = await fetch("https://api.pexels.com/v1" + path, { headers: { authorization: apiKey }, signal: AbortSignal.timeout(10_000) });
-  } catch (err) {
-    if (isTimeout(err)) throw new HttpError(504, "Pexels didn't answer in time. Try again.");
-    throw err;
+    const u = new URL(String(v));
+    return u.protocol === "https:" && !/^(localhost|[\d.]+|\[.*\])$/i.test(u.hostname) ? u.href : "";
+  } catch {
+    return "";
   }
-  if (res.status === 429) throw new HttpError(429, "The Pexels photo limit for this hour is used up. Try again later.");
-  if (res.status === 404) throw new HttpError(404, "That photo is no longer on Pexels. Pick another one.");
-  if (!res.ok) throw new HttpError(502, `Pexels returned an error (${res.status}).`);
-  return res.json();
+};
+
+// The fields we keep from an Openverse image record. Returns null if it isn't usable.
+export function toPhoto(r = {}) {
+  if (!isOpenverseId(r.id) || !(r.license in LICENSES) || !httpsUrl(r.url)) return null;
+  return {
+    id: String(r.id).toLowerCase(),
+    url: httpsUrl(r.url),
+    title: oneLine(r.title, 200) || "Untitled",
+    creator: oneLine(r.creator, 120),
+    creator_url: httpsUrl(r.creator_url),
+    landing_url: httpsUrl(r.foreign_landing_url),
+    license: r.license,
+    license_version: oneLine(r.license_version, 10),
+    license_url: httpsUrl(r.license_url),
+    source: oneLine(r.source, 40),
+    width: Number(r.width) || 0,
+  };
 }
 
-export async function searchPexels(query, { apiKey, perPage = 9, page = 1 }) {
-  const params = new URLSearchParams({ query, orientation: "landscape", per_page: String(perPage), page: String(page) });
-  const data = await pexels(`/search?${params}`, apiKey);
-  return (data.photos || []).map(toPhoto);
-}
-
-// Runs each search and interleaves the results (best of each first), without duplicates.
-export async function photosFor(queries, { apiKey, limit = 9 }) {
-  const lists = await Promise.all(
-    queries.map((q) =>
-      searchPexels(q, { apiKey, perPage: 6 }).catch((err) => {
-        if (err.status === 429) throw err;
-        return [];
-      })
-    )
-  );
-  const seen = new Set();
-  const out = [];
-  for (let i = 0; out.length < limit && lists.some((l) => i < l.length); i++) {
-    for (const list of lists) {
-      const p = list[i];
-      if (p && !seen.has(p.id) && out.length < limit) {
-        seen.add(p.id);
-        out.push(p);
-      }
+// Looks the photo up on Openverse. If Openverse is busy (it limits requests without a key),
+// falls back to the details the page sent, after the same checks.
+export async function getOpenversePhoto(id, fallback) {
+  try {
+    const res = await fetch(`https://api.openverse.org/v1/images/${id}/`, { signal: AbortSignal.timeout(10_000) });
+    if (res.status === 404) throw new HttpError(404, "That photo is no longer on Openverse. Pick another one.");
+    if (res.ok) {
+      const photo = toPhoto(await res.json());
+      if (!photo) throw new HttpError(422, "That photo's licence doesn't allow use on the site. Pick another one.");
+      return photo;
     }
+  } catch (err) {
+    if (err instanceof HttpError) throw err;
   }
-  return out;
+  const photo = toPhoto({ ...fallback, id });
+  if (!photo) throw new HttpError(502, "Couldn't check that photo with Openverse. Try again in a minute.");
+  return photo;
 }
 
-export const getPexelsPhoto = async (id, apiKey) => toPhoto(await pexels(`/photos/${id}`, apiKey));
+// Wikimedia originals can be huge; ask for a 1600px version instead.
+export function downloadUrl(photo) {
+  const u = new URL(photo.url);
+  const m = /^\/wikipedia\/commons\/([0-9a-f])\/([0-9a-f]{2})\/([^/]+)$/.exec(u.pathname);
+  if (u.hostname === "upload.wikimedia.org" && m && photo.width > 1600 && !/\.svg$/i.test(m[3])) {
+    return `https://upload.wikimedia.org/wikipedia/commons/thumb/${m[1]}/${m[2]}/${m[3]}/1600px-${m[3]}`;
+  }
+  return photo.url;
+}
+
+export const licenseLabel = (photo) =>
+  [LICENSES[photo.license], photo.license === "pdm" ? "" : photo.license_version].filter(Boolean).join(" ");
+
+const SOURCE_NAMES = { flickr: "Flickr", wikimedia: "Wikimedia Commons" };
+export const sourceName = (photo) => SOURCE_NAMES[photo.source] || photo.source || "Openverse";
 
 // ---------- Post file ----------
 
@@ -363,10 +377,12 @@ export function buildPostFile(draft, { date, image = "", imageAlt = "", credit =
   return lines.join("\n");
 }
 
-// "Photo: [Name](profile) on [Pexels](photo page)", in the style of the other posts' credits.
-export function pexelsCredit(photo) {
-  const name = photo.photographer.replace(/[[\]]/g, "");
-  const who = photo.photographer_url.startsWith("https://www.pexels.com/") ? `[${name}](${photo.photographer_url})` : name;
-  const where = photo.url.startsWith("https://www.pexels.com/") ? `[Pexels](${photo.url})` : "Pexels";
-  return `Photo: ${who} on ${where}`;
+// e.g. "Photo: [Jane Smith](photo page), [CC BY 2.0](licence)", in the style of the other posts' credits.
+export function photoCredit(photo) {
+  const md = (s) => s.replace(/[[\]]/g, "");
+  const name = md(photo.creator || sourceName(photo));
+  const who = photo.landing_url ? `[${name}](${photo.landing_url})` : name;
+  const label = licenseLabel(photo);
+  const licence = photo.license_url ? `[${label}](${photo.license_url})` : label;
+  return `Photo: ${who}, ${licence}`;
 }

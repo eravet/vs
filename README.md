@@ -24,9 +24,9 @@ src/
   assets/js/main.js     ← small enhancements (menu, filters)
   assets/images/    ← photos (uploads from the editor go to /uploads)
   admin/config.yml  ← the editor's fields. Keep in sync with _data (a test checks this).
-  admin/draft/      ← "Draft with AI" page (Gemini drafts + Pexels photos)
+  admin/draft/      ← "Draft with AI" page (Gemini drafts + Openverse photos)
 netlify/
-  functions/ai-*.mjs  ← server side of "Draft with AI" (needs GEMINI_API_KEY, PEXELS_API_KEY)
+  functions/ai-*.mjs  ← server side of "Draft with AI" (needs GEMINI_API_KEY)
   lib/ai-draft.mjs    ← shared code for those functions
 docs/
   EDITING-GUIDE.md  ← for Mark

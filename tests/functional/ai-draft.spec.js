@@ -2,14 +2,13 @@ import { test, expect } from "@playwright/test";
 import fs from "node:fs";
 import yaml from "js-yaml";
 import {
-  cleanDraft, buildPostFile, buildPrompt, pexelsCredit, slugify, todayInAustin, CATEGORIES, DRAFT_SCHEMA,
+  cleanDraft, buildPostFile, buildPrompt, photoCredit, toPhoto, downloadUrl, slugify, todayInAustin, CATEGORIES, DRAFT_SCHEMA,
 } from "../../netlify/lib/ai-draft.mjs";
 import draftHandler from "../../netlify/functions/ai-draft.mjs";
 import saveHandler from "../../netlify/functions/ai-save.mjs";
-import photosHandler from "../../netlify/functions/ai-photos.mjs";
 
 // "Draft with AI" (src/admin/draft/ + netlify/functions/ai-*.mjs).
-// The server code is tested with fake GitHub, Gemini and Pexels services, so no keys or network are needed.
+// Tested with fake GitHub, Gemini and Openverse services, so no keys or network are needed.
 
 const root = new URL("../../", import.meta.url);
 const config = yaml.load(fs.readFileSync(new URL("src/admin/config.yml", root), "utf8"));
@@ -22,23 +21,31 @@ const geminiDraft = {
   tags: ["recovery rides", "zone 2"],
   body: "# Ride Easy to Ride Fast\n\n## Slow Down\n\nMost riders go too hard on easy days.",
   image_alt: "A rider on a quiet road",
-  photo_searches: ["road cyclist countryside", "group ride"],
+  photo_searches: ["peloton", "cyclist"],
 };
 
-const pexelsPhoto = (id, alt = "Cyclist on a road") => ({
-  id, alt, width: 4000, height: 2667,
-  url: `https://www.pexels.com/photo/${id}/`,
-  photographer: "Jane [Smith]",
-  photographer_url: "https://www.pexels.com/@jane",
-  src: {
-    medium: `https://images.pexels.com/photos/${id}/m.jpeg`,
-    large: `https://images.pexels.com/photos/${id}/l.jpeg`,
-    large2x: `https://images.pexels.com/photos/${id}/l2.jpeg`,
-  },
+const id = (n) => `00000000-0000-4000-8000-00000000000${n}`;
+// An Openverse image record, as the API returns it.
+const openverseImage = (n, extra = {}) => ({
+  id: id(n),
+  title: `Peloton ${n}`,
+  url: `https://live.staticflickr.com/65535/${n}_b.jpg`,
+  thumbnail: `https://api.openverse.org/v1/images/${id(n)}/thumb/`,
+  creator: `Jane Smith ${n}`,
+  creator_url: "https://www.flickr.com/photos/jane",
+  foreign_landing_url: `https://www.flickr.com/photos/jane/${n}`,
+  license: "by",
+  license_version: "2.0",
+  license_url: "https://creativecommons.org/licenses/by/2.0/",
+  source: "flickr",
+  width: 1024,
+  mature: false,
+  tags: [],
+  ...extra,
 });
 
-// Fakes the three services the functions call. Records every request.
-function fakeServices({ push = true, files = {} } = {}) {
+// Fakes the services the functions call. Records every request.
+function fakeServices({ push = true, files = {}, openverseStatus = 200 } = {}) {
   const calls = [];
   const blobs = {};
   let n = 0;
@@ -71,15 +78,11 @@ function fakeServices({ push = true, files = {} } = {}) {
     if (url.hostname === "generativelanguage.googleapis.com") {
       return ok({ candidates: [{ finishReason: "STOP", content: { parts: [{ text: JSON.stringify(geminiDraft) }] } }] });
     }
-    if (url.hostname === "api.pexels.com") {
-      if (p === "/v1/search") {
-        const q = url.searchParams.get("query");
-        return ok({ photos: q === "group ride" ? [pexelsPhoto(2), pexelsPhoto(3)] : [pexelsPhoto(1), pexelsPhoto(2)] });
-      }
-      const photo = /^\/v1\/photos\/(\d+)$/.exec(p);
-      if (photo) return ok(pexelsPhoto(Number(photo[1]), "Cyclist climbing a hill"));
+    if (url.hostname === "api.openverse.org") {
+      if (openverseStatus !== 200) return new Response("{}", { status: openverseStatus });
+      return ok(openverseImage(7, { title: "Peloton on a climb (from Openverse)" }));
     }
-    if (url.hostname === "images.pexels.com") {
+    if (url.hostname === "live.staticflickr.com") {
       return new Response(Buffer.from("fake jpeg bytes"), { headers: { "content-type": "image/jpeg" } });
     }
     throw new Error(`Unexpected request: ${method} ${url}`);
@@ -105,7 +108,6 @@ test.describe("Draft with AI: server @functional", () => {
   test.beforeEach(() => {
     realFetch = globalThis.fetch;
     process.env.GEMINI_API_KEY = "test-gemini-key";
-    process.env.PEXELS_API_KEY = "test-pexels-key";
   });
   test.afterEach(() => {
     globalThis.fetch = realFetch;
@@ -127,15 +129,30 @@ test.describe("Draft with AI: server @functional", () => {
   test("a saved draft has every field the editor needs and stays unpublished @critical", () => {
     const draft = cleanDraft({ ...geminiDraft, title: 'Quotes "and" colons: fine' });
     const file = buildPostFile(draft, {
-      date: "2026-11-22", image: "/assets/images/uploads/pexels-1.jpg", imageAlt: "A rider", credit: pexelsCredit(pexelsPhoto(1)),
+      date: "2026-11-22", image: "/assets/images/uploads/x.jpg", imageAlt: "A rider", credit: photoCredit(toPhoto(openverseImage(1))),
     });
     const fm = yaml.load(file.split("---")[1]);
     const required = journal.fields.filter((f) => f.required !== false && f.name !== "body").map((f) => f.name);
     for (const name of required) expect(fm, `missing ${name}`).toHaveProperty(name);
     expect(fm.title).toBe('Quotes "and" colons: fine');
     expect(fm.published).toBe(false);
-    expect(fm.image_credit).toBe("Photo: [Jane Smith](https://www.pexels.com/@jane) on [Pexels](https://www.pexels.com/photo/1/)");
+    expect(fm.image_credit).toBe("Photo: [Jane Smith 1](https://www.flickr.com/photos/jane/1), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)");
     expect(file).toContain("## Slow Down");
+  });
+
+  test("only photos with licences that allow use on the site are accepted", () => {
+    expect(toPhoto(openverseImage(1, { license: "by-nc" }))).toBeNull();
+    expect(toPhoto(openverseImage(1, { license: "by-nd" }))).toBeNull();
+    expect(toPhoto(openverseImage(1, { url: "http://example.com/x.jpg" }))).toBeNull();
+    expect(toPhoto(openverseImage(1, { id: "../../etc" }))).toBeNull();
+    const pd = toPhoto(openverseImage(1, { license: "pdm", license_version: "1.0", creator: "" }));
+    expect(photoCredit(pd)).toBe("Photo: [Flickr](https://www.flickr.com/photos/jane/1), [Public Domain Mark](https://creativecommons.org/licenses/by/2.0/)");
+  });
+
+  test("large Wikimedia photos are downloaded at 1600px", () => {
+    const photo = toPhoto(openverseImage(1, { source: "wikimedia", width: 4000, url: "https://upload.wikimedia.org/wikipedia/commons/a/ab/Rider_2024.jpg" }));
+    expect(downloadUrl(photo)).toBe("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Rider_2024.jpg/1600px-Rider_2024.jpg");
+    expect(downloadUrl(toPhoto(openverseImage(1)))).toBe("https://live.staticflickr.com/65535/1_b.jpg");
   });
 
   test("the prompt includes Mark's instructions, photo hints and example posts", () => {
@@ -167,17 +184,15 @@ test.describe("Draft with AI: server @functional", () => {
     expect(fake.calls.some((c) => c.url.hostname === "generativelanguage.googleapis.com")).toBe(false);
   });
 
-  test("draft: writes with Gemini using the editable settings, then finds photos", async () => {
+  test("draft: writes with Gemini using the editable settings", async () => {
     const fake = fakeServices({ files: { "src/_data/ai_writing.json": settingsFile, "src/journal/2025-01-01-example.md": "---\ntitle: Example\n---\nExample body" } });
     globalThis.fetch = fake.fetch;
     const res = await draftHandler(request("/api/ai/draft", { notes: "Easy rides matter more than people think." }));
     expect(res.status).toBe(200);
-    const data = await res.json();
-    expect(data.draft.title).toBe("Ride Easy to Ride Fast");
-    expect(data.draft.body.startsWith("## Slow Down")).toBe(true);
-    // Results from both searches, interleaved, without duplicates
-    expect(data.photos.map((p) => p.id)).toEqual([1, 2, 3]);
-    expect(data.photoError).toBe("");
+    const { draft } = await res.json();
+    expect(draft.title).toBe("Ride Easy to Ride Fast");
+    expect(draft.body.startsWith("## Slow Down")).toBe(true);
+    expect(draft.photo_searches).toEqual(["peloton", "cyclist"]);
 
     const gemini = fake.calls.find((c) => c.url.hostname === "generativelanguage.googleapis.com");
     expect(gemini.headers["x-goog-api-key"]).toBe("test-gemini-key");
@@ -188,24 +203,22 @@ test.describe("Draft with AI: server @functional", () => {
     expect(gemini.body.generationConfig.responseJsonSchema).toEqual(DRAFT_SCHEMA);
     // The unsafe example path was ignored, not fetched
     expect(fake.calls.some((c) => c.url.pathname.includes("passwd"))).toBe(false);
-    // Keys never go back to the browser
-    expect(JSON.stringify(data)).not.toContain("test-");
+    expect(JSON.stringify(draft)).not.toContain("test-gemini-key");
   });
 
-  test("photos: searches Pexels with Mark's own words", async () => {
-    const fake = fakeServices();
-    globalThis.fetch = fake.fetch;
-    const res = await photosHandler(request("/api/ai/photos", { query: "group ride", page: 2 }));
-    expect((await res.json()).photos.map((p) => p.id)).toEqual([2, 3]);
-    const search = fake.calls.find((c) => c.url.hostname === "api.pexels.com");
-    expect(search.headers.authorization).toBe("test-pexels-key");
-    expect(search.url.searchParams.get("page")).toBe("2");
+  test("draft: says clearly when the Gemini key is missing", async () => {
+    delete process.env.GEMINI_API_KEY;
+    globalThis.fetch = fakeServices().fetch;
+    const res = await draftHandler(request("/api/ai/draft", { notes: "Easy rides matter more than people think." }));
+    expect(res.status).toBe(500);
+    expect((await res.json()).error).toContain("GEMINI_API_KEY isn't set in Netlify");
   });
 
   test("save: commits the post, photo and credit in one go @critical", async () => {
     const fake = fakeServices({ files: { "src/_data/credits.json": '[\n  {\n    "file": "site/hero.jpg"\n  }\n]\n' } });
     globalThis.fetch = fake.fetch;
-    const res = await saveHandler(request("/api/ai/save", { draft: geminiDraft, photoId: "7", imageAlt: "" }));
+    // The browser's copy of the photo details is ignored when Openverse answers.
+    const res = await saveHandler(request("/api/ai/save", { draft: geminiDraft, photo: openverseImage(7, { license: "by-nc", title: "Forged" }), imageAlt: "" }));
     expect(res.status).toBe(200);
     const { slug, editUrl } = await res.json();
     expect(slug).toBe(`${todayInAustin()}-ride-easy-to-ride-fast`);
@@ -214,38 +227,60 @@ test.describe("Draft with AI: server @functional", () => {
     const tree = fake.calls.find((c) => c.url.pathname.endsWith("/git/trees")).body;
     expect(tree.base_tree).toBe("tree1");
     const byPath = Object.fromEntries(tree.tree.map((t) => [t.path, fake.blobs[t.sha]]));
-    expect(Object.keys(byPath).sort()).toEqual(["src/_data/credits.json", "src/assets/images/uploads/pexels-7.jpg", `src/journal/${slug}.md`]);
+    expect(Object.keys(byPath).sort()).toEqual(["src/_data/credits.json", `src/assets/images/uploads/${slug}.jpg`, `src/journal/${slug}.md`]);
 
-    expect(Buffer.from(byPath["src/assets/images/uploads/pexels-7.jpg"].content, "base64").toString()).toBe("fake jpeg bytes");
+    expect(Buffer.from(byPath[`src/assets/images/uploads/${slug}.jpg`].content, "base64").toString()).toBe("fake jpeg bytes");
     const fm = yaml.load(byPath[`src/journal/${slug}.md`].content.split("---")[1]);
-    expect(fm.image).toBe("/assets/images/uploads/pexels-7.jpg");
-    expect(fm.image_alt).toBe("Cyclist climbing a hill");
+    expect(fm.image).toBe(`/assets/images/uploads/${slug}.jpg`);
+    expect(fm.image_alt).toBe("A rider on a quiet road");
+    expect(fm.image_credit).toContain("[CC BY 2.0]");
     expect(fm.published).toBe(false);
     const credits = JSON.parse(byPath["src/_data/credits.json"].content);
     expect(credits).toHaveLength(2);
-    expect(credits[1]).toMatchObject({ file: "uploads/pexels-7.jpg", site: "Pexels", author: "Jane [Smith]" });
+    expect(credits[1]).toMatchObject({
+      file: `uploads/${slug}.jpg`, title: "Peloton on a climb (from Openverse)", author: "Jane Smith 7",
+      site: "Flickr", license: "CC BY 2.0", source: "https://www.flickr.com/photos/jane/7",
+    });
 
     expect(fake.calls.find((c) => c.method === "PATCH").body).toEqual({ sha: "commit2" });
+  });
+
+  test("save: if Openverse is busy, uses the checked details from the page", async () => {
+    const fake = fakeServices({ openverseStatus: 429, files: { "src/_data/credits.json": "[]" } });
+    globalThis.fetch = fake.fetch;
+    const res = await saveHandler(request("/api/ai/save", { draft: geminiDraft, photo: openverseImage(3), imageAlt: "Riders" }));
+    expect(res.status).toBe(200);
+    const credits = JSON.parse(Object.values(fake.blobs).find((b) => b.content?.startsWith("[")).content);
+    expect(credits[0]).toMatchObject({ title: "Peloton 3", alt: "Riders" });
+
+    // ...but never a licence that isn't allowed
+    const bad = await saveHandler(request("/api/ai/save", { draft: geminiDraft, photo: openverseImage(3, { license: "by-nc" }) }));
+    expect(bad.status).toBe(502);
   });
 
   test("save: without a photo, only the post is committed, and taken names get a number", async () => {
     const date = todayInAustin();
     const fake = fakeServices({ files: { [`src/journal/${date}-ride-easy-to-ride-fast.md`]: "taken" } });
     globalThis.fetch = fake.fetch;
-    const { slug } = await (await saveHandler(request("/api/ai/save", { draft: geminiDraft, photoId: "" }))).json();
+    const { slug } = await (await saveHandler(request("/api/ai/save", { draft: geminiDraft, photo: null }))).json();
     expect(slug).toBe(`${date}-ride-easy-to-ride-fast-2`);
     const tree = fake.calls.find((c) => c.url.pathname.endsWith("/git/trees")).body.tree;
     expect(tree.map((t) => t.path)).toEqual([`src/journal/${slug}.md`]);
-    expect(fake.calls.some((c) => c.url.hostname.includes("pexels"))).toBe(false);
+    expect(fake.calls.some((c) => c.url.hostname.includes("openverse"))).toBe(false);
   });
 });
 
 test.describe("Draft with AI: editor page @functional", () => {
   const login = (page) =>
     page.addInitScript(() => localStorage.setItem("decap-cms-user", JSON.stringify({ token: "gh-token", backendName: "github" })));
+  const stubOutside = async (page) => {
+    await page.route("https://unpkg.com/**", (r) => r.fulfill({ body: "", contentType: "application/javascript" }));
+    await page.route(/api\.openverse\.org\/v1\/images\/.+\/thumb\//, (r) => r.fulfill({ status: 404 }));
+    await page.route("https://live.staticflickr.com/**", (r) => r.fulfill({ status: 404 }));
+  };
 
   test("the editor has a Draft with AI button", async ({ page }) => {
-    await page.route("https://unpkg.com/**", (r) => r.fulfill({ body: "", contentType: "application/javascript" }));
+    await stubOutside(page);
     await page.goto("/admin/");
     await expect(page.getByRole("link", { name: /Draft with AI/ })).toHaveAttribute("href", "/admin/draft/");
   });
@@ -258,18 +293,21 @@ test.describe("Draft with AI: editor page @functional", () => {
 
   test("notes → draft → pick a photo → saved and opened in the editor", async ({ page }) => {
     await login(page);
-    await page.route("https://unpkg.com/**", (r) => r.fulfill({ body: "", contentType: "application/javascript" }));
-    await page.route("https://images.pexels.com/**", (r) => r.fulfill({ status: 404 }));
+    await stubOutside(page);
     await page.route("**/api/ai/draft", async (route) => {
       expect(route.request().headers().authorization).toBe("Bearer gh-token");
       expect(route.request().postDataJSON()).toMatchObject({ notes: "Easy rides matter more than people think.", category: "Recovery" });
-      await route.fulfill({
-        json: {
-          draft: cleanDraft(geminiDraft),
-          photos: [{ ...pexelsPhoto(1, "Cyclist on a road"), thumb: pexelsPhoto(1).src.medium }, { ...pexelsPhoto(2, "Group ride"), thumb: pexelsPhoto(2).src.medium }],
-          photoError: "",
-        },
-      });
+      await route.fulfill({ json: { draft: cleanDraft(geminiDraft) } });
+    });
+    const searches = [];
+    await page.route(/api\.openverse\.org\/v1\/images\/\?/, async (route) => {
+      const url = new URL(route.request().url());
+      searches.push(url.searchParams.get("q"));
+      expect(url.searchParams.get("license")).toBe("cc0,pdm,by,by-sa");
+      const results = url.searchParams.get("q") === "peloton"
+        ? [openverseImage(1), openverseImage(2, { title: "Solstice Parade cyclists" }), openverseImage(3, { license: "by-nc" })]
+        : [openverseImage(4), openverseImage(1)];
+      await route.fulfill({ json: { result_count: results.length, results } });
     });
     let saved;
     await page.route("**/api/ai/save", async (route) => {
@@ -284,17 +322,20 @@ test.describe("Draft with AI: editor page @functional", () => {
 
     await expect(page.locator("#title")).toHaveValue("Ride Easy to Ride Fast");
     await expect(page.locator("#body")).toHaveValue(/^## Slow Down/);
-    await expect(page.locator('input[name="photo"]')).toHaveCount(3); // "No photo" + 2 photos
-    await expect(page.locator("#alt")).toHaveValue("Cyclist on a road");
-    await expect(page.getByRole("link", { name: "Pexels" }).first()).toHaveAttribute("href", "https://www.pexels.com");
+    // "No photo" + photos 1 and 4: the parade photo, the non-commercial one and the duplicate are left out
+    await expect(page.locator('input[name="photo"]')).toHaveCount(3);
+    expect(searches.sort()).toEqual(["cyclist", "peloton"]);
+    await expect(page.getByText("Peloton 1")).toBeVisible();
+    await expect(page.getByText(/by Jane Smith 4 · CC BY 2\.0/)).toBeVisible();
+    await expect(page.getByRole("link", { name: "Openverse" })).toHaveAttribute("href", "https://openverse.org");
 
-    await page.locator('input[name="photo"][value="2"]').check();
-    await expect(page.locator("#alt")).toHaveValue("Group ride");
+    await page.locator(`input[name="photo"][value="${id(4)}"]`).check();
     await page.locator("#title").fill("Ride Easy, Race Fast");
+    await page.locator("#alt").fill("A bunch of riders");
     await page.getByRole("button", { name: /Save draft/ }).click();
 
     await expect(page).toHaveURL(/\/admin\/#\/collections\/journal\/entries\/2026-11-22-ride-easy$/);
-    expect(saved).toMatchObject({ photoId: "2", imageAlt: "Group ride", draft: { title: "Ride Easy, Race Fast", category: "Training Tips" } });
+    expect(saved).toMatchObject({ imageAlt: "A bunch of riders", photo: { id: id(4), license: "by" }, draft: { title: "Ride Easy, Race Fast" } });
   });
 
   test("shows the server's message when something goes wrong", async ({ page }) => {

@@ -53,27 +53,32 @@ After the first deploy, Netlify → **Forms** lists five forms: **contact**, **n
 
 ## 4b. Draft with AI (optional)
 The editor has a **✍️ Draft with AI** button (bottom right, or `/admin/draft/`). Mark types rough
-notes; Gemini writes a draft in his style; he picks a Pexels photo; it's saved as an **unpublished**
-Journal post that he reviews and publishes himself. It needs two free API keys:
+notes; Gemini writes a draft in his style; he picks a free photo; it's saved as an **unpublished**
+Journal post that he reviews and publishes himself. It needs one free API key:
 
 1. **Gemini:** aistudio.google.com → **Get API key** → create a key. The free tier is enough for a
    few posts a week. On the free tier Google may use what's sent (Mark's notes and the drafts) to
    improve its products; a paid key doesn't.
-2. **Pexels:** pexels.com/api → sign up (free, no card) → copy the key. 200 searches an hour.
-3. Netlify project → **Project configuration → Environment variables → Add a variable**, with
-   scope **Functions**:
+2. Netlify project → **Project configuration → Environment variables → Add a variable**:
    - `GEMINI_API_KEY` = the Gemini key
-   - `PEXELS_API_KEY` = the Pexels key
    - optional `GEMINI_MODEL` (default `gemini-3.6-flash`) if Google retires that model
-4. **Deploys → Trigger deploy** so the functions pick up the keys.
-5. Try it: log in to `/admin/`, click **Draft with AI**, write a few sentences, **Write draft**.
+
+   (Paid plans let you limit the scope to **Functions**. On the free plan it applies everywhere,
+   which is fine: the build never prints it.)
+3. **Deploys → Trigger deploy** so the functions pick up the key.
+4. Try it: log in to `/admin/`, click **Draft with AI**, write a few sentences, **Write draft**.
+
+Photos come from [Openverse](https://openverse.org) (Flickr, Wikimedia Commons and others), which
+needs no key. The page only shows licences that allow use on the site (CC0, public domain, CC BY,
+CC BY-SA) and credits the photographer and licence automatically. Without a key Openverse allows
+20 searches a minute and 200 a day, counted for whoever is using the page.
 
 What it says and how: **Settings → AI writing settings** in the editor (instructions, example posts,
 photo hints). Mark can change these himself; they apply to the next draft without a rebuild. The
 code is in `netlify/functions/ai-*.mjs` and `netlify/lib/ai-draft.mjs`; the page is
 `src/admin/draft/index.html`.
 
-Only GitHub accounts that can edit the repo can use it, and the keys never leave Netlify.
+Only GitHub accounts that can edit the repo can use it, and the key never leaves Netlify.
 
 ## 5. Share with Mark
 Send him:

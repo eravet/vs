@@ -469,4 +469,4 @@ collections:
           - label: "Photo search hints"
             name: "photo_hints"
             widget: "text"
-            hint: "What kind of Pexels photos to look for, e.g. 'road cycling, no mountain bikes'."
+            hint: "What kind of photos to look for, e.g. 'road cycling, no mountain bikes'. Photos come from Flickr and Wikimedia Commons via Openverse."
