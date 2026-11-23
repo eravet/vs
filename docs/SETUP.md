@@ -51,6 +51,30 @@ After the first deploy, Netlify → **Forms** lists five forms: **contact**, **n
    *Any form* (or add one per form).
 3. Send a test message from the live Contact page and check it arrives.
 
+## 4b. Draft with AI (optional)
+The editor has a **✍️ Draft with AI** button (bottom right, or `/admin/draft/`). Mark types rough
+notes; Gemini writes a draft in his style; he picks a Pexels photo; it's saved as an **unpublished**
+Journal post that he reviews and publishes himself. It needs two free API keys:
+
+1. **Gemini:** aistudio.google.com → **Get API key** → create a key. The free tier is enough for a
+   few posts a week. On the free tier Google may use what's sent (Mark's notes and the drafts) to
+   improve its products; a paid key doesn't.
+2. **Pexels:** pexels.com/api → sign up (free, no card) → copy the key. 200 searches an hour.
+3. Netlify project → **Project configuration → Environment variables → Add a variable**, with
+   scope **Functions**:
+   - `GEMINI_API_KEY` = the Gemini key
+   - `PEXELS_API_KEY` = the Pexels key
+   - optional `GEMINI_MODEL` (default `gemini-3.6-flash`) if Google retires that model
+4. **Deploys → Trigger deploy** so the functions pick up the keys.
+5. Try it: log in to `/admin/`, click **Draft with AI**, write a few sentences, **Write draft**.
+
+What it says and how: **Settings → AI writing settings** in the editor (instructions, example posts,
+photo hints). Mark can change these himself; they apply to the next draft without a rebuild. The
+code is in `netlify/functions/ai-*.mjs` and `netlify/lib/ai-draft.mjs`; the page is
+`src/admin/draft/index.html`.
+
+Only GitHub accounts that can edit the repo can use it, and the keys never leave Netlify.
+
 ## 5. Share with Mark
 Send him:
 - the preview link `https://velo-savvy.netlify.app`
@@ -83,5 +107,7 @@ When Mark is happy:
   match the GitHub repo, or Mark isn't a collaborator yet (or hasn't accepted the invite).
 - **"Login with GitHub" popup errors:** the OAuth callback URL must be exactly
   `https://api.netlify.com/auth/done`, and the provider must be installed on *this* Netlify project.
+- **Draft with AI says a key "isn't set in Netlify":** add it (step 4b) and trigger a deploy.
+  Other errors: Netlify → **Logs → Functions** → `ai-draft` or `ai-save` shows the details.
 - **Build fails:** Netlify → Deploys → open the failed deploy → the log's last lines say why.
   Every editor change is a Git commit, so any bad edit can be reverted on GitHub.

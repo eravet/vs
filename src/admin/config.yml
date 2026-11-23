@@ -32,7 +32,7 @@ collections:
   - name: "journal"
     label: "Journal posts"
     label_singular: "Journal post"
-    description: "Your weekly ride notes. Click 'New Journal post' to write one. Posts appear on the site about a minute after you publish."
+    description: "Your weekly ride notes. Click 'New Journal post' to write one, or 'Draft with AI' (bottom right) to turn your notes into a draft. Posts appear on the site about a minute after you publish."
     folder: "src/journal"
     extension: "md"
     format: "frontmatter"
@@ -415,7 +415,7 @@ collections:
   # ------------------------------------------------------------------
   - name: "settings"
     label: "Settings"
-    description: "Contact details, social links and site-wide text."
+    description: "Contact details, social links, site-wide text and the AI writing settings."
     editor: { preview: false }
     files:
       - name: "site"
@@ -447,3 +447,26 @@ collections:
               - { label: "Heading", name: "heading", widget: "string" }
               - { label: "Text", name: "text", widget: "text" }
           - { label: "Image for link previews", name: "social_image", widget: "image", hint: "Shown when the site is shared on Facebook, iMessage, etc. 1200×630 works best." }
+      - name: "ai_writing"
+        label: "AI writing settings"
+        file: "src/_data/ai_writing.json"
+        fields:
+          - label: "Writing instructions"
+            name: "instructions"
+            widget: "text"
+            hint: "What 'Draft with AI' is told before it writes: your voice, structure, length and anything to avoid. Changes apply to the next draft; no rebuild needed."
+          - label: "Posts to copy the style of"
+            name: "example_posts"
+            widget: "relation"
+            collection: "journal"
+            value_field: "{{slug}}"
+            search_fields: ["title"]
+            display_fields: ["title"]
+            multiple: true
+            min: 1
+            max: 3
+            hint: "Pick 1 to 3 of your best posts. The AI reads them to match your style."
+          - label: "Photo search hints"
+            name: "photo_hints"
+            widget: "text"
+            hint: "What kind of Pexels photos to look for, e.g. 'road cycling, no mountain bikes'."

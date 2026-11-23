@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Draft with AI · Velo-Savvy editor</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --ink: #0f1720; --paper: #f6f4ef; --white: #fff; --text: #1a1f26; --muted: #59616d;
+      --line: #dcd6ca; --brand: #005fb8; --brand-ink: #004b92; --error: #b42318; --radius: 6px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--text); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .bar { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 12px 20px; background: var(--ink); color: var(--white); }
+    .bar a { color: var(--white); }
+    .bar strong { font-size: 18px; }
+    main { max-width: 860px; margin: 0 auto; padding: 24px 16px 80px; }
+    h1 { font-size: 28px; margin: 8px 0; }
+    h2 { font-size: 20px; margin: 32px 0 8px; }
+    .lede, .hint { color: var(--muted); }
+    .hint { font-size: 14px; margin: 4px 0 12px; }
+    label { display: block; font-weight: 600; margin: 16px 0 6px; }
+    input[type="text"], input[type="search"], select, textarea {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--white); color: var(--text); font: inherit;
+    }
+    textarea { resize: vertical; }
+    #body { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 14px; }
+    button { font: inherit; font-weight: 600; padding: 10px 18px; border-radius: var(--radius); border: 1px solid var(--brand); background: var(--brand); color: var(--white); cursor: pointer; }
+    button:hover { background: var(--brand-ink); }
+    button.secondary { background: var(--white); color: var(--brand); }
+    button:disabled { opacity: .6; cursor: progress; }
+    .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 16px; }
+    .status { color: var(--muted); }
+    .error { color: var(--error); font-weight: 600; }
+    .card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; margin-top: 16px; }
+    .photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+    .photo { margin: 0; font-weight: 400; position: relative; border: 2px solid transparent; border-radius: var(--radius); background: var(--white); cursor: pointer; overflow: hidden; }
+    .photo:has(input:checked) { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(0, 95, 184, .2); }
+    .photo input { position: absolute; top: 10px; left: 10px; width: 20px; height: 20px; }
+    .photo img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: #ddd; }
+    .photo .by { display: block; padding: 6px 10px; font-size: 13px; color: var(--muted); }
+    .photo.none { display: flex; align-items: center; justify-content: center; min-height: 120px; border-color: var(--line); padding: 16px 16px 16px 40px; }
+    .search { display: flex; gap: 8px; }
+    .search input { flex: 1; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <a href="/admin/#/collections/journal">← Back to the editor</a>
+    <strong>Draft with AI</strong>
+    <a href="/admin/#/collections/settings/entries/ai_writing">AI writing settings</a>
+  </header>
+
+  <main>
+    <section id="login" class="card" hidden>
+      <h1>Log in first</h1>
+      <p>Open the <a href="/admin/">editor</a> and log in with GitHub, then come back to this page.</p>
+    </section>
+
+    <section id="step-notes" hidden>
+      <h1>Turn your notes into a draft</h1>
+      <p class="lede">Write what this post is about: the training idea, ride stories, a rider to feature, links you want to use. Rough notes are fine. The AI writes a draft and finds photos. Nothing goes on the site until you publish it in the editor.</p>
+      <form id="notes-form">
+        <label for="notes">Your notes</label>
+        <textarea id="notes" rows="12" required></textarea>
+        <label for="topic">Topic</label>
+        <select id="topic">
+          <option value="">Let the AI choose</option>
+          <option>Training Tips</option><option>Nutrition</option><option>Recovery</option>
+          <option>Mindset</option><option>Race Strategy</option><option>Equipment</option>
+        </select>
+        <div class="row">
+          <button type="submit" id="write">Write draft</button>
+          <span id="notes-status" class="status" role="status"></span>
+        </div>
+      </form>
+    </section>
+
+    <section id="step-draft" hidden>
+      <h2>Your draft</h2>
+      <p class="hint">Change anything you like here, or save it and finish it in the editor. Anything marked ⚠️ check is a fact the AI added: check it before you publish.</p>
+      <div class="card">
+        <label for="title">Title</label>
+        <input type="text" id="title">
+        <label for="excerpt">Short summary</label>
+        <textarea id="excerpt" rows="2"></textarea>
+        <label for="category">Topic</label>
+        <select id="category">
+          <option>Training Tips</option><option>Nutrition</option><option>Recovery</option>
+          <option>Mindset</option><option>Race Strategy</option><option>Equipment</option>
+        </select>
+        <label for="body">Post</label>
+        <textarea id="body" rows="22"></textarea>
+      </div>
+
+      <h2>Pick a photo</h2>
+      <p class="hint">Photos provided by <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a>, free to use. The photographer is credited on the post and on the Photo credits page automatically.</p>
+      <p id="photo-error" class="error" hidden></p>
+      <div id="photos" class="photos"></div>
+      <form id="search-form" class="card">
+        <label for="search">Search for other photos</label>
+        <div class="search">
+          <input type="search" id="search" placeholder="e.g. cyclists on a mountain road">
+          <button type="submit" class="secondary" id="search-button">Search</button>
+        </div>
+        <div class="row"><button type="button" class="secondary" id="more" hidden>Show more photos</button><span id="search-status" class="status" role="status"></span></div>
+      </form>
+      <label for="alt">Describe the photo</label>
+      <input type="text" id="alt" placeholder="A few words for people who can't see the image">
+
+      <div class="row">
+        <button type="button" id="save">Save draft and open in the editor</button>
+        <button type="button" class="secondary" id="again">Write it again</button>
+        <span id="save-status" class="status" role="status"></span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+  (function () {
+    var $ = function (id) { return document.getElementById(id); };
+    var store = {
+      get: function (k) { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (e) { return null; } },
+      set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+      del: function (k) { try { localStorage.removeItem(k); } catch (e) {} }
+    };
+
+    // The editor (Decap CMS) keeps its GitHub login here; the server checks it on every request.
+    var user = store.get("decap-cms-user");
+    var token = user && (user.token || user.access_token);
+    if (!token) { $("login").hidden = false; return; }
+    $("step-notes").hidden = false;
+
+    var state = { draft: null, photos: [], searchQuery: "", searchPage: 1 };
+
+    function api(path, body) {
+      return fetch(path, {
+        method: "POST",
+        headers: { "content-type": "application/json", authorization: "Bearer " + token },
+        body: JSON.stringify(body)
+      }).then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          if (res.status === 401) { $("login").hidden = false; }
+          if (!res.ok) {
+            throw new Error(data.error || (res.status >= 500
+              ? "The server took too long or had a problem (" + res.status + "). Try again."
+              : "Something went wrong (" + res.status + ")."));
+          }
+          return data;
+        });
+      });
+    }
+
+    function setStatus(el, text, isError) {
+      el.textContent = text || "";
+      el.className = isError ? "error" : "status";
+    }
+
+    // ---- Notes ----
+    $("notes").value = store.get("vs-ai-notes") || "";
+    $("notes").addEventListener("input", function () { store.set("vs-ai-notes", $("notes").value); });
+
+    $("notes-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var notes = $("notes").value.trim();
+      if (notes.length < 20) { setStatus($("notes-status"), "Write a few sentences of notes first.", true); return; }
+      var started = Date.now();
+      var timer = setInterval(function () {
+        setStatus($("notes-status"), "Writing your draft… " + Math.round((Date.now() - started) / 1000) + "s (usually 20 to 40 seconds)");
+      }, 1000);
+      setStatus($("notes-status"), "Writing your draft…");
+      $("write").disabled = $("again").disabled = true;
+      api("/api/ai/draft", { notes: notes, category: $("topic").value })
+        .then(function (data) {
+          showDraft(data.draft);
+          showPhotos(data.photos || [], false);
+          showPhotoError(data.photoError);
+          store.set("vs-ai-draft", { draft: data.draft, photos: data.photos || [] });
+          setStatus($("notes-status"), "Done. Your draft is below.");
+          $("step-draft").scrollIntoView({ behavior: "smooth" });
+        })
+        .catch(function (err) { setStatus($("notes-status"), err.message, true); })
+        .then(function () { clearInterval(timer); $("write").disabled = $("again").disabled = false; });
+    });
+
+    $("again").addEventListener("click", function () {
+      $("notes").scrollIntoView({ behavior: "smooth" });
+      $("notes-form").requestSubmit();
+    });
+
+    // ---- Draft ----
+    function showDraft(d) {
+      state.draft = d;
+      $("title").value = d.title;
+      $("excerpt").value = d.excerpt;
+      $("category").value = d.category;
+      $("body").value = d.body;
+      $("alt").value = d.image_alt || "";
+      $("search").value = (d.photo_searches && d.photo_searches[0]) || "";
+      $("step-draft").hidden = false;
+    }
+
+    function currentDraft() {
+      var d = state.draft || {};
+      return {
+        title: $("title").value, excerpt: $("excerpt").value, category: $("category").value,
+        body: $("body").value, tags: d.tags || [], image_alt: $("alt").value, photo_searches: d.photo_searches || []
+      };
+    }
+
+    // ---- Photos ----
+    function showPhotoError(msg) { $("photo-error").textContent = msg || ""; $("photo-error").hidden = !msg; }
+
+    function photoOption(p) {
+      var label = document.createElement("label");
+      label.className = "photo";
+      var input = document.createElement("input");
+      input.type = "radio"; input.name = "photo"; input.value = String(p.id);
+      input.addEventListener("change", function () { if (p.alt) $("alt").value = p.alt; });
+      var img = document.createElement("img");
+      img.src = p.thumb; img.alt = p.alt || ""; img.loading = "lazy";
+      var by = document.createElement("span");
+      by.className = "by";
+      by.appendChild(document.createTextNode("Photo by "));
+      var a = document.createElement("a");
+      a.href = p.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = p.photographer;
+      by.appendChild(a);
+      label.appendChild(input); label.appendChild(img); label.appendChild(by);
+      return label;
+    }
+
+    function noPhotoOption() {
+      var label = document.createElement("label");
+      label.className = "photo none";
+      var input = document.createElement("input");
+      input.type = "radio"; input.name = "photo"; input.value = "";
+      label.appendChild(input);
+      label.appendChild(document.createTextNode("No photo for now (add one later in the editor)"));
+      return label;
+    }
+
+    function showPhotos(photos, append) {
+      var grid = $("photos");
+      if (!append) {
+        state.photos = [];
+        grid.textContent = "";
+        grid.appendChild(noPhotoOption());
+      }
+      photos.forEach(function (p) {
+        if (state.photos.some(function (x) { return x.id === p.id; })) return;
+        state.photos.push(p);
+        grid.appendChild(photoOption(p));
+      });
+      var checked = grid.querySelector("input:checked");
+      if (!checked) {
+        var first = grid.querySelector('input[value]:not([value=""])') || grid.querySelector("input");
+        first.checked = true;
+        if (first.value) first.dispatchEvent(new Event("change"));
+      }
+    }
+
+    function search(page) {
+      var q = $("search").value.trim();
+      if (!q) { setStatus($("search-status"), "Type what the photo should show.", true); return; }
+      state.searchQuery = q; state.searchPage = page;
+      setStatus($("search-status"), "Searching…");
+      $("search-button").disabled = $("more").disabled = true;
+      api("/api/ai/photos", { query: q, page: page })
+        .then(function (data) {
+          showPhotos(data.photos || [], page > 1);
+          showPhotoError("");
+          setStatus($("search-status"), (data.photos || []).length ? "" : "No photos matched. Try other words.");
+          $("more").hidden = (data.photos || []).length < 9;
+        })
+        .catch(function (err) { setStatus($("search-status"), err.message, true); })
+        .then(function () { $("search-button").disabled = $("more").disabled = false; });
+    }
+
+    $("search-form").addEventListener("submit", function (e) { e.preventDefault(); search(1); });
+    $("more").addEventListener("click", function () { search(state.searchPage + 1); });
+
+    // ---- Save ----
+    $("save").addEventListener("click", function () {
+      var chosen = document.querySelector('input[name="photo"]:checked');
+      setStatus($("save-status"), "Saving…");
+      $("save").disabled = true;
+      api("/api/ai/save", { draft: currentDraft(), photoId: chosen ? chosen.value : "", imageAlt: $("alt").value })
+        .then(function (data) {
+          store.del("vs-ai-draft");
+          store.del("vs-ai-notes");
+          setStatus($("save-status"), "Saved. Opening it in the editor…");
+          window.location.href = data.editUrl;
+        })
+        .catch(function (err) { setStatus($("save-status"), err.message, true); $("save").disabled = false; });
+    });
+
+    // Bring back an unsaved draft after a reload.
+    var saved = store.get("vs-ai-draft");
+    if (saved && saved.draft) { showDraft(saved.draft); showPhotos(saved.photos || [], false); }
+  })();
+  </script>
+</body>
+</html>

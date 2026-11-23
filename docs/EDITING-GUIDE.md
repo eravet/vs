@@ -41,6 +41,19 @@ You can come back and switch it on later.
 toolbar to turn section titles ("Training Insight", "Athlete Spotlight"…) into
 **Heading 2**. They'll get the bold condensed style automatically.
 
+### Drafting a post with AI
+1. Click **✍️ Draft with AI** (bottom right of the editor).
+2. Type your notes: the idea, ride stories, a rider to feature, links. Rough is fine.
+   Pick a topic or let the AI choose, then click **Write draft** (20–40 seconds).
+3. Read the draft. Anything marked **⚠️ check** is a fact the AI added: check it, fix it or delete it.
+4. Pick a photo, or search for your own words under **Search for other photos**. The photographer
+   is credited automatically.
+5. Click **Save draft and open in the editor**. The post opens with **Published** switched off.
+   Finish it there, switch **Published** on, and publish as usual.
+
+To change how the AI writes (your voice, length, structure, which posts to copy, what photos to
+look for), go to **Settings → AI writing settings**. Changes apply to the next draft.
+
 ### Where to find free photos
 - **Unsplash** (unsplash.com) and **Pexels** (pexels.com): free to use. Credit the photographer
   with a link, e.g. `Photo: [Jane Smith](link to the photo)`.

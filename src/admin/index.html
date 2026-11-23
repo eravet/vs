@@ -8,6 +8,14 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body>
+  <!-- Turns Mark's notes into a Journal draft with Gemini + Pexels photos (src/admin/draft/) -->
+  <a href="/admin/draft/" class="vs-ai-link">✍️ Draft with AI</a>
+  <style>
+    .vs-ai-link { position: fixed; right: 20px; bottom: 20px; z-index: 10000; padding: 10px 16px; border-radius: 999px;
+      background: #005fb8; color: #fff; font: 600 15px/1.2 system-ui, sans-serif; text-decoration: none;
+      box-shadow: 0 2px 10px rgba(15, 23, 32, .25); }
+    .vs-ai-link:hover { background: #004b92; }
+  </style>
   <script src="https://unpkg.com/decap-cms@3.17.3/dist/decap-cms.js"></script>
   <script>
     // Posts preview with the real site styles

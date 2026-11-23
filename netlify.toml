@@ -6,6 +6,12 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Server code for the editor's "Draft with AI" page (needs GEMINI_API_KEY and PEXELS_API_KEY,
+# set under Project configuration > Environment variables). See docs/SETUP.md.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 # Keep processed images between builds so publishing from the editor stays fast
 [[plugins]]
   package = "netlify-plugin-cache"
