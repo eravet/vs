@@ -8,14 +8,64 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <!-- Turns Mark's notes into a Journal draft with Gemini + Openverse photos (src/admin/draft/) -->
-  <a href="/admin/draft/" class="vs-ai-link">✍️ Draft with AI</a>
+  <!-- "New Journal post" opens a menu: Draft with AI (src/admin/draft/: Gemini + Openverse photos) or a blank post -->
   <style>
-    .vs-ai-link { position: fixed; right: 20px; bottom: 20px; z-index: 10000; padding: 10px 16px; border-radius: 999px;
-      background: #005fb8; color: #fff; font: 600 15px/1.2 system-ui, sans-serif; text-decoration: none;
-      box-shadow: 0 2px 10px rgba(15, 23, 32, .25); }
-    .vs-ai-link:hover { background: #004b92; }
+    a[href="#/collections/journal/new"]:not([role="menuitem"])::after { content: " ▾"; }
+    .vs-new-menu { position: absolute; z-index: 10001; min-width: 260px; padding: 6px 0; border-radius: 6px; background: #fff;
+      box-shadow: 0 6px 24px rgba(15, 23, 32, .22); font: 15px/1.3 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    .vs-new-menu a { display: block; padding: 10px 16px; color: #1a1f26; text-decoration: none; }
+    .vs-new-menu a:hover, .vs-new-menu a:focus { background: #eef4fb; outline: none; }
+    .vs-new-menu small { display: block; margin-top: 2px; color: #59616d; font-size: 13px; }
   </style>
+  <script>
+    (function () {
+      var NEW_POST = "#/collections/journal/new";
+      var menu = null;
+
+      function close() {
+        if (menu) { menu.remove(); menu = null; }
+      }
+
+      function item(href, title, note) {
+        var a = document.createElement("a");
+        a.href = href;
+        a.setAttribute("role", "menuitem");
+        a.textContent = title;
+        var small = document.createElement("small");
+        small.textContent = note;
+        a.appendChild(small);
+        return a;
+      }
+
+      function open(button) {
+        close();
+        menu = document.createElement("div");
+        menu.className = "vs-new-menu";
+        menu.setAttribute("role", "menu");
+        menu.appendChild(item("/admin/draft/", "✍️ Draft with AI", "Turn your notes into a draft, with a photo"));
+        menu.appendChild(item(NEW_POST, "📝 Blank post", "Write it yourself"));
+        document.body.appendChild(menu);
+        var r = button.getBoundingClientRect();
+        var maxLeft = document.documentElement.clientWidth - menu.offsetWidth - 8;
+        menu.style.top = r.bottom + window.scrollY + 6 + "px";
+        menu.style.left = Math.max(8, Math.min(r.left, maxLeft)) + window.scrollX + "px";
+        menu.querySelector("a").focus();
+      }
+
+      // Capture phase, so this runs before the editor's own click handling.
+      document.addEventListener("click", function (e) {
+        if (menu && menu.contains(e.target)) { setTimeout(close); return; }
+        var button = e.target.closest && e.target.closest('a[href="' + NEW_POST + '"]');
+        if (!button || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey) { close(); return; }
+        e.preventDefault();
+        e.stopPropagation();
+        if (menu) close(); else open(button);
+      }, true);
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+      window.addEventListener("resize", close);
+      window.addEventListener("hashchange", close);
+    })();
+  </script>
   <script src="https://unpkg.com/decap-cms@3.17.3/dist/decap-cms.js"></script>
   <script>
     // Posts preview with the real site styles

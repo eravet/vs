@@ -52,7 +52,7 @@ After the first deploy, Netlify → **Forms** lists five forms: **contact**, **n
 3. Send a test message from the live Contact page and check it arrives.
 
 ## 4b. Draft with AI (optional)
-The editor has a **✍️ Draft with AI** button (bottom right, or `/admin/draft/`). Mark types rough
+In the editor, **+ Journal post** opens a menu with **✍️ Draft with AI** (the page is `/admin/draft/`). Mark types rough
 notes; Gemini writes a draft in his style; he picks a free photo; it's saved as an **unpublished**
 Journal post that he reviews and publishes himself. It needs one free API key:
 
@@ -66,7 +66,7 @@ Journal post that he reviews and publishes himself. It needs one free API key:
    (Paid plans let you limit the scope to **Functions**. On the free plan it applies everywhere,
    which is fine: the build never prints it.)
 3. **Deploys → Trigger deploy** so the functions pick up the key.
-4. Try it: log in to `/admin/`, click **Draft with AI**, write a few sentences, **Write draft**.
+4. Try it: log in to `/admin/`, click **+ Journal post → Draft with AI**, write a few sentences, **Write draft**.
 
 Photos come from [Openverse](https://openverse.org) (Flickr, Wikimedia Commons and others), which
 needs no key. The page only shows licences that allow use on the site (CC0, public domain, CC BY,

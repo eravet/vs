@@ -19,7 +19,7 @@ After you click **Publish**, the website updates by itself in about one minute.
 
 ## Writing a new Journal post
 
-1. Click **Journal posts** → **New Journal post**.
+1. Click **Journal posts** → **+ Journal post** → **Blank post**.
 2. Fill in:
    - **Title**: the headline.
    - **Date**: the day you're publishing.
@@ -42,7 +42,7 @@ toolbar to turn section titles ("Training Insight", "Athlete Spotlight"…) into
 **Heading 2**. They'll get the bold condensed style automatically.
 
 ### Drafting a post with AI
-1. Click **✍️ Draft with AI** (bottom right of the editor).
+1. Click **+ Journal post** → **✍️ Draft with AI**.
 2. Type your notes: the idea, ride stories, a rider to feature, links. Rough is fine.
    Pick a topic or let the AI choose, then click **Write draft** (20–40 seconds).
 3. Read the draft. Anything marked **⚠️ check** is a fact the AI added: check it, fix it or delete it.

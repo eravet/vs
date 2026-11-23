@@ -279,10 +279,26 @@ test.describe("Draft with AI: editor page @functional", () => {
     await page.route("https://live.staticflickr.com/**", (r) => r.fulfill({ status: 404 }));
   };
 
-  test("the editor has a Draft with AI button", async ({ page }) => {
+  test("the editor's + Journal post button offers Draft with AI or a blank post", async ({ page }) => {
     await stubOutside(page);
     await page.goto("/admin/");
-    await expect(page.getByRole("link", { name: /Draft with AI/ })).toHaveAttribute("href", "/admin/draft/");
+    // Stand-in for the button the editor draws (it's a link to the new-post screen)
+    await page.evaluate(() => {
+      const a = document.createElement("a");
+      a.href = "#/collections/journal/new";
+      a.textContent = "+ Journal post";
+      document.body.appendChild(a);
+    });
+    await page.getByRole("link", { name: "+ Journal post" }).click();
+    await expect(page).not.toHaveURL(/#\/collections\/journal\/new/);
+    await expect(page.getByRole("menuitem", { name: /Draft with AI/ })).toHaveAttribute("href", "/admin/draft/");
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("menu")).toHaveCount(0);
+
+    await page.getByRole("link", { name: "+ Journal post" }).click();
+    await page.getByRole("menuitem", { name: /Blank post/ }).click();
+    await expect(page).toHaveURL(/#\/collections\/journal\/new$/);
+    await expect(page.getByRole("menu")).toHaveCount(0);
   });
 
   test("asks you to log in to the editor first", async ({ page }) => {
