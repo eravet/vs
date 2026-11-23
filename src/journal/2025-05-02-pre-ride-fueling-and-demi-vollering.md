@@ -82,7 +82,7 @@ Racing in May? Now is the time to fine-tune:
 - **Fueling plan:** What and when will you eat?
 - **Race strategy:** What's your plan for positioning, pacing, and when to attack?
 
-If you have an event calendar, let's dial in your preparation. Reach out at [mark@velo-savvy.com](mailto:mark@velo-savvy.com).
+If you have an event calendar, let's dial in your preparation. Reach out at [mark.duroy@velo-savvy.com](mailto:mark.duroy@velo-savvy.com).
 
 ## Referral Bonus
 
