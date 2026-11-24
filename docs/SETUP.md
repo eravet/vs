@@ -36,7 +36,8 @@ Install provider** → **GitHub** → paste the Client ID and secret → Install
 3. He accepts the invite email from GitHub.
 
 **d. Try it:** open `https://velo-savvy.netlify.app/admin/` → **Login with GitHub** → authorise once.
-Edit something small, **Publish**, and the site updates about a minute later.
+Edit something small, **Save**, then **Go live** (bottom left; needs step 4c). The site updates about
+two minutes later.
 
 ## 4. Forms
 After the first deploy, Netlify → **Forms** lists five forms: **contact**, **newsletter**,
@@ -45,6 +46,23 @@ After the first deploy, Netlify → **Forms** lists five forms: **contact**, **n
 2. **Forms → Form notifications → Add notification → Email notification** → Mark's email → choose
    *Any form* (or add one per form).
 3. Send a test message from the live Contact page and check it arrives.
+
+## 4c. Go live button (saves credits)
+Netlify's free plan has 300 credits a month and each deploy costs 15 (about 20 a month; when
+they run out the site shows "Site not available" until the next month). So saves from the editor
+don't deploy by themselves: the `ignore` rule in `netlify.toml` skips any commit whose message looks
+like an editor save (`Update journal “…”`). Mark clicks **Go live** in the editor to deploy
+everything saved so far. Code pushes (any other commit message) still deploy as usual.
+
+1. Netlify → **Project configuration → Developer settings → Continuous deployment → Build hooks →
+   Add build hook** → name `Go live`, branch `main` → **Save**. Copy the URL.
+2. **Environment variables → Add a variable**: `BUILD_HOOK_URL` = that URL. Keep it private: anyone
+   with it can start deploys (and spend credits).
+3. **Deploys → Trigger deploy** so the functions pick it up.
+
+The **Go live** box (bottom left of the editor) compares `/deploy-info.json` (the commit that's live)
+with GitHub and lists the saves that are waiting. Netlify emails at 50%, 75% and 100% of the month's
+credits; see **Usage & billing → Credit usage breakdown**.
 
 ## 4b. Draft with AI (optional)
 In the editor, **+ Journal post** opens a menu with **✍️ Draft with AI** (the page is `/admin/draft/`). Mark types rough

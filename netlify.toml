@@ -2,6 +2,12 @@
 [build]
   command = "npm run build"
   publish = "_site"
+  # Saves from the editor don't deploy by themselves (each deploy costs credits on the free plan).
+  # Mark clicks "Go live" in the editor, which calls a build hook; hook builds always run.
+  # Editor saves are recognised by their commit messages, e.g. Update journal “slug” (set in
+  # src/admin/config.yml under commit_messages). Any other push, like a code change, deploys as usual.
+  # Exit 0 = skip this build, exit 1 = build.
+  ignore = "git log -1 --pretty=%s | grep -qE '^(Add|Update|Delete|Upload) .*“'"
 
 [build.environment]
   NODE_VERSION = "22"
@@ -25,6 +31,12 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Which commit is live; the editor's "Go live" button compares it with GitHub
+[[headers]]
+  for = "/deploy-info.json"
+  [headers.values]
+    Cache-Control = "no-store"
 
 [[headers]]
   for = "/img/*"

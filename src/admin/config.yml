@@ -1,7 +1,10 @@
 # Velo-Savvy content editor (Decap CMS)
 # Mark logs in at /admin/ with "Login with GitHub" (his GitHub account must be a collaborator on the repo).
 # Netlify handles the GitHub sign-in (Project configuration > Access & security > OAuth). See docs/SETUP.md.
-# Every "Publish" saves a commit to GitHub and Netlify rebuilds the site (about 1 minute).
+# Every "Save" (Decap's Publish button, relabelled in index.html) is a commit to GitHub. Saves don't
+# deploy by themselves: "Go live" in the editor does (netlify.toml `ignore` + a build hook).
+# Keep the commit messages below starting with Add/Update/Delete/Upload and a “ quote: that's how
+# netlify.toml recognises editor saves (a test checks this).
 
 backend:
   name: github
@@ -32,7 +35,7 @@ collections:
   - name: "journal"
     label: "Journal posts"
     label_singular: "Journal post"
-    description: "Your weekly ride notes. Click '+ Journal post' to write one yourself, or to turn your notes into a draft with AI. Posts appear on the site about a minute after you publish."
+    description: "Your weekly ride notes. Click '+ Journal post' to write one yourself, or to turn your notes into a draft with AI. Saved posts go live when you click 'Go live' (bottom left)."
     folder: "src/journal"
     extension: "md"
     format: "frontmatter"

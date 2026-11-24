@@ -58,7 +58,9 @@ test.describe("Content from the editor appears on the site @functional", () => {
 
 test.describe("Journal @functional", () => {
   test("lists every published post, newest first @critical", async ({ page }) => {
-    const files = fs.readdirSync(new URL("../../src/journal/", import.meta.url)).filter((f) => f.endsWith(".md"));
+    const dir = new URL("../../src/journal/", import.meta.url);
+    // Drafts (published: false) are left off the site
+    const files = fs.readdirSync(dir).filter((f) => f.endsWith(".md") && !/^published:\s*false\s*$/m.test(fs.readFileSync(new URL(f, dir), "utf8")));
     await page.goto("/journal/");
     const count = (await page.locator(".feature").count()) + (await page.locator(".post-grid .post-card").count());
     expect(count).toBe(files.length);

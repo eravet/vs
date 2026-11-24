@@ -91,6 +91,142 @@
       }
     });
     CMS.registerPreviewTemplate("journal", PostPreview);
+
+    // Saving no longer puts changes on the site by itself (see "Go live" below), so the
+    // editor's "Publish" buttons say "Save" instead.
+    (function () {
+      var en = CMS.getLocale && CMS.getLocale("en");
+      var bar = en && en.editor && en.editor.editorToolbar;
+      if (!bar) return;
+      Object.assign(bar, {
+        publish: "Save", publishing: "Saving…", published: "Saved", publishNow: "Save now",
+        publishAndCreateNew: "Save and create new", publishAndDuplicate: "Save and duplicate"
+      });
+      CMS.registerLocale("en", en);
+    })();
+  </script>
+
+  <!-- "Go live": saves pile up on GitHub; this puts them on the site in one deploy (netlify/functions/publish.mjs) -->
+  <style>
+    .vs-live { position: fixed; left: 20px; bottom: 20px; z-index: 10000; display: flex; align-items: center; gap: 10px;
+      max-width: calc(100vw - 40px); padding: 8px 8px 8px 14px; border-radius: 999px; background: #fff; color: #1a1f26;
+      box-shadow: 0 4px 18px rgba(15, 23, 32, .22); font: 14px/1.3 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    .vs-live[hidden] { display: none; }
+    .vs-live .dot { width: 9px; height: 9px; flex: none; border-radius: 50%; background: #9aa3ad; }
+    .vs-live[data-state="pending"] .dot { background: #e5482a; }
+    .vs-live[data-state="live"] .dot { background: #1f9d55; }
+    .vs-live[data-state="publishing"] .dot { background: #005fb8; animation: vs-pulse 1s infinite alternate; }
+    .vs-live button { font: 600 14px/1 system-ui, sans-serif; padding: 8px 14px; border: 0; border-radius: 999px;
+      background: #005fb8; color: #fff; cursor: pointer; }
+    .vs-live button:hover { background: #004b92; }
+    .vs-live button[hidden] { display: none; }
+    @keyframes vs-pulse { to { opacity: .3; } }
+  </style>
+  <div class="vs-live" id="vs-live" role="status" hidden>
+    <span class="dot" aria-hidden="true"></span>
+    <span class="text" id="vs-live-text"></span>
+    <button type="button" id="vs-live-go" hidden>Go live</button>
+  </div>
+  <script>
+    (function () {
+      var box = document.getElementById("vs-live");
+      var text = document.getElementById("vs-live-text");
+      var go = document.getElementById("vs-live-go");
+      var repo = null;
+      var publishing = null; // { target: commit, started: time }
+
+      function token() {
+        try {
+          var u = JSON.parse(localStorage.getItem("decap-cms-user") || "null");
+          return u && (u.token || u.access_token) || "";
+        } catch (e) { return ""; }
+      }
+
+      function show(state, message, title, canGo) {
+        box.hidden = false;
+        box.dataset.state = state;
+        text.textContent = message;
+        box.title = title || "";
+        go.hidden = !canGo;
+      }
+
+      function github(path) {
+        return fetch("https://api.github.com/repos/" + repo + path, {
+          headers: { authorization: "Bearer " + token(), accept: "application/vnd.github+json" },
+          cache: "no-store"
+        }).then(function (res) {
+          if (!res.ok) throw new Error("GitHub " + res.status);
+          return res.json();
+        });
+      }
+
+      function liveCommit() {
+        return fetch("/deploy-info.json?t=" + Date.now(), { cache: "no-store" })
+          .then(function (res) { return res.ok ? res.json() : {}; })
+          .then(function (d) { return d.commit || ""; })
+          .catch(function () { return ""; });
+      }
+
+      function check() {
+        if (!repo || !token()) { box.hidden = true; return; }
+        Promise.all([liveCommit(), github("/commits/main")]).then(function (r) {
+          var live = r[0], head = r[1].sha;
+          if (publishing) {
+            if (live === publishing.target || live === head) {
+              publishing = null;
+              show("live", "Your changes are live", "", false);
+            } else if (Date.now() - publishing.started > 10 * 60 * 1000) {
+              publishing = null;
+              show("pending", "The update is taking longer than usual. Check Deploys in Netlify.", "", true);
+            } else {
+              show("publishing", "Updating the site… about 2 minutes", "", false);
+            }
+            return;
+          }
+          if (live === head) { show("live", "Site is up to date", "", false); return; }
+          if (!live) { show("pending", "Saved changes may not be live yet", "", true); return; }
+          return github("/compare/" + live + "..." + head).then(function (c) {
+            var list = (c.commits || []).map(function (x) { return "• " + x.commit.message.split("\n")[0]; });
+            var n = c.ahead_by || list.length;
+            show("pending", n === 1 ? "1 saved change isn't live yet" : n + " saved changes aren't live yet",
+              "Waiting to go live:\n" + list.slice(-10).join("\n"), true);
+          });
+        }).catch(function () {
+          show("pending", "Couldn't check what's live", "", true);
+        });
+      }
+
+      go.addEventListener("click", function () {
+        go.disabled = true;
+        github("/commits/main").then(function (c) {
+          return fetch("/api/publish", { method: "POST", headers: { authorization: "Bearer " + token() } })
+            .then(function (res) {
+              return res.json().catch(function () { return {}; }).then(function (d) {
+                if (!res.ok) throw new Error(d.error || "Couldn't start the update (" + res.status + ").");
+                publishing = { target: c.sha, started: Date.now() };
+                show("publishing", "Updating the site… about 2 minutes", "", false);
+              });
+            });
+        }).catch(function (err) {
+          show("pending", err.message, "", true);
+        }).then(function () { go.disabled = false; });
+      });
+
+      // The repo name comes from the editor's own settings, so it's only written down once.
+      fetch("/admin/config.yml").then(function (r) { return r.text(); }).then(function (yml) {
+        var m = /^\s*repo:\s*([\w.-]+\/[\w.-]+)/m.exec(yml);
+        repo = m && m[1];
+        check();
+      });
+      // Every 30 seconds (picks up new saves), or every 15 while an update is running.
+      var ticks = 0;
+      setInterval(function () {
+        ticks++;
+        if (!document.hidden && (publishing || ticks % 2 === 0)) check();
+      }, 15000);
+      window.addEventListener("hashchange", function () { setTimeout(check, 1500); });
+      window.addEventListener("focus", check);
+    })();
   </script>
 </body>
 </html>

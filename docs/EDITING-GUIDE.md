@@ -13,7 +13,13 @@ an email from GitHub inviting you to the website's project: click **Accept invit
    click **Authorize**. After that you'll stay logged in on that computer.
 3. You'll see three sections on the left: **Journal posts**, **Pages** and **Settings**.
 
-After you click **Publish**, the website updates by itself in about one minute.
+**Saving and going live are two steps.** **Save** keeps your changes, but the website doesn't change
+yet. When you're ready (one change or ten), click **Go live** at the bottom left. The website
+updates about two minutes later, with everything you've saved. The box at the bottom left always
+says how many saved changes are waiting; hover over it to see which.
+
+Why: the website's free hosting allows about 20 updates a month, so it's best to save as often as
+you like and go live once when you're done.
 
 ---
 
@@ -32,7 +38,7 @@ After you click **Publish**, the website updates by itself in about one minute.
    - **Keywords**: optional.
    - **Post**: write the newsletter here. The toolbar has headings, bold, lists and links.
      To add a photo in the middle of a post, click **+** → **Image**.
-3. Click **Publish** → **Publish now**.
+3. Click **Save** → **Save now**. Then click **Go live** (bottom left) when you're ready.
 
 **Tip: drafts.** Switch **Published** off to save a post without showing it on the site.
 You can come back and switch it on later.
@@ -51,7 +57,7 @@ toolbar to turn section titles ("Training Insight", "Athlete Spotlight"…) into
    and licence are credited automatically. If none fit, choose **No photo for now** and upload
    your own in the editor.
 5. Click **Save draft and open in the editor**. The post opens with **Published** switched off.
-   Finish it there, switch **Published** on, and publish as usual.
+   Finish it there, switch **Published** on, **Save**, then **Go live**.
 
 To change how the AI writes (your voice, length, structure, which posts to copy, what photos to
 look for), go to **Settings → AI writing settings**. Changes apply to the next draft.
