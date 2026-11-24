@@ -5,7 +5,7 @@
 
 backend:
   name: github
-  repo: eravet/vs3   # change if the GitHub repo has a different name
+  repo: eravet/vs   # also set in netlify/lib/ai-draft.mjs (a test checks they match)
   branch: main
   commit_messages:
     create: "Add {{collection}} “{{slug}}”"

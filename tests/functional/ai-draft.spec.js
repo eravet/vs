@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import fs from "node:fs";
 import yaml from "js-yaml";
 import {
-  cleanDraft, buildPostFile, buildPrompt, photoCredit, toPhoto, downloadUrl, slugify, todayInAustin, CATEGORIES, DRAFT_SCHEMA,
+  cleanDraft, buildPostFile, buildPrompt, photoCredit, toPhoto, downloadUrl, slugify, todayInAustin, CATEGORIES, DRAFT_SCHEMA, REPO,
 } from "../../netlify/lib/ai-draft.mjs";
 import draftHandler from "../../netlify/functions/ai-draft.mjs";
 import saveHandler from "../../netlify/functions/ai-save.mjs";
@@ -58,8 +58,8 @@ function fakeServices({ push = true, files = {}, openverseStatus = 200 } = {}) {
     calls.push({ method, url, body, headers: init.headers || {} });
     const p = url.pathname;
     if (url.hostname === "api.github.com") {
-      if (p === "/repos/eravet/vs3") return ok({ permissions: { push } });
-      const file = /^\/repos\/eravet\/vs3\/contents\/(.+)$/.exec(p);
+      if (p === "/repos/eravet/vs") return ok({ permissions: { push } });
+      const file = /^\/repos\/eravet\/vs\/contents\/(.+)$/.exec(p);
       if (file) {
         const path = decodeURIComponent(file[1]);
         return path in files ? ok({ content: Buffer.from(files[path]).toString("base64") }) : notFound();
@@ -120,6 +120,10 @@ test.describe("Draft with AI: server @functional", () => {
     expect(d.category).toBe(CATEGORIES[0]);
     expect(d.tags).toHaveLength(8);
     expect(() => cleanDraft({ title: "", body: "x" })).toThrow();
+  });
+
+  test("Draft with AI saves to the same GitHub repo as the editor @critical", () => {
+    expect(REPO).toBe(config.backend.repo);
   });
 
   test("the AI's reply format only allows the site's topics", () => {

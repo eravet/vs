@@ -9,7 +9,7 @@
 // - Mark's editable instructions live in src/_data/ai_writing.json ("AI writing settings"
 //   in the editor) and are read from GitHub on every request, so edits apply right away.
 
-export const REPO = process.env.CONTENT_REPO || "eravet/vs3";
+export const REPO = process.env.CONTENT_REPO || "eravet/vs"; // same as backend.repo in src/admin/config.yml
 export const BRANCH = "main";
 export const SETTINGS_PATH = "src/_data/ai_writing.json";
 export const DEFAULT_MODEL = "gemini-3.6-flash";

@@ -4,18 +4,13 @@ About 30–45 minutes, done once. Order matters: the site goes to a free `*.netl
 Mark reviews it there, and only then does `velo-savvy.com` move over from Vercel.
 
 ## 1. GitHub repo
-1. On github.com: **New repository** → name **`vs3`** (owner `eravet`) → **Private** → *don't* add a
-   README, .gitignore or licence → **Create repository**.
-   (A different name is fine: change `repo:` near the top of `src/admin/config.yml` to match.)
-2. Push the local repo (Claude can run this for you):
-   ```
-   git remote add origin https://github.com/eravet/vs3.git
-   git push -u origin main
-   ```
+The site lives at **`eravet/vs`** (public; see "Public repo" below). The local folder is
+still called `vs3`. To use a different repo, change `repo:` near the top of `src/admin/config.yml`
+and `REPO` in `netlify/lib/ai-draft.mjs` (a test checks they match).
 
 ## 2. Netlify project
 1. app.netlify.com → **Add new project** → **Import an existing project** → **GitHub** → allow access
-   to the `vs3` repo → pick it.
+   to the `vs` repo → pick it.
 2. Build settings fill in from `netlify.toml` (`npm run build`, publish `_site`). Click **Deploy**.
    The first build takes ~2 minutes (it resizes every photo; later builds reuse them).
 3. **Project configuration → General → Change project name** → `velo-savvy`, giving
@@ -93,9 +88,17 @@ people when the repo is public). Nothing secret is in it: the Gemini key lives i
 about Mark stay in `private/`, which is never committed. Keep it that way: never commit keys, and
 remember that draft posts (Published off) can be read on GitHub before they go live.
 
-In Netlify, check **Project configuration → Build & deploy → Continuous deployment → Sensitive
-variable policy** is set to **Require approval**, so a pull request from a stranger can't run a
-build that sees `GEMINI_API_KEY`.
+Anything committed stays public for good (anyone can fork or copy the repo), so tell Mark: don't
+upload private photos, and treat a saved draft as published.
+
+Settings that keep strangers' pull requests from running builds on Netlify:
+- Netlify → **Project configuration → Build & deploy → Continuous deployment**:
+  **Deploy Previews → None**, and **Sensitive variable policy → Require approval** (so no stranger's
+  build can see `GEMINI_API_KEY`).
+- GitHub → repo **Settings → General → Features**: Issues, Wiki and Discussions off (spam).
+
+History: the repo started fresh on 2026-11-23 from the cleaned `vs3` history. The old private `eravet/vs3`
+repo still held the research notes in old commits, so it must never be made public; delete it.
 
 ## 6. Move velo-savvy.com from Vercel to Netlify
 When Mark is happy:
