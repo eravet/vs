@@ -31,7 +31,7 @@ netlify/
 docs/
   EDITING-GUIDE.md  ← for Mark
   SETUP.md          ← deploying to Netlify, editor login, DNS
-  RESEARCH-NOTES.md ← sourced facts about Mark + what still needs confirming
+private/            ← not committed (the repo is public): research notes about Mark, build plans
 ```
 
 ## Develop

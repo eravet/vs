@@ -84,8 +84,18 @@ Only GitHub accounts that can edit the repo can use it, and the key never leaves
 Send him:
 - the preview link `https://velo-savvy.netlify.app`
 - `docs/EDITING-GUIDE.md` (how to log in and edit)
-- the ⚠️ items in `docs/RESEARCH-NOTES.md` to confirm or correct (he can fix most of them himself in
-  the editor; it's good practice)
+- the ⚠️ items in the research notes (`private/RESEARCH-NOTES.md`, on Eric's computer only, not in the
+  repo) to confirm or correct (he can fix most of them himself in the editor; it's good practice)
+
+## Public repo
+The repo is public so Mark's edits deploy on Netlify's free plan (it only deploys commits from other
+people when the repo is public). Nothing secret is in it: the Gemini key lives in Netlify, and notes
+about Mark stay in `private/`, which is never committed. Keep it that way: never commit keys, and
+remember that draft posts (Published off) can be read on GitHub before they go live.
+
+In Netlify, check **Project configuration → Build & deploy → Continuous deployment → Sensitive
+variable policy** is set to **Require approval**, so a pull request from a stranger can't run a
+build that sees `GEMINI_API_KEY`.
 
 ## 6. Move velo-savvy.com from Vercel to Netlify
 When Mark is happy:

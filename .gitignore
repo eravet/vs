@@ -5,3 +5,6 @@ test-results/
 playwright-report/
 .env
 .DS_Store
+
+# Notes about Mark and build plans: kept on this computer only, never committed (the repo is public)
+private/
